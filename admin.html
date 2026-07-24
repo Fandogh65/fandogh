@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل مدیریت | فندق</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🌰</div>
+            <h2>ف<span>ندق</span></h2>
+        </div>
+        <nav class="menu">
+            <a href="index.html" class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span>داشبورد</span>
+            </a>
+            <a href="lessons.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span>درس‌ها</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span>پروفایل</span>
+            </a>
+            <a href="support.html" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span>پشتیبانی</span>
+            </a>
+            <a href="earn-coins.html" class="menu-item">
+                <span class="menu-icon">🪙</span>
+                <span>سکه رایگان</span>
+            </a>
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">🔐</span>
+                <span>ورود</span>
+            </a>
+            <a href="admin.html" class="menu-item active" id="adminMenuItem">
+                <span class="menu-icon">⚙️</span>
+                <span>پنل مدیریت</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="welcome">
+                <h1>⚙️ پنل مدیریت</h1>
+                <p id="adminStatus">خوش آمدید ادمین!</p>
+            </div>
+            <div class="user">
+                <div class="user-info">
+                    <strong id="headerUsername">ادمین</strong>
+                    <span id="headerUserStatus">مدیر سایت</span>
+                </div>
+                <div class="avatar">⚙️</div>
+            </div>
+        </header>
+
+        <!-- تب‌های مدیریت -->
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="lessons">📚 مدیریت درس‌ها</button>
+            <button class="admin-tab" data-tab="users">👥 کاربران</button>
+            <button class="admin-tab" data-tab="messages">💬 پیام‌ها</button>
+            <button class="admin-tab" data-tab="notifications">🔔 اعلان‌ها</button>
+        </div>
+
+        <!-- ===== بخش مدیریت درس‌ها ===== -->
+        <div class="admin-panel" id="tab-lessons">
+            <h3>📚 ویرایش درس‌ها</h3>
+            <div id="adminLessonsContainer"></div>
+            
+            <button class="primary-btn" id="addLessonBtn" style="margin-top:20px;">➕ افزودن درس جدید</button>
+            
+            <div id="addLessonForm" style="display:none;margin-top:20px;background:#0d1d35;padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+                <h4 style="color:#21d4c3;margin-bottom:15px;">📝 اطلاعات درس جدید</h4>
+                <div class="form-group">
+                    <label>عنوان درس</label>
+                    <input type="text" id="newLessonTitle" placeholder="عنوان درس...">
+                </div>
+                <div class="form-group">
+                    <label>آیکون</label>
+                    <input type="text" id="newLessonIcon" placeholder="مثلاً 🇰🇷">
+                </div>
+                <div class="form-group">
+                    <label>دسته‌بندی</label>
+                    <input type="text" id="newLessonCategory" placeholder="مثلاً درسی • سالم و احوالپرسی">
+                </div>
+                <div class="form-group">
+                    <label>توضیحات</label>
+                    <input type="text" id="newLessonDescription" placeholder="توضیحات کوتاه...">
+                </div>
+                <div class="form-group">
+                    <label>سطح</label>
+                    <select id="newLessonLevel">
+                        <option value="مقدماتی">مقدماتی</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="پیشرفته">پیشرفته</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>محتوای آموزشی</label>
+                    <textarea id="newLessonContent" rows="4" placeholder="متن آموزشی درس..."></textarea>
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <button class="primary-btn" id="saveNewLessonBtn">💾 ذخیره درس</button>
+                    <button class="primary-btn secondary" id="cancelAddLessonBtn">❌ انصراف</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== بخش مدیریت کاربران ===== -->
+        <div class="admin-panel" id="tab-users" style="display:none;">
+            <h3>👥 لیست کاربران</h3>
+            <div id="usersListContainer"></div>
+        </div>
+
+        <!-- ===== بخش پیام‌ها ===== -->
+        <div class="admin-panel" id="tab-messages" style="display:none;">
+            <h3>💬 پیام‌های پشتیبانی</h3>
+            <div id="messagesListContainer"></div>
+        </div>
+
+        <!-- ===== بخش اعلان‌ها ===== -->
+        <div class="admin-panel" id="tab-notifications" style="display:none;">
+            <h3>🔔 مدیریت اعلان‌ها</h3>
+            
+            <!-- فرم انتشار اعلان جدید -->
+            <div style="background:rgba(255,255,255,0.03);padding:20px;border-radius:12px;margin-bottom:20px;">
+                <h4 style="color:#21d4c3;margin-bottom:15px;">📢 انتشار اعلان جدید</h4>
+                <div class="form-group">
+                    <label>عنوان اعلان</label>
+                    <input type="text" id="notificationTitle" placeholder="عنوان اعلان...">
+                </div>
+                <div class="form-group">
+                    <label>متن اعلان</label>
+                    <textarea id="notificationText" rows="4" placeholder="متن اعلان..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>نوع اعلان</label>
+                    <select id="notificationType">
+                        <option value="info">اطلاع‌رسانی</option>
+                        <option value="success">موفقیت</option>
+                        <option value="warning">هشدار</option>
+                    </select>
+                </div>
+                <button class="primary-btn" id="publishNotificationBtn">📢 انتشار اعلان</button>
+            </div>
+
+            <!-- لیست اعلان‌های منتشر شده با دکمه‌های ویرایش و حذف -->
+            <h4 style="color:#7f8da5;margin-bottom:15px;">📋 اعلان‌های منتشر شده</h4>
+            <div id="notificationsList"></div>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محتوای درس | فندق</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🌰</div>
+            <h2>ف<span>ندق</span></h2>
+        </div>
+        <nav class="menu">
+            <a href="index.html" class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span>داشبورد</span>
+            </a>
+            <a href="lessons.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span>درس‌ها</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span>پروفایل</span>
+            </a>
+            <a href="support.html" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span>پشتیبانی</span>
+            </a>
+            <a href="earn-coins.html" class="menu-item">
+                <span class="menu-icon">🪙</span>
+                <span>سکه رایگان</span>
+            </a>
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">🔐</span>
+                <span>ورود</span>
+            </a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
+                <span class="menu-icon">⚙️</span>
+                <span>پنل مدیریت</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="welcome">
+                <h1 id="lessonTitle">📖 عنوان درس</h1>
+                <p id="lessonCategory">دسته‌بندی</p>
+            </div>
+            <div class="user">
+                <div class="user-info">
+                    <strong id="headerUsername">کاربر مهمان</strong>
+                    <span id="headerUserStatus">ثبت‌نام نشده</span>
+                </div>
+                <div class="avatar">👤</div>
+            </div>
+        </header>
+
+        <div style="margin-bottom:20px;">
+            <button class="primary-btn secondary" onclick="window.location.href='lessons.html'" style="padding:8px 20px;font-size:13px;">
+                ← بازگشت به درس‌ها
+            </button>
+        </div>
+
+        <section class="lesson-content">
+
+            <div class="content-card">
+                <div style="font-size:50px;margin-bottom:15px;" id="lessonIcon">🇰🇷</div>
+                <h2 id="lessonFullTitle">عنوان کامل درس</h2>
+                <p style="color:#8d9bb1;margin:10px 0;" id="lessonDescription">توضیحات</p>
+                <div class="lesson-text" id="lessonText">
+                    <p>محتوا اینجا قرار میگیره.</p>
+                </div>
+
+                <div style="margin:25px 0;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                        <span style="color:#7f8da5;">پیشرفت شما</span>
+                        <span style="color:#21d4c3;font-weight:700;" id="lessonProgressText">۰%</span>
+                    </div>
+                    <div class="progress" style="height:8px;">
+                        <div class="progress-bar" id="lessonProgressBar" style="width:0%;"></div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                    <button class="primary-btn" id="markComplete">✅ تکمیل کردن درس</button>
+                    <button class="primary-btn secondary" id="resetProgress">🔄 ریست پیشرفت</button>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>📝 تمرین</h3>
+                <div id="exerciseContainer"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

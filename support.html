@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پشتیبانی | فندق</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🌰</div>
+            <h2>ف<span>ندق</span></h2>
+        </div>
+        <nav class="menu">
+            <a href="index.html" class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span>داشبورد</span>
+            </a>
+            <a href="lessons.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span>درس‌ها</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span>پروفایل</span>
+            </a>
+            <a href="support.html" class="menu-item active">
+                <span class="menu-icon">💬</span>
+                <span>پشتیبانی</span>
+            </a>
+            <a href="earn-coins.html" class="menu-item">
+                <span class="menu-icon">🪙</span>
+                <span>سکه رایگان</span>
+            </a>
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">🔐</span>
+                <span>ورود</span>
+            </a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
+                <span class="menu-icon">⚙️</span>
+                <span>پنل مدیریت</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="welcome">
+                <h1>💬 پشتیبانی</h1>
+                <p>سوال یا مشکلی داری؟ به ما بگو.</p>
+            </div>
+            <div class="user">
+                <div class="user-info">
+                    <strong id="headerUsername">کاربر مهمان</strong>
+                    <span id="headerUserStatus">ثبت‌نام نشده</span>
+                </div>
+                <div class="avatar">👤</div>
+            </div>
+        </header>
+
+        <section class="support-card">
+
+            <div class="support-info">
+                <div class="support-item">
+                    <span class="support-icon">📧</span>
+                    <div>
+                        <strong>ایمیل</strong>
+                        <p>support@fandogh.com</p>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <span class="support-icon">📱</span>
+                    <div>
+                        <strong>تلفن</strong>
+                        <p>۰۲۱-۱۲۳۴-۵۶۷۸</p>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <span class="support-icon">🕐</span>
+                    <div>
+                        <strong>ساعات کاری</strong>
+                        <p>شنبه تا چهارشنبه ۹ الی ۱۷</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-form">
+                <h3>📝 ارسال پیام</h3>
+                <form id="supportForm">
+
+                    <div class="form-group">
+                        <label>نام و نام خانوادگی</label>
+                        <input type="text" id="supportName" placeholder="نام خود را وارد کن..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ایمیل</label>
+                        <input type="email" id="supportEmail" placeholder="ایمیل خود را وارد کن..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>موضوع</label>
+                        <select id="supportSubject">
+                            <option value="problem">مشکل فنی</option>
+                            <option value="question">سوال درسی</option>
+                            <option value="suggestion">پیشنهاد</option>
+                            <option value="other">سایر</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>پیام</label>
+                        <textarea id="supportMessage" rows="5" placeholder="پیام خود را بنویس..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="primary-btn" style="width:100%;">
+                        📤 ارسال پیام
+                    </button>
+
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
