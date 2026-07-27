@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام | فندق</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🌰</div>
+            <h2>ف<span>ندق</span></h2>
+        </div>
+        <nav class="menu">
+            <a href="index.html" class="menu-item">
+                <span class="menu-icon">🏠</span>
+                <span>داشبورد</span>
+            </a>
+            <a href="lessons.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span>درس‌ها</span>
+            </a>
+            <a href="profile.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span>پروفایل</span>
+            </a>
+            <a href="support.html" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span>پشتیبانی</span>
+            </a>
+            <a href="earn-coins.html" class="menu-item">
+                <span class="menu-icon">🪙</span>
+                <span>سکه رایگان</span>
+            </a>
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">🔐</span>
+                <span>ورود</span>
+            </a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
+                <span class="menu-icon">⚙️</span>
+                <span>پنل مدیریت</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="welcome">
+                <h1>📝 ثبت‌نام</h1>
+                <p>ایجاد حساب کاربری جدید</p>
+            </div>
+            <div class="user">
+                <div class="user-info">
+                    <strong id="headerUsername">کاربر مهمان</strong>
+                    <span id="headerUserStatus">ثبت‌نام نشده</span>
+                </div>
+                <div class="avatar">👤</div>
+            </div>
+        </header>
+
+        <section class="auth-card">
+            <form id="registerForm">
+
+                <!-- مرحله ۱: اطلاعات کاربری -->
+                <div id="step1">
+                    <h3>🔑 اطلاعات کاربری</h3>
+                    
+                    <div class="form-group">
+                        <label>نام کاربری</label>
+                        <input type="text" id="regUsername" placeholder="فقط حروف انگلیسی (کوچک و بزرگ)" required>
+                        <small style="color:#7f8da5;font-size:11px;">فقط حروف a-z و A-Z</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>رمز عبور</label>
+                        <input type="password" id="regPassword" placeholder="حداقل ۸ کاراکتر" required>
+                        <small style="color:#7f8da5;font-size:11px;">حداقل ۸ کاراکتر</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>تکرار رمز عبور</label>
+                        <input type="password" id="regPasswordConfirm" placeholder="رمز را دوباره وارد کن" required>
+                    </div>
+
+                    <button type="button" class="primary-btn" id="step1Next" style="width:100%;">مرحله بعد ➡️</button>
+                </div>
+
+                <!-- مرحله ۲: تاریخ تولد -->
+                <div id="step2" style="display:none;">
+                    <h3>🎂 تاریخ تولد</h3>
+
+                    <div class="form-group">
+                        <label>تاریخ تولد (شمسی)</label>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <input type="number" id="regYear" placeholder="سال" min="1300" max="1410" style="flex:1;min-width:80px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+                            <input type="number" id="regMonth" placeholder="ماه" min="1" max="12" style="flex:1;min-width:60px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+                            <input type="number" id="regDay" placeholder="روز" min="1" max="31" style="flex:1;min-width:60px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>سن</label>
+                        <input type="number" id="regAge" placeholder="به طور خودکار محاسبه میشه" min="10" max="99" style="padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;width:100%;" readonly>
+                    </div>
+
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <button type="button" class="primary-btn secondary" id="step2Back" style="flex:1;">⬅️ بازگشت</button>
+                        <button type="button" class="primary-btn" id="step2Next" style="flex:1;">مرحله بعد ➡️</button>
+                    </div>
+                </div>
+
+                <!-- مرحله ۳: جنسیت -->
+                <div id="step3" style="display:none;">
+                    <h3>👤 جنسیت</h3>
+
+                    <div class="form-group">
+                        <label>جنسیت خود را انتخاب کن</label>
+                        <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:10px;">
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:10px 20px;background:rgba(255,255,255,0.05);border-radius:10px;border:2px solid transparent;transition:0.3s;">
+                                <input type="radio" name="gender" value="male" required>
+                                <span>👨 مرد</span>
+                            </label>
+                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:10px 20px;background:rgba(255,255,255,0.05);border-radius:10px;border:2px solid transparent;transition:0.3s;">
+                                <input type="radio" name="gender" value="female">
+                                <span>👩 زن</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <button type="button" class="primary-btn secondary" id="step3Back" style="flex:1;">⬅️ بازگشت</button>
+                        <button type="submit" class="primary-btn" id="registerSubmit" style="flex:1;">✅ ثبت‌نام</button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,15 +1,104 @@
 // ============================================
-// 🌰 فندق - اپلیکیشن کامل
+// 🌰 فندق - اپلیکیشن کامل با سیستم لغات
 // ============================================
 
-// ===== داده‌های درس‌ها =====
+// ===== داده‌های درس‌ها با لغات =====
 const LESSONS_DATA = [
-    { id: 1, icon: '🇰🇷', title: 'آشنایی با هانگول', category: 'درسی • سالم و احوالپرسی', description: 'یادگیری الفبای کره‌ای', level: 'مقدماتی', content: 'الفبای کره‌ای (هانگول) در سال ۱۴۴۳ ساخته شد. شامل ۲۴ حرف است.' },
-    { id: 2, icon: '💬', title: 'مکالمه روزمره', category: 'درسی • معرفی خود', description: 'صحبت کردن در موقعیت‌های روزمره', level: 'مقدماتی', content: 'سلام = 안녕하세요 (آن‌نیونگ‌هاسه‌یو)، متشکرم = 감사합니다 (کام‌سا‌هام‌نیدا)' },
-    { id: 3, icon: '📖', title: 'گرامر پایه', category: 'درسی • خانواده', description: 'ساخت جمله‌های ساده کره‌ای', level: 'متوسط', content: 'ترتیب جمله در کره‌ای: فاعل + مفعول + فعل' },
-    { id: 4, icon: '📅', title: 'روزها و تاریخ', category: 'درسی • روزها و تاریخ', description: 'روزهای هفته و تاریخ‌ها', level: 'متوسط', content: 'یک‌شنبه = 일요일 (ایریول)، دوشنبه = 월요일 (وُریول)' },
-    { id: 5, icon: '🕐', title: 'ساعت و زمان', category: 'درسی • ساعت و زمان', description: 'گفتن ساعت و زمان', level: 'پیشرفته', content: 'ساعت ۱ = 1시 (هان‌شی)، ساعت ۳ و ۳۰ دقیقه = 3시 30분' },
-    { id: 6, icon: '🛍️', title: 'خرید کردن', category: 'درسی • خرید کردن', description: 'مکالمات هنگام خرید', level: 'پیشرفته', content: 'قیمتش چنده؟ = 얼마예요؟ (ئول‌ما‌یه‌یو؟)' }
+    {
+        id: 1,
+        icon: '🇰🇷',
+        title: 'آشنایی با هانگول',
+        category: 'درسی • سالم و احوالپرسی',
+        description: 'یادگیری الفبای کره‌ای',
+        level: 'مقدماتی',
+        content: 'الفبای کره‌ای (هانگول) در سال ۱۴۴۳ ساخته شد. شامل ۲۴ حرف است.',
+        vocabulary: [
+            { korean: '한글', pronunciation: 'Han-geul', meaning: 'هانگول (الفبای کره‌ای)' },
+            { korean: 'ㄱ', pronunciation: 'Gi-yeok', meaning: 'گیوک (حرف بی‌صدا)' },
+            { korean: 'ㄴ', pronunciation: 'Ni-eun', meaning: 'نیون (حرف بی‌صدا)' },
+            { korean: 'ㅏ', pronunciation: 'A', meaning: 'آ (حرف صدادار)' },
+            { korean: 'ㅑ', pronunciation: 'Ya', meaning: 'یا (حرف صدادار)' }
+        ]
+    },
+    {
+        id: 2,
+        icon: '💬',
+        title: 'مکالمه روزمره',
+        category: 'درسی • معرفی خود',
+        description: 'صحبت کردن در موقعیت‌های روزمره',
+        level: 'مقدماتی',
+        content: 'سلام = 안녕하세요 (آن‌نیونگ‌هاسه‌یو)، متشکرم = 감사합니다 (کام‌سا‌هام‌نیدا)',
+        vocabulary: [
+            { korean: '안녕하세요', pronunciation: 'An-nyeong-ha-se-yo', meaning: 'سلام' },
+            { korean: '감사합니다', pronunciation: 'Kam-sa-ham-ni-da', meaning: 'متشکرم' },
+            { korean: '죄송합니다', pronunciation: 'Choe-song-ham-ni-da', meaning: 'متاسفم' },
+            { korean: '이름', pronunciation: 'I-reum', meaning: 'اسم' },
+            { korean: '저는', pronunciation: 'Jeo-neun', meaning: 'من (مؤدبانه)' }
+        ]
+    },
+    {
+        id: 3,
+        icon: '📖',
+        title: 'گرامر پایه',
+        category: 'درسی • خانواده',
+        description: 'ساخت جمله‌های ساده کره‌ای',
+        level: 'متوسط',
+        content: 'ترتیب جمله در کره‌ای: فاعل + مفعول + فعل',
+        vocabulary: [
+            { korean: '은/는', pronunciation: 'Eun/Neun', meaning: 'شناسه فاعل' },
+            { korean: '을/를', pronunciation: 'Eul/Reul', meaning: 'شناسه مفعول' },
+            { korean: '입니다', pronunciation: 'Im-ni-da', meaning: 'هست (رسمی)' },
+            { korean: '아니에요', pronunciation: 'A-ni-e-yo', meaning: 'نیست (غیررسمی)' }
+        ]
+    },
+    {
+        id: 4,
+        icon: '📅',
+        title: 'روزها و تاریخ',
+        category: 'درسی • روزها و تاریخ',
+        description: 'روزهای هفته و تاریخ‌ها',
+        level: 'متوسط',
+        content: 'یک‌شنبه = 일요일 (ایریول)، دوشنبه = 월요일 (وُریول)',
+        vocabulary: [
+            { korean: '월요일', pronunciation: 'Wol-yo-il', meaning: 'دوشنبه' },
+            { korean: '화요일', pronunciation: 'Hwa-yo-il', meaning: 'سه‌شنبه' },
+            { korean: '수요일', pronunciation: 'Su-yo-il', meaning: 'چهارشنبه' },
+            { korean: '금요일', pronunciation: 'Geum-yo-il', meaning: 'جمعه' },
+            { korean: '주말', pronunciation: 'Ju-mal', meaning: 'آخر هفته' }
+        ]
+    },
+    {
+        id: 5,
+        icon: '🕐',
+        title: 'ساعت و زمان',
+        category: 'درسی • ساعت و زمان',
+        description: 'گفتن ساعت و زمان',
+        level: 'پیشرفته',
+        content: 'ساعت ۱ = 1시 (هان‌شی)، ساعت ۳ و ۳۰ دقیقه = 3시 30분',
+        vocabulary: [
+            { korean: '시', pronunciation: 'Si', meaning: 'ساعت' },
+            { korean: '분', pronunciation: 'Bun', meaning: 'دقیقه' },
+            { korean: '오전', pronunciation: 'O-jeon', meaning: 'صبح' },
+            { korean: '오후', pronunciation: 'O-hu', meaning: 'بعدازظهر' },
+            { korean: '몇 시예요?', pronunciation: 'Myeot si-ye-yo?', meaning: 'ساعت چند است؟' }
+        ]
+    },
+    {
+        id: 6,
+        icon: '🛍️',
+        title: 'خرید کردن',
+        category: 'درسی • خرید کردن',
+        description: 'مکالمات هنگام خرید',
+        level: 'پیشرفته',
+        content: 'قیمتش چنده؟ = 얼마예요؟ (ئول‌ما‌یه‌یو؟)',
+        vocabulary: [
+            { korean: '얼마예요?', pronunciation: 'Eol-ma-ye-yo?', meaning: 'قیمتش چنده؟' },
+            { korean: '비싸요', pronunciation: 'Bi-ssa-yo', meaning: 'گرونه' },
+            { korean: '싸요', pronunciation: 'Ssa-yo', meaning: 'ارزونه' },
+            { korean: '주세요', pronunciation: 'Ju-se-yo', meaning: 'لطفاً به من بدهید' },
+            { korean: '이거', pronunciation: 'I-geo', meaning: 'این' }
+        ]
+    }
 ];
 
 // ===== ذخیره‌سازی =====
@@ -41,7 +130,40 @@ function showToast(msg, type = 'info') {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// ===== محاسبه سن از تاریخ تولد شمسی =====
+// ============================================
+// سیستم تلفظ لغات (Google Text-to-Speech)
+// ============================================
+
+function speakKorean(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.8;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        const voices = window.speechSynthesis.getVoices();
+        const koreanVoice = voices.find(voice => voice.lang.startsWith('ko'));
+        if (koreanVoice) {
+            utterance.voice = koreanVoice;
+        }
+        
+        window.speechSynthesis.speak(utterance);
+    } else {
+        showToast('⚠️ مرورگر شما از تلفظ صوتی پشتیبانی نمی‌کند!', 'error');
+    }
+}
+
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+    };
+}
+
+// ===== محاسبه سن =====
 function calculateAgeFromShamsi(year, month, day) {
     const today = new Date();
     const gregorianYear = parseInt(year) + 621;
@@ -68,7 +190,7 @@ function openLesson(lessonId) {
     window.location.href = `lesson-detail.html?id=${lessonId}`;
 }
 
-// ===== رندر درس‌ها در صفحه اصلی =====
+// ===== رندر درس‌ها =====
 function renderLessons() {
     const container = document.getElementById('lessonsContainer');
     if (!container) return;
@@ -99,7 +221,7 @@ function renderLessons() {
     updateStats();
 }
 
-// ===== رندر همه درس‌ها در lessons.html =====
+// ===== رندر همه درس‌ها =====
 function renderAllLessons() {
     const container = document.getElementById('allLessonsContainer');
     if (!container) return;
@@ -150,6 +272,35 @@ function updateStats() {
     document.getElementById('statHours').textContent = (DB.get('stats', { hours: 0 }).hours || 0) + ' ساعت';
 }
 
+// ===== نمایش لغات =====
+function displayVocabulary(vocab) {
+    const container = document.getElementById('vocabularyContainer');
+    if (!container) return;
+    
+    if (!vocab || vocab.length === 0) {
+        container.innerHTML = '<p style="color:#6b7a93;">هیچ لغتی برای این درس ثبت نشده است.</p>';
+        return;
+    }
+    
+    let html = '<div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;">';
+    vocab.forEach((item) => {
+        html += `
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:12px 16px;border-radius:10px;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <span style="font-size:20px;font-weight:700;color:#ffffff;">${item.korean}</span>
+                    <span style="color:#6b7a93;font-size:13px;">${item.pronunciation || ''}</span>
+                    <span style="color:#2dd4bf;font-size:13px;">${item.meaning}</span>
+                </div>
+                <button class="primary-btn" onclick="speakKorean('${item.korean}')" style="padding:6px 14px;font-size:12px;background:rgba(45,212,191,0.1);color:#2dd4bf;border:1px solid rgba(45,212,191,0.15);">
+                    🔊 تلفظ
+                </button>
+            </div>
+        `;
+    });
+    html += '</div>';
+    container.innerHTML = html;
+}
+
 // ===== بارگذاری صفحه درس =====
 function loadLessonDetail() {
     const params = new URLSearchParams(window.location.search);
@@ -173,6 +324,9 @@ function loadLessonDetail() {
     document.getElementById('lessonDescription').textContent = data.description;
     document.getElementById('lessonText').innerHTML = `<p>${data.content || 'محتوا در حال ویرایش...'}</p>`;
 
+    // نمایش لغات
+    displayVocabulary(data.vocabulary || []);
+
     // تمرین
     const exercises = [
         { q: `${data.title} درباره چیه؟`, options: ['یادگیری کره‌ای', 'ریاضی', 'تاریخ', 'شیمی'], correct: 0 }
@@ -186,7 +340,7 @@ function loadLessonDetail() {
                     <input type="radio" name="ex${i}" value="${oi}"> ${opt}
                 </label>
             `).join('')}
-            <button class="check-btn" data-ex="${i}" style="margin-top:10px;padding:6px 16px;background:#21d4c3;border:none;border-radius:8px;color:#06121f;font-weight:700;cursor:pointer;">بررسی</button>
+            <button class="check-btn" data-ex="${i}" style="margin-top:10px;padding:6px 16px;background:#2dd4bf;border:none;border-radius:8px;color:#0a0e1a;font-weight:700;cursor:pointer;">بررسی</button>
             <div class="fb" style="margin-top:8px;font-size:13px;"></div>
         </div>`;
     });
@@ -201,7 +355,7 @@ function loadLessonDetail() {
             const correct = exercises[exIdx].correct;
             if (parseInt(sel.value) === correct) {
                 fb.textContent = '✅ آفرین! درسته! 🎉';
-                fb.style.color = '#21d4c3';
+                fb.style.color = '#2dd4bf';
             } else {
                 fb.textContent = `❌ نه! پاسخ صحیح گزینه ${correct+1} بود.`;
                 fb.style.color = '#ef4444';
@@ -441,7 +595,6 @@ function setupRegisterPage() {
         return password.length >= 8;
     }
 
-    // ===== محاسبه خودکار سن =====
     function updateAgeAutomatically() {
         const year = regYear.value.trim();
         const month = regMonth.value.trim();
@@ -467,7 +620,6 @@ function setupRegisterPage() {
         }
     }
 
-    // رویدادهای محاسبه خودکار سن
     regYear.addEventListener('input', updateAgeAutomatically);
     regMonth.addEventListener('input', updateAgeAutomatically);
     regDay.addEventListener('input', updateAgeAutomatically);
@@ -671,7 +823,7 @@ function createDefaultAdmin() {
 }
 
 // ============================================
-// پنل مدیریت
+// پنل مدیریت - بخش درس‌ها با لغات
 // ============================================
 
 function renderAdminLessons() {
@@ -680,13 +832,14 @@ function renderAdminLessons() {
     const lessons = DB.get('lessons', LESSONS_DATA);
     let html = '';
     lessons.forEach((lesson, index) => {
+        const vocabCount = (lesson.vocabulary || []).length;
         html += `
             <div class="admin-lesson-item" data-index="${index}">
                 <div class="lesson-info">
                     <span style="font-size:24px;">${lesson.icon}</span>
                     <span><strong>${lesson.title}</strong></span>
                     <span class="level-badge">${lesson.level || 'مقدماتی'}</span>
-                    <span style="color:#7f8da5;font-size:12px;">${lesson.category}</span>
+                    <span style="color:#7f8da5;font-size:12px;">📚 ${vocabCount} لغت</span>
                 </div>
                 <div class="lesson-actions">
                     <button class="btn-edit" onclick="editLesson(${index})">✏️ ویرایش</button>
@@ -721,6 +874,19 @@ function editLesson(index) {
     const newContent = prompt('محتوای آموزشی جدید:', lesson.content || '');
     if (newContent !== null) lesson.content = newContent;
     
+    // ویرایش لغات
+    const vocabText = (lesson.vocabulary || []).map(v => `${v.korean} | ${v.pronunciation} | ${v.meaning}`).join('\n');
+    const newVocabText = prompt('لغات (هر خط: کلمه | تلفظ | معنی):', vocabText);
+    if (newVocabText !== null) {
+        lesson.vocabulary = newVocabText.split('\n').map(line => {
+            const parts = line.split('|').map(p => p.trim());
+            if (parts.length === 3) {
+                return { korean: parts[0], pronunciation: parts[1], meaning: parts[2] };
+            }
+            return null;
+        }).filter(v => v !== null);
+    }
+    
     lessons[index] = lesson;
     DB.set('lessons', lessons);
     renderAdminLessons();
@@ -736,6 +902,7 @@ function deleteLesson(index) {
     showToast('🗑️ درس حذف شد!', 'info');
 }
 
+// ===== افزودن درس جدید با لغات =====
 function setupAddLesson() {
     const addBtn = document.getElementById('addLessonBtn');
     const form = document.getElementById('addLessonForm');
@@ -760,10 +927,27 @@ function setupAddLesson() {
         const description = document.getElementById('newLessonDescription').value.trim();
         const level = document.getElementById('newLessonLevel').value;
         const content = document.getElementById('newLessonContent').value.trim();
+        const vocabText = document.getElementById('newLessonVocabulary').value.trim();
         
         if (!title || !icon || !category || !description) {
             showToast('⚠️ لطفاً همه فیلدها را پر کن!', 'error');
             return;
+        }
+        
+        // پردازش لغات
+        const vocabulary = [];
+        if (vocabText) {
+            const lines = vocabText.split('\n');
+            for (const line of lines) {
+                const parts = line.split('|').map(p => p.trim());
+                if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+                    vocabulary.push({
+                        korean: parts[0],
+                        pronunciation: parts[1],
+                        meaning: parts[2]
+                    });
+                }
+            }
         }
         
         const lessons = DB.get('lessons', LESSONS_DATA);
@@ -776,21 +960,24 @@ function setupAddLesson() {
             category: category,
             description: description,
             level: level,
-            content: content || 'محتوا در حال ویرایش...'
+            content: content || 'محتوا در حال ویرایش...',
+            vocabulary: vocabulary
         });
         
         DB.set('lessons', lessons);
         renderAdminLessons();
         
+        // پاک کردن فرم
         document.getElementById('newLessonTitle').value = '';
         document.getElementById('newLessonIcon').value = '';
         document.getElementById('newLessonCategory').value = '';
         document.getElementById('newLessonDescription').value = '';
         document.getElementById('newLessonContent').value = '';
+        document.getElementById('newLessonVocabulary').value = '';
         form.style.display = 'none';
         addBtn.style.display = 'inline-block';
         
-        showToast('✅ درس جدید اضافه شد!', 'success');
+        showToast(`✅ درس جدید اضافه شد! (${vocabulary.length} لغت)`, 'success');
     });
 }
 
@@ -854,7 +1041,7 @@ function renderMessages() {
                 </div>
                 <div class="message-subject">📌 ${subjectMap[msg.subject] || msg.subject}</div>
                 <div class="message-text">${msg.message}</div>
-                ${msg.reply ? `<div style="margin-top:8px;padding:8px 12px;background:rgba(33,212,195,0.1);border-radius:8px;border-right:2px solid #21d4c3;color:#21d4c3;font-size:13px;">✅ پاسخ: ${msg.reply}</div>` : ''}
+                ${msg.reply ? `<div style="margin-top:8px;padding:8px 12px;background:rgba(45,212,191,0.1);border-radius:8px;border-right:2px solid #2dd4bf;color:#2dd4bf;font-size:13px;">✅ پاسخ: ${msg.reply}</div>` : ''}
                 <div class="message-actions">
                     <textarea id="replyText_${index}" placeholder="پاسخ خود را بنویس...">${msg.reply || ''}</textarea>
                     <button class="reply-btn" onclick="replyToMessage(${index})">📤 ارسال پاسخ</button>
@@ -883,7 +1070,7 @@ function replyToMessage(index) {
 }
 
 // ============================================
-// مدیریت اعلان‌ها (قسمت ادمین)
+// مدیریت اعلان‌ها
 // ============================================
 
 function renderNotifications() {
@@ -914,7 +1101,6 @@ function renderNotifications() {
     container.innerHTML = html;
 }
 
-// ===== ویرایش اعلان =====
 function editNotification(index) {
     const notifications = DB.get('notifications', []);
     const notif = notifications[index];
@@ -951,33 +1137,24 @@ function editNotification(index) {
     
     DB.set('notifications', notifications);
     renderNotifications();
-    
-    // ریست کردن وضعیت خوانده شدن اعلان‌ها برای کاربران
     DB.set('notificationsRead', false);
     DB.set('notificationCount', notifications.length);
-    
     showToast('✅ اعلان ویرایش شد!', 'success');
 }
 
-// ===== حذف اعلان =====
 function deleteNotification(index) {
     if (!confirm('⚠️ مطمئنی میخوای این اعلان رو حذف کنی؟')) return;
-    
     const notifications = DB.get('notifications', []);
     notifications.splice(index, 1);
     DB.set('notifications', notifications);
     renderNotifications();
-    
-    // بروزرسانی شمارنده
     DB.set('notificationCount', notifications.length);
     if (notifications.length === 0) {
         DB.set('notificationsRead', true);
     }
-    
     showToast('🗑️ اعلان حذف شد!', 'info');
 }
 
-// ===== انتشار اعلان جدید =====
 function setupNotifications() {
     const publishBtn = document.getElementById('publishNotificationBtn');
     if (!publishBtn) return;
@@ -1002,14 +1179,11 @@ function setupNotifications() {
             time: new Date().toLocaleTimeString('fa-IR')
         });
         DB.set('notifications', notifications);
-        
-        // ریست کردن وضعیت خوانده شدن برای کاربران
         DB.set('notificationsRead', false);
         DB.set('notificationCount', notifications.length);
         
         document.getElementById('notificationTitle').value = '';
         document.getElementById('notificationText').value = '';
-        
         renderNotifications();
         showToast('📢 اعلان با موفقیت منتشر شد!', 'success');
     });
@@ -1454,7 +1628,7 @@ function setupEarnCoinsPage() {
 
         ctx.beginPath();
         ctx.arc(centerX, centerY, 12, 0, 2 * Math.PI);
-        ctx.fillStyle = '#21d4c3';
+        ctx.fillStyle = '#2dd4bf';
         ctx.fill();
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 3;
@@ -1625,10 +1799,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // بروزرسانی نشانگر اعلان
     updateNotificationBadge();
-
-    // بررسی اعلان‌های جدید هر 30 ثانیه
     setInterval(checkNewNotifications, 30000);
 
     if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname === '') {

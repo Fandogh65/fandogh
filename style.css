@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Vazirmatn', sans-serif;
-    background: #07152b;
+    background: #0a0e1a;
     color: #ffffff;
     min-height: 100vh;
     display: flex;
@@ -16,14 +16,15 @@ body {
     direction: rtl;
 }
 
+/* ===== دکمه همبرگری ===== */
 .hamburger-btn {
     display: none;
     position: fixed;
     top: 15px;
     right: 15px;
     z-index: 999;
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #141d2f;
+    border: none;
     color: #ffffff;
     font-size: 24px;
     padding: 10px 14px;
@@ -31,12 +32,13 @@ body {
     cursor: pointer;
 }
 
+/* ===== منوی کناری ===== */
 .sidebar {
-    width: 250px;
+    width: 260px;
     min-height: 100vh;
-    background: #0a1830;
-    border-left: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 25px 18px;
+    background: #0d1424;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px 20px;
     position: fixed;
     right: 0;
     top: 0;
@@ -47,93 +49,103 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 45px;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-right: 5px;
 }
 
 .logo-icon {
-    width: 42px;
-    height: 42px;
-    background: linear-gradient(135deg, #21d4c3, #18a99d);
-    border-radius: 13px;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 23px;
+    font-size: 22px;
+    box-shadow: 0 4px 20px rgba(45, 212, 191, 0.25);
 }
 
 .logo h2 {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
 }
 
 .logo span {
-    color: #21d4c3;
+    color: #2dd4bf;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .menu-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 15px;
+    gap: 14px;
+    padding: 12px 16px;
     border-radius: 12px;
-    color: #8492a9;
+    color: #6b7a93;
     text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
     transition: 0.3s;
 }
 
 .menu-item:hover {
-    background: rgba(31, 214, 193, 0.08);
+    background: rgba(45, 212, 191, 0.08);
     color: #ffffff;
 }
 
 .menu-item.active {
-    background: rgba(31, 214, 193, 0.15);
-    color: #21d4c3;
+    background: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
 }
 
 .menu-icon {
-    width: 20px;
+    width: 22px;
     text-align: center;
+    font-size: 16px;
 }
 
+/* ===== محتوای اصلی ===== */
 .main {
-    width: calc(100% - 250px);
-    margin-right: 250px;
-    padding: 35px 40px;
+    width: calc(100% - 260px);
+    margin-right: 260px;
+    padding: 35px 45px;
     min-height: 100vh;
+    background: #0a0e1a;
 }
 
+/* ===== هدر ===== */
 .topbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
     flex-wrap: wrap;
     gap: 15px;
 }
 
 .welcome h1 {
-    font-size: 25px;
-    margin-bottom: 7px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
 }
 
 .welcome p {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 14px;
+    margin-top: 4px;
 }
 
 .user {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .user-info {
@@ -143,117 +155,160 @@ body {
 .user-info strong {
     display: block;
     font-size: 14px;
-}
-
-.user-info span {
-    color: #7f8da5;
-    font-size: 12px;
-}
-
-.avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #8b5cf6, #21d4c3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-}
-
-.stats-top {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.stat-top-card {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.stat-top-icon {
-    font-size: 28px;
-}
-
-.stat-top-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-top-info strong {
-    font-size: 22px;
     font-weight: 700;
     color: #ffffff;
 }
 
-.stat-top-info span {
+.user-info span {
+    color: #6b7a93;
     font-size: 12px;
-    color: #7f8da5;
 }
 
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #2dd4bf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 4px 15px rgba(45, 212, 191, 0.2);
+}
+
+/* ===== کارت‌های آمار بالا (شبیه عکس) ===== */
+.stats-top {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.stat-top-card {
+    background: #111b2e;
+    border-radius: 16px;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.stat-top-card .stat-icon {
+    font-size: 30px;
+    width: 52px;
+    height: 52px;
+    background: rgba(45, 212, 191, 0.08);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-top-card .stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-top-card .stat-info .number {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.stat-top-card .stat-info .label {
+    font-size: 12px;
+    color: #6b7a93;
+    margin-top: 2px;
+}
+
+/* ===== کارت خوش‌آمدگویی (شبیه عکس) ===== */
 .hero {
-    background: linear-gradient(135deg, rgba(31, 214, 193, 0.10), rgba(139, 92, 246, 0.10));
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 22px;
-    padding: 35px;
+    background: linear-gradient(135deg, rgba(45, 212, 191, 0.08), rgba(139, 92, 246, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 35px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(45, 212, 191, 0.05), transparent 70%);
+    border-radius: 50%;
 }
 
 .hero-content {
     max-width: 550px;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content h2 {
-    font-size: 25px;
-    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 10px;
 }
 
 .hero-content p {
-    color: #8d9bb1;
+    color: #8a9bb5;
     font-size: 14px;
-    line-height: 2;
+    line-height: 1.9;
     margin-bottom: 22px;
 }
 
 .hero-image {
-    font-size: 90px;
-    padding-left: 35px;
+    font-size: 80px;
+    padding-left: 30px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
 }
 
+/* ===== دکمه اصلی ===== */
 .primary-btn {
     border: none;
-    background: #20d6c2;
-    color: #06121f;
-    padding: 12px 24px;
-    border-radius: 11px;
-    font-family: inherit;
+    background: #2dd4bf;
+    color: #0a0e1a;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-family: 'Vazirmatn', sans-serif;
     font-weight: 700;
+    font-size: 14px;
     cursor: pointer;
     transition: 0.3s;
-    font-size: 14px;
 }
 
 .primary-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(31, 214, 193, 0.25);
+    box-shadow: 0 8px 30px rgba(45, 212, 191, 0.3);
 }
 
 .primary-btn.secondary {
     background: transparent;
-    color: #21d4c3;
-    border: 1px solid rgba(31, 214, 193, 0.3);
+    color: #2dd4bf;
+    border: 1px solid rgba(45, 212, 191, 0.25);
 }
 
+.primary-btn.secondary:hover {
+    background: rgba(45, 212, 191, 0.08);
+    box-shadow: none;
+}
+
+/* ===== عنوان بخش (شبیه عکس) ===== */
 .section-title {
     display: flex;
     align-items: center;
@@ -262,19 +317,23 @@ body {
 }
 
 .section-title h2 {
-    font-size: 19px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
 }
 
 .section-title a {
-    color: #21d4c3;
+    color: #2dd4bf;
     font-size: 13px;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .section-title a:hover {
     text-decoration: underline;
 }
 
+/* ===== کارت‌های درس (شبیه عکس) ===== */
 .lessons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -282,84 +341,100 @@ body {
 }
 
 .lesson-card {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
-    padding: 22px;
+    padding: 24px;
     transition: 0.3s;
 }
 
 .lesson-card:hover {
     transform: translateY(-4px);
-    border-color: rgba(31, 214, 193, 0.3);
+    border-color: rgba(45, 212, 191, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-.lesson-icon {
-    width: 48px;
-    height: 48px;
+.lesson-card .lesson-icon {
+    width: 50px;
+    height: 50px;
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 23px;
-    margin-bottom: 17px;
-    background: rgba(31, 214, 193, 0.12);
+    font-size: 24px;
+    margin-bottom: 16px;
+    background: rgba(45, 212, 191, 0.08);
 }
 
 .lesson-card h3 {
     font-size: 15px;
-    margin-bottom: 6px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 4px;
 }
 
-.lesson-card p {
-    color: #7f8da5;
+.lesson-card .lesson-desc {
+    color: #6b7a93;
     font-size: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     line-height: 1.6;
 }
 
-.lesson-category {
+.lesson-card .lesson-category {
     font-size: 11px !important;
-    color: #21d4c3 !important;
-    margin-bottom: 12px !important;
+    color: #2dd4bf !important;
+    margin-bottom: 14px !important;
+    font-weight: 500;
+    opacity: 0.8;
 }
 
-.progress {
+.lesson-card .progress {
     height: 6px;
-    background: #17243a;
+    background: #1a2740;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 8px;
 }
 
-.progress-bar {
+.lesson-card .progress .progress-bar {
     height: 100%;
-    background: #21d4c3;
+    background: linear-gradient(90deg, #2dd4bf, #14b8a6);
     border-radius: 10px;
     transition: width 0.5s ease;
 }
 
-.progress-info {
+.lesson-card .progress-info {
     display: flex;
     justify-content: space-between;
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 11px;
 }
 
-.lesson-btn {
+.lesson-card .lesson-btn {
     width: 100%;
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 13px !important;
+    background: rgba(45, 212, 191, 0.1);
+    color: #2dd4bf;
+    border: 1px solid rgba(45, 212, 191, 0.15);
 }
 
+.lesson-card .lesson-btn:hover {
+    background: #2dd4bf;
+    color: #0a0e1a;
+    box-shadow: 0 4px 20px rgba(45, 212, 191, 0.2);
+}
+
+/* ===== بقیه استایل‌ها ===== */
 .filter-bar {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 25px;
-    background: #0d1d35;
+    background: #111b2e;
     padding: 15px 20px;
     border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .search-box {
@@ -369,10 +444,10 @@ body {
 
 .search-box input {
     width: 100%;
-    padding: 10px 15px;
+    padding: 10px 16px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #07152b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0a0e1a;
     color: #ffffff;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 14px;
@@ -380,7 +455,11 @@ body {
 }
 
 .search-box input:focus {
-    border-color: #21d4c3;
+    border-color: #2dd4bf;
+}
+
+.search-box input::placeholder {
+    color: #4a5a72;
 }
 
 .filter-buttons {
@@ -392,29 +471,32 @@ body {
 .filter-btn {
     padding: 8px 16px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     background: transparent;
-    color: #8492a9;
+    color: #6b7a93;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 13px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .filter-btn:hover {
-    background: rgba(31, 214, 193, 0.08);
+    background: rgba(45, 212, 191, 0.06);
     color: #ffffff;
 }
 
 .filter-btn.active {
-    background: rgba(31, 214, 193, 0.15);
-    color: #21d4c3;
+    background: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.15);
 }
 
 .stats-bottom {
     margin-top: 30px;
-    background: #0d1d35;
+    background: #111b2e;
     border-radius: 16px;
     padding: 20px 25px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .stat-bottom-card {
@@ -425,7 +507,7 @@ body {
 }
 
 .stat-bottom-card span {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 14px;
 }
 
@@ -433,10 +515,17 @@ body {
     flex: 1;
     min-width: 100px;
     height: 8px;
+    background: #1a2740;
+}
+
+.stat-bottom-card .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #2dd4bf, #14b8a6);
+    border-radius: 10px;
 }
 
 #overallProgressText {
-    color: #21d4c3;
+    color: #2dd4bf;
     font-weight: 700;
 }
 
@@ -445,32 +534,33 @@ body {
 }
 
 .content-card {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 30px;
 }
 
 .lesson-text {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     padding: 20px;
     border-radius: 12px;
-    border-right: 3px solid #21d4c3;
+    border-right: 3px solid #2dd4bf;
     line-height: 2;
     color: #c8d0dc;
 }
 
 .profile-card {
-    background: #0d1d35;
+    background: #111b2e;
     border-radius: 18px;
     padding: 30px;
     margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .profile-avatar {
     text-align: center;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     margin-bottom: 20px;
 }
 
@@ -478,16 +568,18 @@ body {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #8b5cf6, #21d4c3);
+    background: linear-gradient(135deg, #8b5cf6, #2dd4bf);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 35px;
     margin: 0 auto 15px auto;
+    box-shadow: 0 4px 20px rgba(45, 212, 191, 0.2);
 }
 
 .profile-avatar h2 {
     font-size: 20px;
+    font-weight: 700;
 }
 
 .profile-info {
@@ -497,7 +589,7 @@ body {
 }
 
 .info-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 12px;
     padding: 15px;
     display: flex;
@@ -506,31 +598,32 @@ body {
 }
 
 .info-label {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
 }
 
 .info-value {
     font-size: 18px;
     font-weight: 700;
-    color: #21d4c3;
+    color: #2dd4bf;
 }
 
 .profile-settings {
-    background: #0d1d35;
+    background: #111b2e;
     border-radius: 18px;
     padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .setting-item {
     padding-bottom: 18px;
     margin-bottom: 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .setting-item label {
     display: block;
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
     margin-bottom: 8px;
 }
@@ -542,8 +635,8 @@ body {
 }
 
 .support-info {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 25px;
     display: flex;
@@ -556,7 +649,7 @@ body {
     align-items: center;
     gap: 15px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 12px;
 }
 
@@ -568,24 +661,27 @@ body {
 .support-item strong {
     display: block;
     font-size: 14px;
+    color: #ffffff;
 }
 
 .support-item p {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
     margin-top: 4px;
 }
 
 .support-form {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 30px;
 }
 
 .support-form h3 {
     font-size: 18px;
+    font-weight: 700;
     margin-bottom: 20px;
+    color: #ffffff;
 }
 
 .form-group {
@@ -594,7 +690,7 @@ body {
 
 .form-group label {
     display: block;
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
     margin-bottom: 6px;
 }
@@ -603,10 +699,10 @@ body {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 16px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #07152b;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #0a0e1a;
     color: #ffffff;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 14px;
@@ -617,11 +713,11 @@ body {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #21d4c3;
+    border-color: #2dd4bf;
 }
 
 .form-group select option {
-    background: #07152b;
+    background: #0a0e1a;
     color: #ffffff;
 }
 
@@ -633,16 +729,17 @@ body {
 .auth-card {
     max-width: 500px;
     margin: 0 auto;
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 30px;
 }
 
 .auth-card h3 {
     font-size: 18px;
+    font-weight: 700;
     margin-bottom: 20px;
-    color: #21d4c3;
+    color: #2dd4bf;
 }
 
 .auth-card .form-group {
@@ -651,17 +748,17 @@ body {
 
 .auth-card .form-group label {
     display: block;
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
     margin-bottom: 6px;
 }
 
 .auth-card .form-group input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 16px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #07152b;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #0a0e1a;
     color: #ffffff;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 14px;
@@ -670,7 +767,7 @@ body {
 }
 
 .auth-card .form-group input:focus {
-    border-color: #21d4c3;
+    border-color: #2dd4bf;
 }
 
 .auth-card .form-group input[type="radio"] {
@@ -684,38 +781,35 @@ body {
 }
 
 .coin-box {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 25px;
 }
 
 .coin-box h3 {
     font-size: 18px;
+    font-weight: 700;
     color: #ffffff;
 }
-
-/* ============================================
-   پنل مدیریت (admin.html)
-   ============================================ */
 
 .admin-tabs {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
     flex-wrap: wrap;
-    background: #0d1d35;
+    background: #111b2e;
     padding: 15px;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .admin-tab {
     padding: 10px 20px;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     background: transparent;
-    color: #8492a9;
+    color: #6b7a93;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 14px;
     cursor: pointer;
@@ -723,34 +817,35 @@ body {
 }
 
 .admin-tab:hover {
-    background: rgba(31, 214, 193, 0.08);
+    background: rgba(45, 212, 191, 0.06);
     color: #ffffff;
 }
 
 .admin-tab.active {
-    background: rgba(31, 214, 193, 0.15);
-    color: #21d4c3;
-    border-color: rgba(31, 214, 193, 0.3);
+    background: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.15);
 }
 
 .admin-panel {
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     border-radius: 18px;
     padding: 25px;
 }
 
 .admin-panel h3 {
     margin-bottom: 20px;
-    color: #21d4c3;
+    color: #2dd4bf;
+    font-weight: 700;
 }
 
 .admin-lesson-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 10px;
     margin-bottom: 8px;
     flex-wrap: wrap;
@@ -768,8 +863,8 @@ body {
     font-size: 11px;
     padding: 2px 10px;
     border-radius: 20px;
-    background: rgba(31, 214, 193, 0.15);
-    color: #21d4c3;
+    background: rgba(45, 212, 191, 0.12);
+    color: #2dd4bf;
 }
 
 .admin-lesson-item .lesson-actions {
@@ -788,29 +883,29 @@ body {
 }
 
 .btn-edit {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(59, 130, 246, 0.15);
     color: #3b82f6;
 }
 
 .btn-edit:hover {
-    background: rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.25);
 }
 
 .btn-delete {
-    background: rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.15);
     color: #ef4444;
 }
 
 .btn-delete:hover {
-    background: rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.25);
 }
 
 .user-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 10px;
     margin-bottom: 8px;
     flex-wrap: wrap;
@@ -825,7 +920,7 @@ body {
 }
 
 .user-item .user-info .user-detail {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 12px;
 }
 
@@ -833,17 +928,17 @@ body {
     display: flex;
     gap: 15px;
     font-size: 12px;
-    color: #7f8da5;
+    color: #6b7a93;
 }
 
 .user-item .user-stats span {
-    color: #21d4c3;
+    color: #2dd4bf;
     font-weight: 700;
 }
 
 .message-item {
     padding: 15px;
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -858,11 +953,11 @@ body {
 
 .message-item .message-header .sender {
     font-weight: 700;
-    color: #21d4c3;
+    color: #2dd4bf;
 }
 
 .message-item .message-header .date {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 12px;
 }
 
@@ -886,8 +981,8 @@ body {
     width: 100%;
     padding: 10px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #07152b;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #0a0e1a;
     color: #ffffff;
     font-family: 'Vazirmatn', sans-serif;
     font-size: 13px;
@@ -900,8 +995,8 @@ body {
     padding: 6px 16px;
     border: none;
     border-radius: 8px;
-    background: #21d4c3;
-    color: #06121f;
+    background: #2dd4bf;
+    color: #0a0e1a;
     font-family: 'Vazirmatn', sans-serif;
     font-weight: 700;
     cursor: pointer;
@@ -909,28 +1004,150 @@ body {
 }
 
 .notification-item {
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
     border-radius: 10px;
     margin-bottom: 8px;
-    border-right: 3px solid #21d4c3;
+    border-right: 3px solid #2dd4bf;
 }
 
 .notification-item .notif-title {
     font-weight: 700;
     font-size: 14px;
+    color: #ffffff;
 }
 
 .notification-item .notif-text {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 13px;
     margin-top: 4px;
 }
 
 .notification-item .notif-date {
-    color: #7f8da5;
+    color: #6b7a93;
     font-size: 11px;
     margin-top: 4px;
+}
+
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    color: #6b7a93;
+    transition: 0.3s;
+    padding: 5px;
+    margin-left: 5px;
+}
+
+.notification-bell:hover {
+    color: #2dd4bf;
+}
+
+.notification-bell .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: #ef4444;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #0a0e1a;
+}
+
+.notification-panel {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    width: 380px;
+    max-height: 450px;
+    background: #111b2e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    overflow: hidden;
+    animation: slideDownNotif 0.3s ease;
+}
+
+.notification-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.notification-panel-header h4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#notificationList {
+    padding: 10px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.notification-item-panel {
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    border-right: 3px solid #2dd4bf;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.notification-item-panel:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.notification-item-panel .notif-title-panel {
+    font-weight: 700;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.notification-item-panel .notif-text-panel {
+    color: #6b7a93;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.notification-item-panel .notif-date-panel {
+    color: #6b7a93;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.notification-item-panel .notif-type-success {
+    border-right-color: #4ade80;
+}
+
+.notification-item-panel .notif-type-warning {
+    border-right-color: #fbbf24;
+}
+
+.notification-item-panel .notif-type-info {
+    border-right-color: #60a5fa;
+}
+
+@keyframes slideDownNotif {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* ============================================
@@ -989,8 +1206,8 @@ body {
         padding: 14px 16px;
     }
 
-    .stat-top-info strong {
-        font-size: 18px;
+    .stat-top-card .stat-info .number {
+        font-size: 20px;
     }
 
     .lessons {
@@ -1012,6 +1229,7 @@ body {
         flex-direction: column;
         align-items: flex-start;
         padding: 25px;
+        gap: 20px;
     }
 
     .hero-image {
@@ -1110,6 +1328,17 @@ body {
     .user-item .user-stats {
         flex-wrap: wrap;
     }
+
+    .notification-panel {
+        width: calc(100% - 30px);
+        left: 15px;
+        top: 70px;
+        max-height: 400px;
+    }
+
+    .notification-bell {
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 550px) {
@@ -1150,19 +1379,21 @@ body {
         padding: 12px 14px;
     }
 
-    .stat-top-icon {
+    .stat-top-card .stat-icon {
+        width: 40px;
+        height: 40px;
         font-size: 22px;
     }
 
-    .stat-top-info strong {
-        font-size: 16px;
+    .stat-top-card .stat-info .number {
+        font-size: 18px;
     }
 
     .lesson-card {
         padding: 18px;
     }
 
-    .lesson-icon {
+    .lesson-card .lesson-icon {
         width: 42px;
         height: 42px;
         font-size: 20px;
@@ -1232,149 +1463,10 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: #0a1830;
+    background: #0a0e1a;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #21d4c3;
+    background: #2dd4bf;
     border-radius: 10px;
-}
-/* ============================================
-   دکمه زنگوله اعلان
-   ============================================ */
-
-.notification-bell {
-    position: relative;
-    cursor: pointer;
-    font-size: 24px;
-    color: #8492a9;
-    transition: 0.3s;
-    padding: 5px;
-    margin-left: 5px;
-}
-
-.notification-bell:hover {
-    color: #21d4c3;
-}
-
-.notification-bell .notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -8px;
-    background: #ef4444;
-    color: #ffffff;
-    font-size: 10px;
-    font-weight: 700;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #07152b;
-}
-
-/* ===== پنل اعلان‌ها ===== */
-.notification-panel {
-    position: fixed;
-    top: 80px;
-    left: 20px;
-    width: 380px;
-    max-height: 450px;
-    background: #0d1d35;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-    overflow: hidden;
-    animation: slideDownNotif 0.3s ease;
-}
-
-.notification-panel-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.notification-panel-header h4 {
-    color: #ffffff;
-    font-size: 16px;
-}
-
-#notificationList {
-    padding: 10px;
-    max-height: 350px;
-    overflow-y: auto;
-}
-
-.notification-item-panel {
-    padding: 12px 15px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
-    margin-bottom: 8px;
-    border-right: 3px solid #21d4c3;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.notification-item-panel:hover {
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.notification-item-panel .notif-title-panel {
-    font-weight: 700;
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.notification-item-panel .notif-text-panel {
-    color: #7f8da5;
-    font-size: 13px;
-    margin-top: 4px;
-}
-
-.notification-item-panel .notif-date-panel {
-    color: #7f8da5;
-    font-size: 11px;
-    margin-top: 4px;
-}
-
-.notification-item-panel .notif-type-success {
-    border-right-color: #4ade80;
-}
-
-.notification-item-panel .notif-type-warning {
-    border-right-color: #fbbf24;
-}
-
-.notification-item-panel .notif-type-info {
-    border-right-color: #60a5fa;
-}
-
-/* ===== انیمیشن ===== */
-@keyframes slideDownNotif {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* ===== ریسپانسیو موبایل ===== */
-@media (max-width: 550px) {
-    .notification-panel {
-        width: calc(100% - 30px);
-        left: 15px;
-        top: 70px;
-        max-height: 400px;
-    }
-
-    .notification-bell {
-        font-size: 20px;
-    }
 }
