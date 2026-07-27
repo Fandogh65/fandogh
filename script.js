@@ -1,5 +1,5 @@
 // ============================================
-// 🌰 فندق - اپلیکیشن کامل با سیستم لغات
+// 🌰 فندق - اپلیکیشن کامل با تلفظ Edge TTS
 // ============================================
 
 // ===== داده‌های درس‌ها با لغات =====
@@ -131,13 +131,67 @@ function showToast(msg, type = 'info') {
 }
 
 // ============================================
-// سیستم تلفظ لغات (Google Text-to-Speech)
+// سیستم تلفظ با Edge TTS (کیفیت بالا، رایگان)
 // ============================================
 
-function speakKorean(text) {
+async function speakKorean(text) {
+    try {
+        // ساخت URL برای Edge TTS
+        const url = `https://speech.platform.bing.com/recognize?${new URLSearchParams({
+            'dnt': '1',
+            'form': 'DETAILS',
+            'ig': 'ADB6C4B1C5174D12A2D5D8D6E4F5C6D7',
+            'mode': 'tts',
+            'mkt': 'ko-KR',
+            'resultid': Date.now(),
+            's': Date.now(),
+            'c': 'load',
+            'rc': '2058',
+            'p': 'b'
+        })}`;
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/ssml+xml',
+                'X-MSEdge-ClientID': 'fandogh',
+            },
+            body: `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ko-KR">
+                <voice name="ko-KR-SunHiNeural">
+                    <prosody rate="0.9" pitch="0">
+                        ${text}
+                    </prosody>
+                </voice>
+            </speak>`
+        });
+
+        if (!response.ok) {
+            throw new Error('TTS request failed');
+        }
+
+        const audioData = await response.arrayBuffer();
+        const audioBlob = new Blob([audioData], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        
+        audio.onended = () => {
+            URL.revokeObjectURL(audioUrl);
+        };
+        
+        audio.play();
+        console.log('🎤 تلفظ پخش شد:', text);
+        
+    } catch (error) {
+        console.error('TTS Error:', error);
+        // Fallback: استفاده از Web Speech API
+        fallbackSpeak(text);
+    }
+}
+
+// ===== Fallback (در صورت عدم موفقیت Edge TTS) =====
+function fallbackSpeak(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
-        
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ko-KR';
         utterance.rate = 0.8;
@@ -156,6 +210,7 @@ function speakKorean(text) {
     }
 }
 
+// ===== بارگذاری صداها =====
 if ('speechSynthesis' in window) {
     window.speechSynthesis.getVoices();
     window.speechSynthesis.onvoiceschanged = () => {
@@ -284,6 +339,8 @@ function displayVocabulary(vocab) {
     
     let html = '<div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px;">';
     vocab.forEach((item) => {
+        // کلمه رو برای تلفظ آماده میکنیم
+        const cleanText = item.korean.replace(/[?؟!¡,;]/g, '').trim();
         html += `
             <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:12px 16px;border-radius:10px;flex-wrap:wrap;gap:10px;">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
@@ -291,7 +348,7 @@ function displayVocabulary(vocab) {
                     <span style="color:#6b7a93;font-size:13px;">${item.pronunciation || ''}</span>
                     <span style="color:#2dd4bf;font-size:13px;">${item.meaning}</span>
                 </div>
-                <button class="primary-btn" onclick="speakKorean('${item.korean}')" style="padding:6px 14px;font-size:12px;background:rgba(45,212,191,0.1);color:#2dd4bf;border:1px solid rgba(45,212,191,0.15);">
+                <button class="primary-btn" onclick="speakKorean('${cleanText}')" style="padding:6px 14px;font-size:12px;background:rgba(45,212,191,0.1);color:#2dd4bf;border:1px solid rgba(45,212,191,0.15);">
                     🔊 تلفظ
                 </button>
             </div>
