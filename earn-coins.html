@@ -9,73 +9,57 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item active">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item active">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1>🪙 سکه رایگان</h1>
-                <p>با تماشای تبلیغات یا چرخوندن گردونه شانس سکه جمع کن!</p>
+                <p>با تماشای تبلیغات سکه جمع کن و گردونه شانس رو بچرخون!</p>
             </div>
             <div class="user">
                 <div class="user-info">
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
                 <div class="avatar">👤</div>
             </div>
         </header>
 
-        <div style="text-align:center;background:#0d1d35;padding:15px;border-radius:16px;margin-bottom:25px;border:1px solid rgba(255,255,255,0.06);">
+        <div style="text-align:center;background:#111b2e;padding:15px;border-radius:16px;margin-bottom:25px;border:1px solid rgba(255,255,255,0.06);">
             <span style="color:#7f8da5;font-size:14px;">💰 سکه‌های شما:</span>
-            <span id="userCoinsDisplay" style="font-size:28px;font-weight:800;color:#21d4c3;margin-right:10px;">0</span>
+            <span id="userCoinsDisplay" style="font-size:28px;font-weight:800;color:#2dd4bf;margin-right:10px;">0</span>
         </div>
 
         <div class="coin-box">
             <h3>📺 تماشای تبلیغات</h3>
-            <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">
-                با تماشای یک تبلیغ ۴۵ ثانیه‌ای، ۲۰ سکه دریافت کن.
-            </p>
+            <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">با تماشای یک تبلیغ ۴۵ ثانیه‌ای، ۲۰ سکه دریافت کن.</p>
 
             <div id="adStatus" style="background:rgba(255,255,255,0.03);padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
                 <span id="adMessage" style="color:#4ade80;">✅ آماده تماشا</span>
@@ -93,30 +77,26 @@
 
         <div class="coin-box" style="margin-top:25px;">
             <h3>🎡 گردونه شانس</h3>
-            <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">
-                هر ۳ بار تماشای تبلیغ، یک بار می‌تونی گردونه رو بچرخونی.
-            </p>
+            <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">هر ۳ بار تماشای تبلیغ، یک شانس چرخوندن گردونه دریافت کن.</p>
 
             <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:12px 18px;border-radius:12px;margin-bottom:15px;">
                 <span style="color:#7f8da5;font-size:13px;">🎟️ تعداد شانس‌ها:</span>
-                <span id="spinChances" style="font-size:22px;font-weight:700;color:#21d4c3;">0</span>
+                <span id="spinChances" style="font-size:22px;font-weight:700;color:#2dd4bf;">0</span>
             </div>
 
             <div style="text-align:center;margin:20px 0;">
                 <div id="wheelContainer" style="position:relative;display:inline-block;">
-                    <canvas id="wheelCanvas" width="280" height="280" style="max-width:100%;height:auto;border-radius:50%;border:3px solid #21d4c3;"></canvas>
-                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;background:#21d4c3;border-radius:50%;border:3px solid #fff;box-shadow:0 0 20px rgba(33,212,195,0.5);"></div>
+                    <canvas id="wheelCanvas" width="280" height="280" style="max-width:100%;height:auto;border-radius:50%;border:3px solid #2dd4bf;"></canvas>
+                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;background:#2dd4bf;border-radius:50%;border:3px solid #fff;box-shadow:0 0 20px rgba(45,212,191,0.5);"></div>
                 </div>
             </div>
 
             <button class="primary-btn" id="spinBtn" style="width:100%;" disabled>🎡 بچرخون (۰ شانس)</button>
 
-            <div id="spinResult" style="margin-top:15px;text-align:center;font-size:16px;font-weight:700;color:#21d4c3;min-height:30px;"></div>
+            <div id="spinResult" style="margin-top:15px;text-align:center;font-size:16px;font-weight:700;color:#2dd4bf;min-height:30px;"></div>
         </div>
-
     </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>

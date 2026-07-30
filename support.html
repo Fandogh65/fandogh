@@ -9,130 +9,270 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item active">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item active">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1>💬 پشتیبانی</h1>
-                <p>سوال یا مشکلی داری؟ به ما بگو.</p>
+                <p>سوال یا مشکلی داری؟ به ما بگو</p>
             </div>
             <div class="user">
                 <div class="user-info">
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
                 <div class="avatar">👤</div>
             </div>
         </header>
 
         <section class="support-card">
-
-            <div class="support-info">
-                <div class="support-item">
-                    <span class="support-icon">📧</span>
-                    <div>
-                        <strong>ایمیل</strong>
-                        <p>support@fandogh.com</p>
-                    </div>
-                </div>
-                <div class="support-item">
-                    <span class="support-icon">📱</span>
-                    <div>
-                        <strong>تلفن</strong>
-                        <p>۰۲۱-۱۲۳۴-۵۶۷۸</p>
-                    </div>
-                </div>
-                <div class="support-item">
-                    <span class="support-icon">🕐</span>
-                    <div>
-                        <strong>ساعات کاری</strong>
-                        <p>شنبه تا چهارشنبه ۹ الی ۱۷</p>
-                    </div>
-                </div>
-            </div>
-
+            <!-- ===== فرم ارسال پیام جدید ===== -->
             <div class="support-form">
-                <h3>📝 ارسال پیام</h3>
-                <form id="supportForm">
-
+                <h3>📝 ارسال پیام جدید</h3>
+                <form id="supportForm" onsubmit="return false;">
                     <div class="form-group">
-                        <label>نام و نام خانوادگی</label>
-                        <input type="text" id="supportName" placeholder="نام خود را وارد کن..." required>
+                        <label>نام کاربری</label>
+                        <input type="text" id="supportUsername" placeholder="نام کاربری خود را وارد کن" required>
+                        <small style="color:#7f8da5;font-size:11px;">نام کاربری خود را دقیق وارد کن</small>
                     </div>
-
-                    <div class="form-group">
-                        <label>ایمیل</label>
-                        <input type="email" id="supportEmail" placeholder="ایمیل خود را وارد کن..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>موضوع</label>
-                        <select id="supportSubject">
-                            <option value="problem">مشکل فنی</option>
-                            <option value="question">سوال درسی</option>
-                            <option value="suggestion">پیشنهاد</option>
-                            <option value="other">سایر</option>
-                        </select>
-                    </div>
-
                     <div class="form-group">
                         <label>پیام</label>
-                        <textarea id="supportMessage" rows="5" placeholder="پیام خود را بنویس..." required></textarea>
+                        <textarea id="supportMessage" rows="4" placeholder="پیام خود را بنویس..." required></textarea>
                     </div>
-
-                    <button type="submit" class="primary-btn" style="width:100%;">
-                        📤 ارسال پیام
-                    </button>
-
+                    <button type="button" class="primary-btn" onclick="sendMessage()" style="width:100%;">📤 ارسال پیام</button>
                 </form>
+                <div id="supportMessageResult" class="msg"></div>
             </div>
 
+            <!-- ===== نمایش پیام‌های کاربر ===== -->
+            <div class="support-form" style="margin-top:20px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                    <h3 style="margin:0;">📋 تیکت‌های من</h3>
+                    <button class="primary-btn secondary" onclick="loadUserMessages()" style="padding:6px 16px;font-size:13px;">🔄 بروزرسانی</button>
+                </div>
+                <div id="userMessagesContainer">
+                    <p style="color:#7f8da5;text-align:center;padding:20px;">👈 برای مشاهده تیکت‌ها، نام کاربری خود را وارد کنید.</p>
+                </div>
+            </div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
+    <script>
+        // ===== ارسال پیام جدید =====
+        function sendMessage() {
+            var username = document.getElementById('supportUsername').value.trim();
+            var msg = document.getElementById('supportMessage').value.trim();
+            var result = document.getElementById('supportMessageResult');
+            
+            if (!username || !msg) {
+                result.className = 'msg error';
+                result.textContent = '⚠️ همه فیلدها را پر کن!';
+                return;
+            }
 
+            var users = getData('users', []);
+            var userExists = users.some(function(u) { return u.username === username; });
+            if (!userExists) {
+                result.className = 'msg error';
+                result.textContent = '❌ این نام کاربری وجود ندارد!';
+                return;
+            }
+
+            var messages = getData('supportMessages', []);
+            messages.push({
+                username: username,
+                message: msg,
+                date: new Date().toLocaleDateString('fa-IR'),
+                time: new Date().toLocaleTimeString('fa-IR'),
+                replied: false,
+                reply: null,
+                closed: false,
+                ticketId: Date.now()
+            });
+            setData('supportMessages', messages);
+
+            result.className = 'msg success';
+            result.textContent = '✅ پیام شما با موفقیت ارسال شد!';
+            document.getElementById('supportMessage').value = '';
+            
+            // بارگذاری خودکار پیام‌ها
+            loadUserMessages();
+        }
+
+        // ===== بارگذاری پیام‌های کاربر =====
+        function loadUserMessages() {
+            var username = document.getElementById('supportUsername').value.trim();
+            var container = document.getElementById('userMessagesContainer');
+            
+            // اگر کاربر وارد شده، از currentUser استفاده کن
+            var currentUser = getData('currentUser', null);
+            if (!username && currentUser) {
+                username = currentUser;
+                document.getElementById('supportUsername').value = username;
+            }
+            
+            if (!username) {
+                container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:20px;">⚠️ ابتدا نام کاربری خود را وارد کن!</p>';
+                return;
+            }
+
+            var allMessages = getData('supportMessages', []);
+            var userMessages = allMessages.filter(function(m) { return m.username === username; });
+
+            if (userMessages.length === 0) {
+                container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:20px;">📭 هیچ تیکتی برای شما وجود ندارد.</p>';
+                return;
+            }
+
+            var html = '';
+            for (var i = userMessages.length - 1; i >= 0; i--) {
+                var m = userMessages[i];
+                var statusColor = m.closed ? '#ef4444' : (m.replied ? '#4ade80' : '#fbbf24');
+                var statusText = m.closed ? '🔒 بسته شده' : (m.replied ? '✅ پاسخ داده شده' : '⏳ در انتظار پاسخ');
+                var ticketId = m.ticketId || (i + 1);
+                
+                html += `
+                    <div class="message-item" style="margin-bottom:12px;padding:15px;background:rgba(255,255,255,0.03);border-radius:10px;border-right:3px solid ${statusColor};">
+                        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
+                            <span style="font-size:12px;color:#7f8da5;">🆔 #${ticketId} - ${m.date} ${m.time || ''}</span>
+                            <span style="font-size:11px;color:${statusColor};">${statusText}</span>
+                        </div>
+                        <div style="color:#c8d0dc;font-size:14px;padding:8px 0;">${m.message}</div>
+                        
+                        ${m.replied ? `
+                            <div style="margin-top:8px;padding:10px 12px;background:rgba(45,212,191,0.08);border-radius:8px;border-right:2px solid #2dd4bf;">
+                                <span style="color:#2dd4bf;font-size:12px;">📩 پاسخ پشتیبانی:</span>
+                                <div style="color:#c8d0dc;font-size:13px;margin-top:4px;">${m.reply}</div>
+                                <div style="font-size:10px;color:#7f8da5;margin-top:4px;">${m.repliedAt || ''}</div>
+                            </div>
+                        ` : ''}
+                        
+                        ${!m.closed ? `
+                            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+                                <button class="primary-btn secondary" onclick="replyToTicket('${username}', ${m.ticketId || i+1})" style="padding:4px 12px;font-size:12px;border-color:rgba(45,212,191,0.2);color:#2dd4bf;">
+                                    ↩️ پاسخ
+                                </button>
+                                <button class="primary-btn secondary" onclick="closeTicket('${username}', ${m.ticketId || i+1})" style="padding:4px 12px;font-size:12px;border-color:rgba(239,68,68,0.2);color:#ef4444;">
+                                    🔒 بستن تیکت
+                                </button>
+                            </div>
+                        ` : `
+                            <div style="margin-top:8px;font-size:12px;color:#7f8da5;">🔒 این تیکت بسته شده است.</div>
+                        `}
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+
+        // ===== پاسخ به تیکت =====
+        function replyToTicket(username, ticketId) {
+            var replyText = prompt('📝 پاسخ خود را وارد کنید:');
+            if (replyText === null) return;
+            if (!replyText.trim()) {
+                showToast('⚠️ لطفاً متن پاسخ را بنویس!', 'error');
+                return;
+            }
+
+            var messages = getData('supportMessages', []);
+            var found = false;
+            for (var i = 0; i < messages.length; i++) {
+                if (messages[i].username === username && messages[i].ticketId === ticketId && !messages[i].closed) {
+                    messages[i].reply = replyText.trim();
+                    messages[i].replied = true;
+                    messages[i].repliedAt = new Date().toLocaleDateString('fa-IR') + ' - ' + new Date().toLocaleTimeString('fa-IR');
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                showToast('❌ تیکت پیدا نشد یا قبلاً بسته شده!', 'error');
+                return;
+            }
+            
+            setData('supportMessages', messages);
+            showToast('✅ پاسخ شما ثبت شد و برای پشتیبانی ارسال شد!', 'success');
+            
+            // بارگذاری مجدد برای نمایش پاسخ
+            setTimeout(function() {
+                loadUserMessages();
+            }, 500);
+        }
+
+        // ===== بستن تیکت =====
+        function closeTicket(username, ticketId) {
+            if (!confirm('🔒 آیا مطمئنی میخوای این تیکت رو ببندی؟')) return;
+            if (!confirm('‼️ بعد از بستن، نمیتونی بهش پاسخ بدی!')) return;
+
+            var messages = getData('supportMessages', []);
+            var found = false;
+            for (var i = 0; i < messages.length; i++) {
+                if (messages[i].username === username && messages[i].ticketId === ticketId && !messages[i].closed) {
+                    messages[i].closed = true;
+                    messages[i].closedAt = new Date().toLocaleDateString('fa-IR') + ' - ' + new Date().toLocaleTimeString('fa-IR');
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found) {
+                showToast('❌ تیکت پیدا نشد!', 'error');
+                return;
+            }
+            
+            setData('supportMessages', messages);
+            showToast('🔒 تیکت با موفقیت بسته شد!', 'success');
+            
+            // بارگذاری مجدد
+            setTimeout(function() {
+                loadUserMessages();
+            }, 500);
+        }
+
+        // ===== بارگذاری خودکار هنگام تغییر نام کاربری =====
+        document.getElementById('supportUsername').addEventListener('input', function() {
+            if (this.value.trim().length > 2) loadUserMessages();
+        });
+
+        // ===== بارگذاری خودکار هنگام ورود =====
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentUser = getData('currentUser', null);
+            if (currentUser) {
+                document.getElementById('supportUsername').value = currentUser;
+                setTimeout(function() {
+                    loadUserMessages();
+                }, 300);
+            }
+        });
+    </script>
 </body>
 </html>

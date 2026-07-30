@@ -9,49 +9,31 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item">🔐 ورود</a>
+            <a href="register.html" class="menu-item active">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1>📝 ثبت‌نام</h1>
@@ -62,91 +44,57 @@
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
                 <div class="avatar">👤</div>
             </div>
         </header>
 
         <section class="auth-card">
-            <form id="registerForm">
-
-                <!-- مرحله ۱: اطلاعات کاربری -->
-                <div id="step1">
-                    <h3>🔑 اطلاعات کاربری</h3>
-                    
-                    <div class="form-group">
-                        <label>نام کاربری</label>
-                        <input type="text" id="regUsername" placeholder="فقط حروف انگلیسی (کوچک و بزرگ)" required>
-                        <small style="color:#7f8da5;font-size:11px;">فقط حروف a-z و A-Z</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>رمز عبور</label>
-                        <input type="password" id="regPassword" placeholder="حداقل ۸ کاراکتر" required>
-                        <small style="color:#7f8da5;font-size:11px;">حداقل ۸ کاراکتر</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>تکرار رمز عبور</label>
-                        <input type="password" id="regPasswordConfirm" placeholder="رمز را دوباره وارد کن" required>
-                    </div>
-
-                    <button type="button" class="primary-btn" id="step1Next" style="width:100%;">مرحله بعد ➡️</button>
+            <form id="registerForm" onsubmit="return false;">
+                <h3>🔑 اطلاعات کاربری</h3>
+                <div class="form-group">
+                    <label>نام کاربری</label>
+                    <input type="text" id="regUsername" placeholder="فقط حروف انگلیسی" required>
                 </div>
-
-                <!-- مرحله ۲: تاریخ تولد -->
-                <div id="step2" style="display:none;">
-                    <h3>🎂 تاریخ تولد</h3>
-
-                    <div class="form-group">
-                        <label>تاریخ تولد (شمسی)</label>
-                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                            <input type="number" id="regYear" placeholder="سال" min="1300" max="1410" style="flex:1;min-width:80px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
-                            <input type="number" id="regMonth" placeholder="ماه" min="1" max="12" style="flex:1;min-width:60px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
-                            <input type="number" id="regDay" placeholder="روز" min="1" max="31" style="flex:1;min-width:60px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>سن</label>
-                        <input type="number" id="regAge" placeholder="به طور خودکار محاسبه میشه" min="10" max="99" style="padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;width:100%;" readonly>
-                    </div>
-
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                        <button type="button" class="primary-btn secondary" id="step2Back" style="flex:1;">⬅️ بازگشت</button>
-                        <button type="button" class="primary-btn" id="step2Next" style="flex:1;">مرحله بعد ➡️</button>
-                    </div>
+                <div class="form-group">
+                    <label>رمز عبور</label>
+                    <input type="password" id="regPassword" placeholder="حداقل ۸ کاراکتر" required>
                 </div>
-
-                <!-- مرحله ۳: جنسیت -->
-                <div id="step3" style="display:none;">
-                    <h3>👤 جنسیت</h3>
-
-                    <div class="form-group">
-                        <label>جنسیت خود را انتخاب کن</label>
-                        <div style="display:flex;gap:15px;flex-wrap:wrap;margin-top:10px;">
-                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:10px 20px;background:rgba(255,255,255,0.05);border-radius:10px;border:2px solid transparent;transition:0.3s;">
-                                <input type="radio" name="gender" value="male" required>
-                                <span>👨 مرد</span>
-                            </label>
-                            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:10px 20px;background:rgba(255,255,255,0.05);border-radius:10px;border:2px solid transparent;transition:0.3s;">
-                                <input type="radio" name="gender" value="female">
-                                <span>👩 زن</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                        <button type="button" class="primary-btn secondary" id="step3Back" style="flex:1;">⬅️ بازگشت</button>
-                        <button type="submit" class="primary-btn" id="registerSubmit" style="flex:1;">✅ ثبت‌نام</button>
-                    </div>
+                <div class="form-group">
+                    <label>تکرار رمز</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="دوباره وارد کن" required>
                 </div>
-
+                <button type="button" class="primary-btn" onclick="registerUser()" style="width:100%;">✅ ثبت‌نام</button>
+                <div style="text-align:center;margin-top:15px;color:#7f8da5;font-size:13px;">
+                    قبلاً ثبت‌نام کردی؟ <a href="login.html" style="color:#2dd4bf;">وارد شو</a>
+                </div>
             </form>
+            <div id="registerMessage" class="msg"></div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
-
+    <script>
+        function registerUser() {
+            var username = document.getElementById('regUsername').value.trim();
+            var password = document.getElementById('regPassword').value;
+            var passConfirm = document.getElementById('regPasswordConfirm').value;
+            var msg = document.getElementById('registerMessage');
+            if (!username || !password || !passConfirm) { msg.className = 'msg error'; msg.textContent = '⚠️ همه فیلدها را پر کن!'; return; }
+            if (username.length < 3) { msg.className = 'msg error'; msg.textContent = '⚠️ نام کاربری حداقل ۳ کاراکتر!'; return; }
+            if (password.length < 8) { msg.className = 'msg error'; msg.textContent = '⚠️ رمز حداقل ۸ کاراکتر!'; return; }
+            if (password !== passConfirm) { msg.className = 'msg error'; msg.textContent = '⚠️ رمزها مطابقت ندارند!'; return; }
+            var users = getData('users', []);
+            if (users.find(function(u) { return u.username === username; })) { msg.className = 'msg error'; msg.textContent = '⚠️ این نام کاربری قبلاً ثبت شده!'; return; }
+            users.push({ username: username, password: password, isAdmin: false });
+            setData('users', users);
+            setData('currentUser', username);
+            msg.className = 'msg success'; msg.textContent = '🎉 ثبت‌نام موفق!';
+            setTimeout(function() { window.location.href = 'index.html'; }, 800);
+        }
+    </script>
 </body>
 </html>

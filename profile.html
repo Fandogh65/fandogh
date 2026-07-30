@@ -9,58 +9,44 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item active">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item active">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
-                <h1>👤 پروفایل من</h1>
-                <p>اطلاعات خودت رو مدیریت کن.</p>
+                <h1>👤 پروفایل</h1>
+                <p>اطلاعات خودت رو مدیریت کن</p>
             </div>
             <div class="user">
                 <div class="user-info">
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
+                </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
                 <div class="avatar">👤</div>
             </div>
@@ -73,51 +59,28 @@
                 <p style="color:#7f8da5;" id="profileStatus">ثبت‌نام نشده</p>
             </div>
             <div class="profile-info">
-                <div class="info-item">
-                    <span class="info-label">📚 درس‌های تکمیل شده</span>
-                    <span class="info-value" id="profileCompleted">۰</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">🔥 روزهای متوالی</span>
-                    <span class="info-value" id="profileStreak">۰</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">⏱️ زمان مطالعه</span>
-                    <span class="info-value" id="profileHours">۰ ساعت</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">🪙 سکه‌ها</span>
-                    <span class="info-value" id="profileCoins">۰</span>
-                </div>
+                <div class="info-item"><span class="info-label">📚 درس‌ها</span><span class="info-value" id="profileCompleted">۰</span></div>
+                <div class="info-item"><span class="info-label">🔥 روزها</span><span class="info-value" id="profileStreak">۰</span></div>
+                <div class="info-item"><span class="info-label">⏱️ زمان</span><span class="info-value" id="profileHours">۰ ساعت</span></div>
+                <div class="info-item"><span class="info-label">🪙 سکه</span><span class="info-value" id="profileCoins">۰</span></div>
             </div>
         </section>
 
         <section class="profile-settings">
-            <h3 style="margin-bottom:15px;">⚙️ تنظیمات پروفایل</h3>
+            <h3>⚙️ تنظیمات</h3>
             <div class="setting-item">
                 <label>نام کاربری</label>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                    <input type="text" id="nameInput" placeholder="نام جدید..." style="flex:1;min-width:150px;padding:10px 15px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;font-family:'Vazirmatn',sans-serif;">
-                    <button class="primary-btn" id="saveNameBtn">ذخیره نام</button>
+                <div style="display:flex;gap:10px;">
+                    <input type="text" id="nameInput" placeholder="نام جدید..." style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+                    <button class="primary-btn" id="saveNameBtn">ذخیره</button>
                 </div>
             </div>
-            <div class="setting-item" style="border-bottom:none;padding-bottom:0;">
-                <label>🗑️ خطرناک</label>
-                <button class="primary-btn secondary" id="resetAllBtn" style="border-color:#ef4444;color:#ef4444;">
-                    🗑️ ریست کردن همه داده‌ها
-                </button>
-            </div>
-            <div class="setting-item" style="border-bottom:none;padding-bottom:0;margin-top:10px;">
-                <label>🚪 خروج</label>
-                <button class="primary-btn secondary" id="logoutBtn" style="border-color:#f59e0b;color:#f59e0b;">
-                    🚪 خروج از حساب کاربری
-                </button>
+            <div class="setting-item">
+                <button class="primary-btn secondary" id="resetAllBtn" style="border-color:#ef4444;color:#ef4444;">🗑️ ریست همه</button>
             </div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>

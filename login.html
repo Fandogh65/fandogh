@@ -9,49 +9,31 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item active">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item active">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1>🔐 ورود به حساب</h1>
@@ -62,35 +44,47 @@
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
                 <div class="avatar">👤</div>
             </div>
         </header>
 
         <section class="auth-card">
-            <form id="loginForm">
-
+            <form id="loginForm" onsubmit="return false;">
                 <div class="form-group">
                     <label>نام کاربری</label>
-                    <input type="text" id="loginUsername" placeholder="نام کاربری خود را وارد کن" required>
+                    <input type="text" id="loginUsername" placeholder="نام کاربری" required>
                 </div>
-
                 <div class="form-group">
                     <label>رمز عبور</label>
-                    <input type="password" id="loginPassword" placeholder="رمز عبور خود را وارد کن" required>
+                    <input type="password" id="loginPassword" placeholder="رمز عبور" required>
                 </div>
-
-                <button type="submit" class="primary-btn" style="width:100%;">🚪 ورود</button>
-
+                <button type="button" class="primary-btn" onclick="loginUser()" style="width:100%;">🚪 ورود</button>
                 <div style="text-align:center;margin-top:15px;color:#7f8da5;font-size:13px;">
-                    حساب کاربری نداری؟ <a href="register.html" style="color:#21d4c3;text-decoration:none;">ثبت‌نام کن</a>
+                    حساب نداری؟ <a href="register.html" style="color:#2dd4bf;">ثبت‌نام</a>
                 </div>
-
             </form>
+            <div id="loginMessage" class="msg"></div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
-
+    <script>
+        function loginUser() {
+            var username = document.getElementById('loginUsername').value.trim();
+            var password = document.getElementById('loginPassword').value;
+            var msg = document.getElementById('loginMessage');
+            if (!username || !password) { msg.className = 'msg error'; msg.textContent = '⚠️ همه فیلدها را پر کن!'; return; }
+            var users = getData('users', []);
+            var user = users.find(function(u) { return u.username === username && u.password === password; });
+            if (!user) { msg.className = 'msg error'; msg.textContent = '❌ نام یا رمز اشتباه!'; return; }
+            setData('currentUser', username);
+            msg.className = 'msg success'; msg.textContent = '✅ ورود موفق!';
+            setTimeout(function() { window.location.href = 'index.html'; }, 800);
+        }
+    </script>
 </body>
 </html>

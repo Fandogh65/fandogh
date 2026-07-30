@@ -9,58 +9,44 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item active">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item active">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
-                <h1>📚 همه درس‌های کره‌ای</h1>
-                <p>از پایه تا پیشرفته، همه درس‌ها اینجا هستند.</p>
+                <h1>📚 همه درس‌ها</h1>
+                <p>از پایه تا پیشرفته</p>
             </div>
             <div class="user">
                 <div class="user-info">
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
+                </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
                 <div class="avatar">👤</div>
             </div>
@@ -70,12 +56,6 @@
             <div class="search-box">
                 <input type="text" id="searchLessons" placeholder="🔍 جستجوی درس...">
             </div>
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">همه</button>
-                <button class="filter-btn" data-filter="in-progress">در حال پیشرفت</button>
-                <button class="filter-btn" data-filter="completed">تکمیل شده</button>
-                <button class="filter-btn" data-filter="not-started">شروع نشده</button>
-            </div>
         </div>
 
         <section class="lessons" id="allLessonsContainer"></section>
@@ -84,15 +64,13 @@
             <div class="stat-bottom-card">
                 <span>📊 پیشرفت کلی</span>
                 <div class="progress">
-                    <div class="progress-bar" id="overallProgress" style="width: 0%;"></div>
+                    <div class="progress-bar" id="overallProgress" style="width:0%;"></div>
                 </div>
                 <span id="overallProgressText">۰%</span>
             </div>
         </section>
-
     </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>

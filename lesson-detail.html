@@ -9,49 +9,31 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1 id="lessonTitle">📖 عنوان درس</h1>
@@ -62,61 +44,39 @@
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
                 <div class="avatar">👤</div>
             </div>
         </header>
 
-        <div style="margin-bottom:20px;">
-            <button class="primary-btn secondary" onclick="window.location.href='lessons.html'" style="padding:8px 20px;font-size:13px;">
-                ← بازگشت به درس‌ها
-            </button>
-        </div>
+        <button class="primary-btn secondary" onclick="window.location.href='lessons.html'" style="padding:8px 20px;font-size:13px;margin-bottom:20px;">← بازگشت</button>
 
         <section class="lesson-content">
-
             <div class="content-card">
                 <div style="font-size:50px;margin-bottom:15px;" id="lessonIcon">🇰🇷</div>
-                <h2 id="lessonFullTitle">عنوان کامل درس</h2>
+                <h2 id="lessonFullTitle">عنوان کامل</h2>
                 <p style="color:#8d9bb1;margin:10px 0;" id="lessonDescription">توضیحات</p>
-                <div class="lesson-text" id="lessonText">
-                    <p>محتوا اینجا قرار میگیره.</p>
-                </div>
-
+                <div class="lesson-text" id="lessonText"><p>محتوا</p></div>
                 <div style="margin:25px 0;">
                     <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-                        <span style="color:#7f8da5;">پیشرفت شما</span>
+                        <span style="color:#7f8da5;">پیشرفت</span>
                         <span style="color:#2dd4bf;font-weight:700;" id="lessonProgressText">۰%</span>
                     </div>
                     <div class="progress" style="height:8px;">
                         <div class="progress-bar" id="lessonProgressBar" style="width:0%;"></div>
                     </div>
                 </div>
-
                 <div style="display:flex;gap:12px;flex-wrap:wrap;">
-                    <button class="primary-btn" id="markComplete">✅ تکمیل کردن درس</button>
-                    <button class="primary-btn secondary" id="resetProgress">🔄 ریست پیشرفت</button>
+                    <button class="primary-btn" id="markComplete">✅ تکمیل</button>
+                    <button class="primary-btn secondary" id="resetProgress">🔄 ریست</button>
                 </div>
             </div>
-
-            <!-- ===== بخش لغات ===== -->
-            <div class="content-card" style="margin-top:20px;">
-                <h3>📚 لغات این درس</h3>
-                <div id="vocabularyContainer">
-                    <!-- لغات توسط JS ساخته میشن -->
-                </div>
-            </div>
-
-            <!-- ===== بخش تمرین ===== -->
-            <div class="content-card" style="margin-top:20px;">
-                <h3>📝 تمرین</h3>
-                <div id="exerciseContainer"></div>
-            </div>
-
         </section>
-
     </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>

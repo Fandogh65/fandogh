@@ -9,95 +9,79 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item active" id="adminMenuItem">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item active">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
     <main class="main">
-
         <header class="topbar">
             <div class="welcome">
                 <h1>⚙️ پنل مدیریت</h1>
-                <p id="adminStatus">خوش آمدید ادمین!</p>
+                <p>مدیریت کامل سایت</p>
             </div>
             <div class="user">
                 <div class="user-info">
                     <strong id="headerUsername">ادمین</strong>
-                    <span id="headerUserStatus">مدیر سایت</span>
+                    <span>مدیر سایت</span>
+                </div>
+                <div class="coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
                 <div class="avatar">⚙️</div>
             </div>
         </header>
 
-        <!-- تب‌های مدیریت -->
         <div class="admin-tabs">
-            <button class="admin-tab active" data-tab="lessons">📚 مدیریت درس‌ها</button>
-            <button class="admin-tab" data-tab="prices">💰 قیمت درس‌ها</button>
-            <button class="admin-tab" data-tab="users">👥 کاربران</button>
-            <button class="admin-tab" data-tab="messages">💬 پیام‌ها</button>
-            <button class="admin-tab" data-tab="notifications">🔔 اعلان‌ها</button>
+            <button class="admin-tab" onclick="showTab('lessons')">📚 مدیریت درس‌ها</button>
+            <button class="admin-tab" onclick="showTab('prices')">💰 قیمت درس‌ها</button>
+            <button class="admin-tab" onclick="showTab('users')">👥 کاربران</button>
+            <button class="admin-tab" onclick="showTab('messages')">💬 پیام‌ها</button>
+            <button class="admin-tab active" onclick="showTab('notifications')">🔔 اعلان‌ها</button>
         </div>
 
         <!-- ===== بخش مدیریت درس‌ها ===== -->
-        <div class="admin-panel" id="tab-lessons">
-            <h3>📚 ویرایش درس‌ها</h3>
-            <div id="adminLessonsContainer"></div>
-            
-            <button class="primary-btn" id="addLessonBtn" style="margin-top:20px;">➕ افزودن درس جدید</button>
-            
-            <div id="addLessonForm" style="display:none;margin-top:20px;background:#0d1d35;padding:20px;border-radius:16px;border:1px solid rgba(255,255,255,0.06);">
+        <div id="tab-lessons" class="admin-panel" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
+                <h3 style="margin:0;">📚 لیست درس‌ها</h3>
+                <button class="primary-btn" id="addLessonBtn" style="padding:8px 20px;font-size:13px;">➕ افزودن درس جدید</button>
+            </div>
+            <div id="addLessonForm" style="display:none;background:rgba(255,255,255,0.03);padding:20px;border-radius:12px;margin-bottom:20px;border:1px solid rgba(45,212,191,0.15);">
                 <h4 style="color:#2dd4bf;margin-bottom:15px;">📝 اطلاعات درس جدید</h4>
                 <div class="form-group">
-                    <label>عنوان درس</label>
+                    <label>عنوان درس <span style="color:#ef4444;">*</span></label>
                     <input type="text" id="newLessonTitle" placeholder="عنوان درس...">
                 </div>
                 <div class="form-group">
                     <label>آیکون</label>
-                    <input type="text" id="newLessonIcon" placeholder="مثلاً 🇰🇷">
+                    <input type="text" id="newLessonIcon" placeholder="مثلاً 🇰🇷" value="📚">
                 </div>
                 <div class="form-group">
-                    <label>دسته‌بندی</label>
+                    <label>دسته‌بندی <span style="color:#ef4444;">*</span></label>
                     <input type="text" id="newLessonCategory" placeholder="مثلاً درسی • سالم و احوالپرسی">
                 </div>
                 <div class="form-group">
-                    <label>توضیحات</label>
+                    <label>توضیحات کوتاه</label>
                     <input type="text" id="newLessonDescription" placeholder="توضیحات کوتاه...">
                 </div>
                 <div class="form-group">
@@ -110,45 +94,41 @@
                 </div>
                 <div class="form-group">
                     <label>محتوای آموزشی</label>
-                    <textarea id="newLessonContent" rows="4" placeholder="متن آموزشی درس..."></textarea>
+                    <textarea id="newLessonContent" rows="5" placeholder="متن آموزشی درس..."></textarea>
                 </div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;">
                     <button class="primary-btn" id="saveNewLessonBtn">💾 ذخیره درس</button>
                     <button class="primary-btn secondary" id="cancelAddLessonBtn">❌ انصراف</button>
                 </div>
             </div>
+            <div id="adminLessonsContainer"></div>
         </div>
 
-        <!-- ===== بخش تنظیمات قیمت درس‌ها ===== -->
-        <div class="admin-panel" id="tab-prices" style="display:none;">
+        <!-- ===== بخش قیمت درس‌ها ===== -->
+        <div id="tab-prices" class="admin-panel" style="display:none;">
             <h3>💰 تنظیمات قیمت درس‌ها</h3>
-            <p style="color:#7f8da5;font-size:13px;margin-bottom:15px;">
-                قیمت هر درس رو تعیین کن. عدد ۰ به معنی رایگان هست.
-            </p>
-            <div id="priceSettingsContainer">
-                <!-- توسط JS پر میشه -->
-            </div>
-            <button class="primary-btn" id="savePriceSettingsBtn" style="margin-top:15px;">
-                💾 ذخیره تنظیمات قیمت
-            </button>
+            <p style="color:#7f8da5;font-size:13px;margin-bottom:15px;">قیمت هر درس رو تعیین کن. عدد ۰ به معنی رایگان هست.</p>
+            <div id="priceSettingsContainer"></div>
+            <button class="primary-btn" id="savePriceSettingsBtn" style="margin-top:15px;">💾 ذخیره تنظیمات قیمت</button>
         </div>
 
-        <!-- ===== بخش مدیریت کاربران ===== -->
-        <div class="admin-panel" id="tab-users" style="display:none;">
+        <!-- ===== بخش کاربران ===== -->
+        <div id="tab-users" class="admin-panel" style="display:none;">
             <h3>👥 لیست کاربران</h3>
             <div id="usersListContainer"></div>
         </div>
 
         <!-- ===== بخش پیام‌ها ===== -->
-        <div class="admin-panel" id="tab-messages" style="display:none;">
+        <div id="tab-messages" class="admin-panel" style="display:none;">
             <h3>💬 پیام‌های پشتیبانی</h3>
             <div id="messagesListContainer"></div>
         </div>
 
-        <!-- ===== بخش اعلان‌ها ===== -->
-        <div class="admin-panel" id="tab-notifications" style="display:none;">
+        <!-- ===== بخش اعلان‌ها (کامل) ===== -->
+        <div id="tab-notifications" class="admin-panel">
             <h3>🔔 مدیریت اعلان‌ها</h3>
-            
+
+            <!-- فرم انتشار اعلان جدید -->
             <div style="background:rgba(255,255,255,0.03);padding:20px;border-radius:12px;margin-bottom:20px;">
                 <h4 style="color:#2dd4bf;margin-bottom:15px;">📢 انتشار اعلان جدید</h4>
                 <div class="form-group">
@@ -170,6 +150,7 @@
                 <button class="primary-btn" id="publishNotificationBtn">📢 انتشار اعلان</button>
             </div>
 
+            <!-- لیست اعلان‌های منتشر شده -->
             <h4 style="color:#7f8da5;margin-bottom:15px;">📋 اعلان‌های منتشر شده</h4>
             <div id="notificationsList"></div>
         </div>
@@ -177,6 +158,5 @@
     </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>

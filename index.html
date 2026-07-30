@@ -9,44 +9,27 @@
 </head>
 <body>
 
-    <button class="hamburger-btn" id="hamburgerBtn">
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
     </button>
 
-    <aside class="sidebar">
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+    <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon">🌰</div>
             <h2>ف<span>ندق</span></h2>
         </div>
         <nav class="menu">
-            <a href="index.html" class="menu-item active">
-                <span class="menu-icon">🏠</span>
-                <span>داشبورد</span>
-            </a>
-            <a href="lessons.html" class="menu-item">
-                <span class="menu-icon">📚</span>
-                <span>درس‌ها</span>
-            </a>
-            <a href="profile.html" class="menu-item">
-                <span class="menu-icon">👤</span>
-                <span>پروفایل</span>
-            </a>
-            <a href="support.html" class="menu-item">
-                <span class="menu-icon">💬</span>
-                <span>پشتیبانی</span>
-            </a>
-            <a href="earn-coins.html" class="menu-item">
-                <span class="menu-icon">🪙</span>
-                <span>سکه رایگان</span>
-            </a>
-            <a href="login.html" class="menu-item">
-                <span class="menu-icon">🔐</span>
-                <span>ورود</span>
-            </a>
-            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">
-                <span class="menu-icon">⚙️</span>
-                <span>پنل مدیریت</span>
-            </a>
+            <a href="index.html" class="menu-item active">🏠 داشبورد</a>
+            <a href="lessons.html" class="menu-item">📚 درس‌ها</a>
+            <a href="profile.html" class="menu-item">👤 پروفایل</a>
+            <a href="support.html" class="menu-item">💬 پشتیبانی</a>
+            <a href="earn-coins.html" class="menu-item">🪙 سکه رایگان</a>
+            <a href="login.html" class="menu-item" id="loginMenuItem">🔐 ورود</a>
+            <a href="register.html" class="menu-item" id="registerMenuItem">📝 ثبت‌نام</a>
+            <a href="#" class="menu-item" id="logoutMenuItem" style="display:none;" onclick="logoutUser()">🚪 خروج</a>
+            <a href="admin.html" class="menu-item" id="adminMenuItem" style="display:none;">⚙️ پنل مدیریت</a>
         </nav>
     </aside>
 
@@ -62,35 +45,50 @@
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
-                <!-- ===== نمایش سکه ===== -->
-                <div class="coin-display" id="coinDisplay">
+                <div class="coin-display">
                     <span class="coin-icon">🪙</span>
                     <span class="coin-count" id="headerCoinCount">0</span>
+                </div>
+                <!-- ===== دکمه اعلان ===== -->
+                <div class="notification-bell" id="notificationBell" onclick="toggleNotificationPanel()">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
                 </div>
                 <div class="avatar" id="headerAvatar">👤</div>
             </div>
         </header>
 
+        <!-- ===== پنل اعلان‌ها ===== -->
+        <div class="notification-panel" id="notificationPanel" style="display:none;">
+            <div class="notification-panel-header">
+                <h4>🔔 اعلان‌ها</h4>
+                <button onclick="closeNotificationPanel()" style="background:transparent;border:none;color:#7f8da5;font-size:20px;cursor:pointer;">✕</button>
+            </div>
+            <div id="notificationList">
+                <p style="color:#7f8da5;text-align:center;padding:20px;">هیچ اعلانی وجود ندارد.</p>
+            </div>
+        </div>
+
         <section class="stats-top">
             <div class="stat-top-card">
-                <span class="stat-top-icon">🔥</span>
-                <div class="stat-top-info">
-                    <strong id="statStreak">۰</strong>
-                    <span>روزهای متوالی</span>
+                <span class="stat-icon">🔥</span>
+                <div class="stat-info">
+                    <span class="number" id="statStreak">۰</span>
+                    <span class="label">روزهای متوالی</span>
                 </div>
             </div>
             <div class="stat-top-card">
-                <span class="stat-top-icon">📚</span>
-                <div class="stat-top-info">
-                    <strong id="statLessons">۰ / ۶</strong>
-                    <span>درس‌های تکمیل شده</span>
+                <span class="stat-icon">📚</span>
+                <div class="stat-info">
+                    <span class="number" id="statLessons">۰ / ۶</span>
+                    <span class="label">درس‌های تکمیل شده</span>
                 </div>
             </div>
             <div class="stat-top-card">
-                <span class="stat-top-icon">⏱️</span>
-                <div class="stat-top-info">
-                    <strong id="statHours">۰ ساعت</strong>
-                    <span>زمان مطالعه</span>
+                <span class="stat-icon">⏱️</span>
+                <div class="stat-info">
+                    <span class="number" id="statHours">۰ ساعت</span>
+                    <span class="label">زمان مطالعه</span>
                 </div>
             </div>
         </section>
@@ -106,7 +104,7 @@
 
         <div class="section-title">
             <h2>درس‌های من</h2>
-            <a href="lessons.html">مشاهده همه درس‌ها</a>
+            <a href="lessons.html">مشاهده همه</a>
         </div>
 
         <section class="lessons" id="lessonsContainer"></section>
@@ -114,6 +112,95 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        // ===== منوی کشویی =====
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        function closeMenu() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('show');
+        }
+
+        // بستن منو با کلیک روی لینک‌ها
+        document.querySelectorAll('.menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // ===== اعلان‌ها =====
+        function toggleNotificationPanel() {
+            var panel = document.getElementById('notificationPanel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+                loadNotifications();
+            }
+        }
+
+        function closeNotificationPanel() {
+            document.getElementById('notificationPanel').style.display = 'none';
+        }
+
+        function loadNotifications() {
+            var list = document.getElementById('notificationList');
+            var notifications = getData('notifications', []);
+            if (notifications.length === 0) {
+                list.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:20px;">🔕 هیچ اعلانی وجود ندارد.</p>';
+                return;
+            }
+            var html = '';
+            for (var i = notifications.length - 1; i >= 0; i--) {
+                var n = notifications[i];
+                var color = n.type === 'success' ? '#4ade80' : n.type === 'warning' ? '#fbbf24' : '#60a5fa';
+                html += '<div class="notification-item-panel" style="border-right-color:' + color + ';">';
+                html += '<div class="notif-title-panel">' + n.title + '</div>';
+                html += '<div class="notif-text-panel">' + n.text + '</div>';
+                html += '<div class="notif-date-panel">' + n.date + ' - ' + n.time + '</div>';
+                html += '</div>';
+            }
+            list.innerHTML = html;
+            var badge = document.getElementById('notificationBadge');
+            if (badge) {
+                badge.style.display = 'none';
+                badge.textContent = '0';
+            }
+            setData('notificationsRead', true);
+        }
+
+        function updateNotificationBadge() {
+            var notifications = getData('notifications', []);
+            var read = getData('notificationsRead', false);
+            var badge = document.getElementById('notificationBadge');
+            if (!badge) return;
+            if (notifications.length > 0 && !read) {
+                badge.style.display = 'flex';
+                badge.textContent = notifications.length;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        // بستن پنل اعلان با کلیک خارج
+        document.addEventListener('click', function(e) {
+            var panel = document.getElementById('notificationPanel');
+            var bell = document.getElementById('notificationBell');
+            if (panel && bell && !panel.contains(e.target) && !bell.contains(e.target)) {
+                panel.style.display = 'none';
+            }
+        });
+
+        // بارگذاری اولیه
+        document.addEventListener('DOMContentLoaded', function() {
+            updateNotificationBadge();
+        });
+    </script>
 
 </body>
 </html>
