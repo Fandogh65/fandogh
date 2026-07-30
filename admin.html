@@ -34,6 +34,12 @@
     </aside>
 
     <main class="main">
+        
+        <!-- دکمه بازگشت به داشبورد -->
+        <button class="back-home-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+        </button>
+
         <header class="topbar">
             <div class="welcome">
                 <h1>⚙️ پنل مدیریت</h1>
@@ -60,7 +66,6 @@
             <button class="admin-tab active" onclick="showTab('notifications')">🔔 اعلان‌ها</button>
         </div>
 
-        <!-- ===== بخش مدیریت درس‌ها ===== -->
         <div id="tab-lessons" class="admin-panel" style="display:none;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
                 <h3 style="margin:0;">📚 لیست درس‌ها</h3>
@@ -104,7 +109,6 @@
             <div id="adminLessonsContainer"></div>
         </div>
 
-        <!-- ===== بخش قیمت درس‌ها ===== -->
         <div id="tab-prices" class="admin-panel" style="display:none;">
             <h3>💰 تنظیمات قیمت درس‌ها</h3>
             <p style="color:#7f8da5;font-size:13px;margin-bottom:15px;">قیمت هر درس رو تعیین کن. عدد ۰ به معنی رایگان هست.</p>
@@ -112,23 +116,18 @@
             <button class="primary-btn" id="savePriceSettingsBtn" style="margin-top:15px;">💾 ذخیره تنظیمات قیمت</button>
         </div>
 
-        <!-- ===== بخش کاربران ===== -->
         <div id="tab-users" class="admin-panel" style="display:none;">
             <h3>👥 لیست کاربران</h3>
             <div id="usersListContainer"></div>
         </div>
 
-        <!-- ===== بخش پیام‌ها ===== -->
         <div id="tab-messages" class="admin-panel" style="display:none;">
             <h3>💬 پیام‌های پشتیبانی</h3>
             <div id="messagesListContainer"></div>
         </div>
 
-        <!-- ===== بخش اعلان‌ها (کامل) ===== -->
         <div id="tab-notifications" class="admin-panel">
             <h3>🔔 مدیریت اعلان‌ها</h3>
-
-            <!-- فرم انتشار اعلان جدید -->
             <div style="background:rgba(255,255,255,0.03);padding:20px;border-radius:12px;margin-bottom:20px;">
                 <h4 style="color:#2dd4bf;margin-bottom:15px;">📢 انتشار اعلان جدید</h4>
                 <div class="form-group">
@@ -149,12 +148,9 @@
                 </div>
                 <button class="primary-btn" id="publishNotificationBtn">📢 انتشار اعلان</button>
             </div>
-
-            <!-- لیست اعلان‌های منتشر شده -->
             <h4 style="color:#7f8da5;margin-bottom:15px;">📋 اعلان‌های منتشر شده</h4>
             <div id="notificationsList"></div>
         </div>
-
     </main>
 
     <script src="script.js"></script>

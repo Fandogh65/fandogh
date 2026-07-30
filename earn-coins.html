@@ -34,6 +34,12 @@
     </aside>
 
     <main class="main">
+        
+        <!-- دکمه بازگشت به داشبورد -->
+        <button class="back-home-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+        </button>
+
         <header class="topbar">
             <div class="welcome">
                 <h1>🪙 سکه رایگان</h1>
@@ -60,16 +66,13 @@
         <div class="coin-box">
             <h3>📺 تماشای تبلیغات</h3>
             <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">با تماشای یک تبلیغ ۴۵ ثانیه‌ای، ۲۰ سکه دریافت کن.</p>
-
             <div id="adStatus" style="background:rgba(255,255,255,0.03);padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
                 <span id="adMessage" style="color:#4ade80;">✅ آماده تماشا</span>
             </div>
-
             <div style="display:flex;gap:12px;flex-wrap:wrap;">
                 <button class="primary-btn" id="startAdBtn" style="flex:1;">▶️ شروع تماشا</button>
                 <button class="primary-btn" id="completeAdBtn" style="flex:1;background:#6b7280;" disabled>⏳ اتمام تماشا (۴۵s)</button>
             </div>
-
             <div style="margin-top:12px;font-size:12px;color:#7f8da5;text-align:center;">
                 ⏱️ زمان باقی‌مانده تا تماشای بعدی: <span id="adCooldown">۰</span> دقیقه
             </div>
@@ -78,21 +81,17 @@
         <div class="coin-box" style="margin-top:25px;">
             <h3>🎡 گردونه شانس</h3>
             <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">هر ۳ بار تماشای تبلیغ، یک شانس چرخوندن گردونه دریافت کن.</p>
-
             <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:12px 18px;border-radius:12px;margin-bottom:15px;">
                 <span style="color:#7f8da5;font-size:13px;">🎟️ تعداد شانس‌ها:</span>
                 <span id="spinChances" style="font-size:22px;font-weight:700;color:#2dd4bf;">0</span>
             </div>
-
             <div style="text-align:center;margin:20px 0;">
                 <div id="wheelContainer" style="position:relative;display:inline-block;">
                     <canvas id="wheelCanvas" width="280" height="280" style="max-width:100%;height:auto;border-radius:50%;border:3px solid #2dd4bf;"></canvas>
                     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;background:#2dd4bf;border-radius:50%;border:3px solid #fff;box-shadow:0 0 20px rgba(45,212,191,0.5);"></div>
                 </div>
             </div>
-
             <button class="primary-btn" id="spinBtn" style="width:100%;" disabled>🎡 بچرخون (۰ شانس)</button>
-
             <div id="spinResult" style="margin-top:15px;text-align:center;font-size:16px;font-weight:700;color:#2dd4bf;min-height:30px;"></div>
         </div>
     </main>
