@@ -1,387 +1,874 @@
 // ============================================
-// 🌰 فندق - اپلیکیشن کامل با سیستم سکه و قفل درس
+// 🌰 فندق - نسخه کامل نهایی
 // ============================================
 
 // ===== داده‌های درس‌ها =====
-const LESSONS_DATA = [
-    {
-        id: 1,
-        icon: '🇰🇷',
-        title: 'آشنایی با هانگول',
-        category: 'درسی • سالم و احوالپرسی',
-        description: 'یادگیری الفبای کره‌ای',
-        level: 'مقدماتی',
-        content: 'الفبای کره‌ای (هانگول) در سال ۱۴۴۳ ساخته شد.\nشامل ۲۴ حرف است.\n\nحروف بی‌صدا: ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ ㅈ ㅊ ㅋ ㅌ ㅍ ㅎ\nحروف صدادار: ㅏ ㅑ ㅓ ㅕ ㅗ ㅛ ㅜ ㅠ ㅡ ㅣ'
-    },
-    {
-        id: 2,
-        icon: '💬',
-        title: 'مکالمه روزمره',
-        category: 'درسی • معرفی خود',
-        description: 'صحبت کردن در موقعیت‌های روزمره',
-        level: 'مقدماتی',
-        content: 'سلام = 안녕하세요 (آن‌نیونگ‌هاسه‌یو)\nمتشکرم = 감사합니다 (کام‌سا‌هام‌نیدا)\nمتاسفم = 죄송합니다 (چوئه‌سونگ‌هام‌نیدا)\nاسم من ... است = 제 이름은 ... 입니다'
-    },
-    {
-        id: 3,
-        icon: '📖',
-        title: 'گرامر پایه',
-        category: 'درسی • خانواده',
-        description: 'ساخت جمله‌های ساده کره‌ای',
-        level: 'متوسط',
-        content: 'ترتیب جمله در کره‌ای:\nفاعل + مفعول + فعل\n\nمثال:\n나는 사과를 먹어요\n(من + سیب + میخورم)'
-    },
-    {
-        id: 4,
-        icon: '📅',
-        title: 'روزها و تاریخ',
-        category: 'درسی • روزها و تاریخ',
-        description: 'روزهای هفته و تاریخ‌ها',
-        level: 'متوسط',
-        content: 'روزهای هفته به کره‌ای:\n일요일 = یک‌شنبه\n월요일 = دوشنبه\n화요일 = سه‌شنبه\n수요일 = چهارشنبه\n목요일 = پنج‌شنبه\n금요일 = جمعه\n토요일 = شنبه'
-    },
-    {
-        id: 5,
-        icon: '🕐',
-        title: 'ساعت و زمان',
-        category: 'درسی • ساعت و زمان',
-        description: 'گفتن ساعت و زمان',
-        level: 'پیشرفته',
-        content: 'گفتن ساعت:\n1시 = ساعت ۱\n2시 = ساعت ۲\n3시 = ساعت ۳\n\nگفتن دقیقه:\n30분 = ۳۰ دقیقه\n3시 30분 = ساعت ۳ و ۳۰ دقیقه'
-    },
-    {
-        id: 6,
-        icon: '🛍️',
-        title: 'خرید کردن',
-        category: 'درسی • خرید کردن',
-        description: 'مکالمات هنگام خرید',
-        level: 'پیشرفته',
-        content: 'قیمتش چنده؟ = 얼마예요؟ (ئول‌ما‌یه‌یو؟)\nگرونه = 비싸요 (پی‌سا‌یو)\nارزونه = 싸요 (سا‌یو)\nلطفاً به من بدهید = 주세요 (چو‌سه‌یو)'
-    }
+var LESSONS_DATA = [
+    { id: 1, icon: '🇰🇷', title: 'آشنایی با هانگول', category: 'درسی • سالم و احوالپرسی', description: 'یادگیری الفبای کره‌ای', level: 'مقدماتی', content: 'الفبای کره‌ای (هانگول) در سال ۱۴۴۳ ساخته شد.' },
+    { id: 2, icon: '💬', title: 'مکالمه روزمره', category: 'درسی • معرفی خود', description: 'صحبت کردن در موقعیت‌های روزمره', level: 'مقدماتی', content: 'سلام = 안녕하세요، متشکرم = 감사합니다' },
+    { id: 3, icon: '📖', title: 'گرامر پایه', category: 'درسی • خانواده', description: 'ساخت جمله‌های ساده کره‌ای', level: 'متوسط', content: 'ترتیب جمله: فاعل + مفعول + فعل' },
+    { id: 4, icon: '📅', title: 'روزها و تاریخ', category: 'درسی • روزها و تاریخ', description: 'روزهای هفته و تاریخ‌ها', level: 'متوسط', content: 'یک‌شنبه = 일요일، دوشنبه = 월요일' },
+    { id: 5, icon: '🕐', title: 'ساعت و زمان', category: 'درسی • ساعت و زمان', description: 'گفتن ساعت و زمان', level: 'پیشرفته', content: 'ساعت ۱ = 1시، ساعت ۳:۳۰ = 3시 30분' },
+    { id: 6, icon: '🛍️', title: 'خرید کردن', category: 'درسی • خرید کردن', description: 'مکالمات هنگام خرید', level: 'پیشرفته', content: 'قیمتش چنده؟ = 얼마예요？' }
 ];
 
-// ===== قیمت‌های پیش‌فرض درس‌ها =====
-const DEFAULT_PRICES = {
-    1: 0, // درس اول رایگان
-    2: 0, // درس دوم رایگان
-    3: 0, // درس سوم رایگان
-    4: 100, // درس چهارم ۱۰۰ سکه
-    5: 100, // درس پنجم ۱۰۰ سکه
-    6: 100  // درس ششم ۱۰۰ سکه
-};
+// ===== قیمت‌های پیش‌فرض =====
+var DEFAULT_PRICES = { 1: 0, 2: 0, 3: 0, 4: 100, 5: 100, 6: 100 };
 
 // ===== ذخیره‌سازی =====
-const DB = {
-    get(key, def) {
-        try { return JSON.parse(localStorage.getItem(key)) || def } catch { return def }
-    },
-    set(key, val) {
-        localStorage.setItem(key, JSON.stringify(val))
-    }
-};
+function getData(key, def) {
+    try { var data = localStorage.getItem(key); return data ? JSON.parse(data) : def; } catch(e) { return def; }
+}
+function setData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 
-// ===== نمایش پیام =====
-function showToast(msg, type = 'info') {
-    const old = document.querySelector('.toast-message');
+// ===== پیام =====
+function showToast(msg, type) {
+    var old = document.querySelector('.toast-message');
     if (old) old.remove();
-    const toast = document.createElement('div');
+    var toast = document.createElement('div');
     toast.className = 'toast-message';
-    toast.style.cssText = `
-        position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-        background: ${type === 'success' ? '#21d4c3' : type === 'error' ? '#ef4444' : '#3b82f6'};
-        color: ${type === 'success' ? '#06121f' : '#fff'};
-        padding: 14px 28px; border-radius: 14px; font-family: 'Vazirmatn', sans-serif;
-        font-size: 14px; font-weight: 600; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        z-index: 9999; max-width: 90%; text-align: center; direction: rtl;
-    `;
-    toast.innerText = msg;
+    var bg = type === 'success' ? '#2dd4bf' : type === 'error' ? '#ef4444' : '#3b82f6';
+    var color = type === 'success' ? '#0a0e1a' : '#fff';
+    toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:' + bg + ';color:' + color + ';padding:14px 28px;border-radius:14px;font-family:Vazirmatn,sans-serif;font-size:14px;font-weight:600;box-shadow:0 10px 40px rgba(0,0,0,0.5);z-index:9999;max-width:90%;text-align:center;direction:rtl;';
+    toast.textContent = msg;
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    setTimeout(function() { toast.remove(); }, 3000);
 }
 
-// ============================================
-// سیستم سکه و قفل درس
-// ============================================
-
-// ===== به‌روزرسانی سکه در هدر =====
-function updateCoinDisplay() {
-    const coins = DB.get('coins', 0);
-    const coinDisplay = document.getElementById('headerCoinCount');
-    if (coinDisplay) {
-        coinDisplay.textContent = coins;
-    }
-    const profileCoins = document.getElementById('profileCoins');
-    if (profileCoins) {
-        profileCoins.textContent = coins;
-    }
+// ===== قیمت درس =====
+function getLessonPrice(id) {
+    var prices = getData('lessonPrices', DEFAULT_PRICES);
+    return prices[id] !== undefined ? prices[id] : 100;
 }
 
-// ===== دریافت قیمت درس =====
-function getLessonPrice(lessonId) {
-    const prices = DB.get('lessonPrices', DEFAULT_PRICES);
-    return prices[lessonId] !== undefined ? prices[lessonId] : 100;
-}
-
-// ===== بررسی قفل بودن درس =====
-function isLessonLocked(lessonId) {
-    const price = getLessonPrice(lessonId);
-    if (price === 0) return false; // رایگان
-    
-    const unlockedLessons = DB.get('unlockedLessons', []);
-    return !unlockedLessons.includes(lessonId);
+// ===== قفل بودن =====
+function isLessonLocked(id) {
+    var price = getLessonPrice(id);
+    if (price === 0) return false;
+    var unlocked = getData('unlockedLessons', []);
+    return unlocked.indexOf(id) === -1;
 }
 
 // ===== باز کردن درس با سکه =====
-function unlockLesson(lessonId) {
-    const price = getLessonPrice(lessonId);
-    if (price === 0) {
-        showToast('✅ این درس رایگان است!', 'info');
-        return false;
-    }
-    
-    const coins = DB.get('coins', 0);
-    
-    if (coins < price) {
-        showToast(`⚠️ برای باز کردن این درس به ${price} سکه نیاز داری!`, 'error');
-        return false;
-    }
-    
-    if (confirm(`آیا می‌خوای ${price} سکه برای باز کردن این درس پرداخت کنی؟`)) {
-        const newCoins = coins - price;
-        DB.set('coins', newCoins);
-        
-        const unlockedLessons = DB.get('unlockedLessons', []);
-        if (!unlockedLessons.includes(lessonId)) {
-            unlockedLessons.push(lessonId);
-            DB.set('unlockedLessons', unlockedLessons);
-        }
-        
-        updateCoinDisplay();
-        showToast(`✅ درس با موفقیت باز شد!`, 'success');
-        renderLessons();
-        renderAllLessons();
-        return true;
-    }
-    return false;
+function unlockLesson(id) {
+    var price = getLessonPrice(id);
+    if (price === 0) { showToast('✅ این درس رایگان است!', 'info'); return false; }
+    var coins = getData('coins', 0);
+    if (coins < price) { showToast('⚠️ به ' + price + ' سکه نیاز داری!', 'error'); return false; }
+    if (!confirm('آیا می‌خوای ' + price + ' سکه پرداخت کنی؟')) return false;
+    var newCoins = coins - price;
+    setData('coins', newCoins);
+    var unlocked = getData('unlockedLessons', []);
+    if (unlocked.indexOf(id) === -1) { unlocked.push(id); setData('unlockedLessons', unlocked); }
+    updateCoinDisplay();
+    showToast('✅ درس باز شد!', 'success');
+    renderLessons();
+    return true;
 }
 
-// ============================================
-// توابع رندر درس‌ها با قفل
-// ============================================
+// ===== نمایش سکه =====
+function updateCoinDisplay() {
+    var coins = getData('coins', 0);
+    var el = document.getElementById('headerCoinCount');
+    if (el) el.textContent = coins;
+}
 
+// ===== باز کردن درس =====
+function openLesson(id) {
+    if (isLessonLocked(id)) { showToast('🔒 این درس قفل است!', 'error'); return; }
+    var lessons = getData('lessons', LESSONS_DATA);
+    var lesson = lessons.find(function(l) { return l.id === id; });
+    if (!lesson) { showToast('❌ درس پیدا نشد!', 'error'); return; }
+    setData('lastLesson', id);
+    window.location.href = 'lesson-detail.html?id=' + id;
+}
+
+// ===== رندر درس‌ها =====
 function renderLessons() {
-    const container = document.getElementById('lessonsContainer');
+    var container = document.getElementById('lessonsContainer');
     if (!container) return;
-    const lessons = DB.get('lessons', LESSONS_DATA);
-    const progress = DB.get('progress', {});
-    let html = '';
-    
-    lessons.slice(0, 3).forEach(lesson => {
-        const p = progress[lesson.id] || 0;
-        const locked = isLessonLocked(lesson.id);
-        const price = getLessonPrice(lesson.id);
-        
-        html += `
-            <div class="lesson-card ${locked ? 'locked' : ''}" data-lesson-id="${lesson.id}">
-                ${locked ? `<div class="lock-overlay">🔒</div>` : ''}
-                <div class="lesson-icon">${lesson.icon}</div>
-                <h3>${lesson.title}</h3>
-                <p class="lesson-category">📘 ${lesson.category}</p>
-                ${!locked ? `
-                    <div class="progress">
-                        <div class="progress-bar" style="width: ${p}%;"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span>${p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده'}</span>
-                        <span>${p}%</span>
-                    </div>
-                    <button class="primary-btn lesson-btn" onclick="openLesson(${lesson.id})">
-                        ${p === 100 ? '📝 مرور درس' : 'ورود به درس'}
-                    </button>
-                ` : `
-                    <div class="lesson-price">🔒 ${price} سکه برای باز کردن</div>
-                    <button class="unlock-btn" onclick="unlockLesson(${lesson.id})">
-                        🪙 باز کردن با ${price} سکه
-                    </button>
-                `}
-            </div>
-        `;
-    });
+    var lessons = getData('lessons', LESSONS_DATA);
+    var progress = getData('progress', {});
+    var html = '';
+    for (var i = 0; i < Math.min(lessons.length, 3); i++) {
+        var lesson = lessons[i];
+        var p = progress[lesson.id] || 0;
+        var locked = isLessonLocked(lesson.id);
+        var price = getLessonPrice(lesson.id);
+        html += '<div class="lesson-card' + (locked ? ' locked' : '') + '">';
+        if (locked) html += '<div class="lock-overlay">🔒</div>';
+        html += '<div class="lesson-icon">' + lesson.icon + '</div><h3>' + lesson.title + '</h3><p class="lesson-category">📘 ' + lesson.category + '</p>';
+        if (!locked) {
+            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div><div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div><button class="primary-btn lesson-btn" onclick="openLesson(' + lesson.id + ')">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
+        } else {
+            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div><button class="unlock-btn" onclick="unlockLesson(' + lesson.id + ')">🪙 باز کردن</button>';
+        }
+        html += '</div>';
+    }
     container.innerHTML = html;
     updateStats();
     updateCoinDisplay();
 }
 
+// ===== رندر همه درس‌ها =====
 function renderAllLessons() {
-    const container = document.getElementById('allLessonsContainer');
+    var container = document.getElementById('allLessonsContainer');
     if (!container) return;
-    const lessons = DB.get('lessons', LESSONS_DATA);
-    const progress = DB.get('progress', {});
-    let html = '';
-    let totalProgress = 0;
-    
-    lessons.forEach(lesson => {
-        const p = progress[lesson.id] || 0;
-        totalProgress += p;
-        const locked = isLessonLocked(lesson.id);
-        const price = getLessonPrice(lesson.id);
-        
-        html += `
-            <div class="lesson-card ${locked ? 'locked' : ''}" data-lesson-id="${lesson.id}">
-                ${locked ? `<div class="lock-overlay">🔒</div>` : ''}
-                <div class="lesson-icon">${lesson.icon}</div>
-                <h3>${lesson.title}</h3>
-                <p class="lesson-category">📘 ${lesson.category}</p>
-                <p style="font-size:12px;color:#7f8da5;margin-bottom:12px;">${lesson.description}</p>
-                ${!locked ? `
-                    <div class="progress">
-                        <div class="progress-bar" style="width: ${p}%;"></div>
-                    </div>
-                    <div class="progress-info">
-                        <span>${p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده'}</span>
-                        <span>${p}%</span>
-                    </div>
-                    <button class="primary-btn lesson-btn" onclick="openLesson(${lesson.id})">
-                        ${p === 100 ? '📝 مرور درس' : 'ورود به درس'}
-                    </button>
-                ` : `
-                    <div class="lesson-price">🔒 ${price} سکه برای باز کردن</div>
-                    <button class="unlock-btn" onclick="unlockLesson(${lesson.id})">
-                        🪙 باز کردن با ${price} سکه
-                    </button>
-                `}
-            </div>
-        `;
-    });
+    var lessons = getData('lessons', LESSONS_DATA);
+    var progress = getData('progress', {});
+    var html = '';
+    var total = 0;
+    for (var i = 0; i < lessons.length; i++) {
+        var lesson = lessons[i];
+        var p = progress[lesson.id] || 0;
+        total += p;
+        var locked = isLessonLocked(lesson.id);
+        var price = getLessonPrice(lesson.id);
+        html += '<div class="lesson-card' + (locked ? ' locked' : '') + '">';
+        if (locked) html += '<div class="lock-overlay">🔒</div>';
+        html += '<div class="lesson-icon">' + lesson.icon + '</div><h3>' + lesson.title + '</h3><p class="lesson-category">📘 ' + lesson.category + '</p><p style="font-size:12px;color:#7f8da5;margin-bottom:12px;">' + lesson.description + '</p>';
+        if (!locked) {
+            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div><div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div><button class="primary-btn lesson-btn" onclick="openLesson(' + lesson.id + ')">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
+        } else {
+            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div><button class="unlock-btn" onclick="unlockLesson(' + lesson.id + ')">🪙 باز کردن</button>';
+        }
+        html += '</div>';
+    }
     container.innerHTML = html;
+    var avg = lessons.length > 0 ? Math.round(total / lessons.length) : 0;
+    var bar = document.getElementById('overallProgress');
+    var text = document.getElementById('overallProgressText');
+    if (bar) bar.style.width = avg + '%';
+    if (text) text.textContent = avg + '%';
+}
 
-    const avg = lessons.length > 0 ? Math.round(totalProgress / lessons.length) : 0;
-    const overallBar = document.getElementById('overallProgress');
-    const overallText = document.getElementById('overallProgressText');
-    if (overallBar) overallBar.style.width = avg + '%';
-    if (overallText) overallText.textContent = avg + '%';
+// ===== به‌روزرسانی آمار =====
+function updateStats() {
+    var progress = getData('progress', {});
+    var completed = 0;
+    var keys = Object.keys(progress);
+    for (var i = 0; i < keys.length; i++) { if (progress[keys[i]] === 100) completed++; }
+    var lessons = getData('lessons', LESSONS_DATA);
+    document.getElementById('statLessons').textContent = completed + ' / ' + lessons.length;
+    document.getElementById('statStreak').textContent = getData('stats', { streak: 0 }).streak || 0;
+    document.getElementById('statHours').textContent = (getData('stats', { hours: 0 }).hours || 0) + ' ساعت';
+}
+
+// ===== بارگذاری صفحه درس =====
+function loadLessonDetail() {
+    var params = new URLSearchParams(window.location.search);
+    var id = parseInt(params.get('id'));
+    if (!id) { document.getElementById('lessonTitle').textContent = '❌ درس نامعتبر'; return; }
+    var lessons = getData('lessons', LESSONS_DATA);
+    var data = lessons.find(function(l) { return l.id === id; });
+    if (!data) { document.getElementById('lessonTitle').textContent = '❌ درس پیدا نشد'; return; }
+    document.getElementById('lessonTitle').textContent = '📖 ' + data.title;
+    document.getElementById('lessonCategory').textContent = data.category;
+    document.getElementById('lessonIcon').textContent = data.icon;
+    document.getElementById('lessonFullTitle').textContent = data.title;
+    document.getElementById('lessonDescription').textContent = data.description;
+    document.getElementById('lessonText').innerHTML = '<p style="white-space:pre-wrap;word-wrap:break-word;">' + (data.content || 'محتوا در حال ویرایش...') + '</p>';
+    var progress = getData('progress', {});
+    var p = progress[id] || 0;
+    document.getElementById('lessonProgressBar').style.width = p + '%';
+    document.getElementById('lessonProgressText').textContent = p + '%';
+    document.getElementById('markComplete').onclick = function() {
+        var prog = getData('progress', {});
+        prog[id] = 100;
+        setData('progress', prog);
+        document.getElementById('lessonProgressBar').style.width = '100%';
+        document.getElementById('lessonProgressText').textContent = '۱۰۰%';
+        showToast('🎉 تبریک!', 'success');
+    };
+    document.getElementById('resetProgress').onclick = function() {
+        if (confirm('ریست کنم؟')) {
+            var prog = getData('progress', {});
+            prog[id] = 0;
+            setData('progress', prog);
+            document.getElementById('lessonProgressBar').style.width = '0%';
+            document.getElementById('lessonProgressText').textContent = '۰%';
+            showToast('🔄 ریست شد!', 'info');
+        }
+    };
 }
 
 // ============================================
-// مدیریت قیمت‌ها در پنل ادمین
+// مدیریت کاربر (ورود/ثبت‌نام/پروفایل)
 // ============================================
+
+function updateUserHeader() {
+    var user = getData('currentUser', null);
+    var nameEl = document.getElementById('headerUsername');
+    var statusEl = document.getElementById('headerUserStatus');
+    var displayEl = document.getElementById('userDisplayName');
+    if (nameEl) nameEl.textContent = user || 'کاربر مهمان';
+    if (statusEl) statusEl.textContent = user ? 'کاربر عضو' : 'ثبت‌نام نشده';
+    if (displayEl) displayEl.textContent = user || 'کاربر مهمان';
+    var profileName = document.getElementById('profileName');
+    var profileStatus = document.getElementById('profileStatus');
+    if (profileName) profileName.textContent = user || 'کاربر مهمان';
+    if (profileStatus) profileStatus.textContent = user ? 'کاربر عضو' : 'ثبت‌نام نشده';
+    var nameInput = document.getElementById('nameInput');
+    if (nameInput) nameInput.value = user || '';
+}
+
+function continueLastLesson() {
+    var last = getData('lastLesson', null);
+    if (last) { openLesson(last); } else { showToast('📚 هنوز درسی رو شروع نکردی!', 'info'); }
+}
+
+function updateAuthMenu() {
+    var user = getData('currentUser', null);
+    var loginItem = document.getElementById('loginMenuItem');
+    var registerItem = document.getElementById('registerMenuItem');
+    var logoutItem = document.getElementById('logoutMenuItem');
+    var adminItem = document.getElementById('adminMenuItem');
+
+    if (user) {
+        if (loginItem) loginItem.style.display = 'none';
+        if (registerItem) registerItem.style.display = 'none';
+        if (logoutItem) logoutItem.style.display = 'flex';
+        if (adminItem) {
+            var users = getData('users', []);
+            var found = users.find(function(u) { return u.username === user; });
+            adminItem.style.display = (found && found.isAdmin) ? 'flex' : 'none';
+        }
+    } else {
+        if (loginItem) loginItem.style.display = 'flex';
+        if (registerItem) registerItem.style.display = 'flex';
+        if (logoutItem) logoutItem.style.display = 'none';
+        if (adminItem) adminItem.style.display = 'none';
+    }
+}
+
+function logoutUser() {
+    if (confirm('🚪 مطمئنی میخوای خارج بشی؟')) {
+        setData('currentUser', null);
+        showToast('👋 خارج شدید!', 'info');
+        updateAuthMenu();
+        updateUserHeader();
+        setTimeout(function() { window.location.reload(); }, 500);
+    }
+}
+
+function createAdminAccount() {
+    var users = getData('users', []);
+    var adminExists = users.some(function(u) { return u.username === 'admin'; });
+    if (!adminExists) {
+        users.push({
+            username: 'admin',
+            password: 'admin123',
+            isAdmin: true,
+            registeredAt: new Date().toISOString()
+        });
+        setData('users', users);
+        console.log('✅ اکانت ادمین با موفقیت ایجاد شد!');
+        console.log('👤 نام کاربری: admin');
+        console.log('🔑 رمز عبور: admin123');
+    } else {
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].username === 'admin') {
+                users[i].isAdmin = true;
+                break;
+            }
+        }
+        setData('users', users);
+    }
+}
+
+// ============================================
+// پنل مدیریت - درس‌ها
+// ============================================
+
+function renderAdminLessons() {
+    var container = document.getElementById('adminLessonsContainer');
+    if (!container) return;
+    var lessons = getData('lessons', LESSONS_DATA);
+    if (lessons.length === 0) {
+        container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:30px;">هیچ درسی وجود ندارد.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = 0; i < lessons.length; i++) {
+        var l = lessons[i];
+        html += '<div class="admin-lesson-item" data-index="' + i + '"><div class="lesson-info"><span style="font-size:24px;">' + l.icon + '</span><span><strong>' + l.title + '</strong></span><span class="level-badge">' + (l.level || 'مقدماتی') + '</span><span style="color:#7f8da5;font-size:12px;">' + l.category + '</span></div><div class="lesson-actions"><button class="btn-edit" onclick="editLesson(' + i + ')">✏️ ویرایش</button><button class="btn-delete" onclick="deleteLesson(' + i + ')">🗑️ حذف</button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+function editLesson(index) {
+    var lessons = getData('lessons', LESSONS_DATA);
+    var l = lessons[index];
+    if (!l) return;
+    var newTitle = prompt('عنوان جدید:', l.title);
+    if (newTitle !== null && newTitle.trim()) l.title = newTitle.trim();
+    var newIcon = prompt('آیکون جدید:', l.icon);
+    if (newIcon !== null) l.icon = newIcon.trim() || '📚';
+    var newCategory = prompt('دسته‌بندی جدید:', l.category);
+    if (newCategory !== null && newCategory.trim()) l.category = newCategory.trim();
+    var newLevel = prompt('سطح جدید (مقدماتی/متوسط/پیشرفته):', l.level || 'مقدماتی');
+    if (newLevel !== null) l.level = newLevel.trim() || 'مقدماتی';
+    var newDesc = prompt('توضیحات جدید:', l.description);
+    if (newDesc !== null) l.description = newDesc.trim() || 'توضیحی برای این درس وارد نشده است.';
+    var newContent = prompt('محتوای آموزشی جدید:', l.content || '');
+    if (newContent !== null) l.content = newContent.trim() || 'محتوای این درس در حال ویرایش است...';
+    lessons[index] = l;
+    setData('lessons', lessons);
+    renderAdminLessons();
+    renderLessons();
+    renderAllLessons();
+    showToast('✅ درس ویرایش شد!', 'success');
+}
+
+function deleteLesson(index) {
+    if (!confirm('⚠️ مطمئنی این درس رو حذف کنی؟')) return;
+    if (!confirm('‼️ آخرین تأیید؟')) return;
+    var lessons = getData('lessons', LESSONS_DATA);
+    var removed = lessons.splice(index, 1);
+    setData('lessons', lessons);
+    var progress = getData('progress', {});
+    if (progress[removed[0].id]) { delete progress[removed[0].id]; setData('progress', progress); }
+    var unlocked = getData('unlockedLessons', []);
+    var newUnlocked = [];
+    for (var i = 0; i < unlocked.length; i++) { if (unlocked[i] !== removed[0].id) newUnlocked.push(unlocked[i]); }
+    setData('unlockedLessons', newUnlocked);
+    renderAdminLessons();
+    renderLessons();
+    renderAllLessons();
+    showToast('🗑️ درس حذف شد!', 'info');
+}
+
+function showAddLessonForm() {
+    var form = document.getElementById('addLessonForm');
+    if (form) form.style.display = 'block';
+}
+function hideAddLessonForm() {
+    var form = document.getElementById('addLessonForm');
+    if (form) form.style.display = 'none';
+    document.getElementById('newLessonTitle').value = '';
+    document.getElementById('newLessonIcon').value = '📚';
+    document.getElementById('newLessonCategory').value = '';
+    document.getElementById('newLessonDescription').value = '';
+    document.getElementById('newLessonContent').value = '';
+}
+
+function saveNewLesson() {
+    var title = document.getElementById('newLessonTitle').value.trim();
+    var icon = document.getElementById('newLessonIcon').value.trim() || '📚';
+    var category = document.getElementById('newLessonCategory').value.trim();
+    var description = document.getElementById('newLessonDescription').value.trim();
+    var level = document.getElementById('newLessonLevel').value;
+    var content = document.getElementById('newLessonContent').value.trim();
+    if (!title || !category) { showToast('⚠️ عنوان و دسته‌بندی الزامی است!', 'error'); return; }
+    var lessons = getData('lessons', LESSONS_DATA);
+    var newId = lessons.length + 1;
+    lessons.push({ id: newId, icon: icon, title: title, category: category, description: description || 'توضیحی وارد نشده.', level: level, content: content || 'محتوای در حال ویرایش...' });
+    setData('lessons', lessons);
+    renderAdminLessons();
+    hideAddLessonForm();
+    showToast('✅ درس اضافه شد!', 'success');
+    renderLessons();
+    renderAllLessons();
+}
 
 function renderPriceSettings() {
-    const container = document.getElementById('priceSettingsContainer');
+    var container = document.getElementById('priceSettingsContainer');
     if (!container) return;
-    
-    const lessons = DB.get('lessons', LESSONS_DATA);
-    const prices = DB.get('lessonPrices', DEFAULT_PRICES);
-    
-    let html = '';
-    lessons.forEach(lesson => {
-        const price = prices[lesson.id] !== undefined ? prices[lesson.id] : 100;
-        const isFree = price === 0;
-        html += `
-            <div class="price-setting" data-lesson-id="${lesson.id}">
-                <span class="lesson-title">${lesson.icon} ${lesson.title}</span>
-                <label>قیمت (سکه)</label>
-                <input type="number" class="price-input" data-lesson-id="${lesson.id}" value="${price}" min="0" step="10">
-                <button class="toggle-free ${isFree ? 'free' : 'paid'}" data-lesson-id="${lesson.id}" onclick="toggleFreePrice(${lesson.id})">
-                    ${isFree ? '✅ رایگان' : '💰 پولی'}
-                </button>
-            </div>
-        `;
-    });
+    var lessons = getData('lessons', LESSONS_DATA);
+    var prices = getData('lessonPrices', DEFAULT_PRICES);
+    var html = '';
+    for (var i = 0; i < lessons.length; i++) {
+        var l = lessons[i];
+        var price = prices[l.id] !== undefined ? prices[l.id] : 100;
+        html += '<div class="price-setting"><span class="lesson-title">' + l.icon + ' ' + l.title + '</span><label>قیمت</label><input type="number" class="price-input" data-id="' + l.id + '" value="' + price + '" min="0" step="10"></div>';
+    }
     container.innerHTML = html;
 }
 
-function toggleFreePrice(lessonId) {
-    const prices = DB.get('lessonPrices', DEFAULT_PRICES);
-    const currentPrice = prices[lessonId] !== undefined ? prices[lessonId] : 100;
-    
-    if (currentPrice === 0) {
-        prices[lessonId] = 100;
-    } else {
-        prices[lessonId] = 0;
-    }
-    
-    DB.set('lessonPrices', prices);
-    renderPriceSettings();
-    showToast('✅ وضعیت قیمت تغییر کرد!', 'success');
+function savePrices() {
+    var inputs = document.querySelectorAll('.price-input');
+    var prices = {};
+    inputs.forEach(function(input) { var id = parseInt(input.dataset.id); prices[id] = parseInt(input.value) || 0; });
+    setData('lessonPrices', prices);
+    showToast('✅ قیمت‌ها ذخیره شد!', 'success');
+    renderAllLessons();
+    renderLessons();
 }
 
-function setupPriceSettings() {
-    const saveBtn = document.getElementById('savePriceSettingsBtn');
-    if (!saveBtn) return;
-    
-    renderPriceSettings();
-    
-    saveBtn.addEventListener('click', function() {
-        const inputs = document.querySelectorAll('.price-input');
-        const prices = {};
-        inputs.forEach(input => {
-            const lessonId = parseInt(input.dataset.lessonId);
-            const value = parseInt(input.value) || 0;
-            prices[lessonId] = Math.max(0, value);
-        });
-        
-        DB.set('lessonPrices', prices);
-        showToast('✅ تنظیمات قیمت ذخیره شد!', 'success');
-        renderPriceSettings();
-        renderLessons();
-        renderAllLessons();
+function renderUsers() {
+    var container = document.getElementById('usersListContainer');
+    if (!container) return;
+    var users = getData('users', []);
+    var progress = getData('progress', {});
+    var lessons = getData('lessons', LESSONS_DATA);
+    var userCoins = getData('userCoins', {});
+    if (users.length === 0) {
+        container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:30px;">هیچ کاربری ثبت نام نکرده است.</p>';
+        return;
+    }
+    var html = '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-weight:700;color:#2dd4bf;font-size:13px;text-align:center;"><span>👤 نام کاربری</span><span>🪙 سکه</span><span>📚 درس‌ها</span><span>📖 آخرین درس</span></div>';
+    for (var i = 0; i < users.length; i++) {
+        var user = users[i];
+        var username = user.username;
+        var completed = 0;
+        for (var key in progress) { if (progress[key] === 100) completed++; }
+        var lastLesson = getData('lastLesson', null);
+        var lastLessonTitle = 'ندارد';
+        if (lastLesson) {
+            for (var j = 0; j < lessons.length; j++) {
+                if (lessons[j].id === lastLesson) { lastLessonTitle = lessons[j].title; break; }
+            }
+        }
+        var coins = userCoins[username] || 0;
+        html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;align-items:center;"><span style="color:#ffffff;font-weight:600;">' + username + (user.isAdmin ? ' ⭐' : '') + '</span><span style="color:#fbbf24;font-weight:700;">' + coins + '</span><span style="color:#4ade80;font-weight:600;">' + completed + ' / ' + lessons.length + '</span><span style="color:#7f8da5;font-size:13px;">' + lastLessonTitle + '</span></div>';
+    }
+    container.innerHTML = html;
+}
+
+// ============================================
+// پنل مدیریت - پیام‌ها
+// ============================================
+
+function renderMessages() {
+    var container = document.getElementById('messagesListContainer');
+    if (!container) return;
+    var messages = getData('supportMessages', []);
+    if (messages.length === 0) {
+        container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:20px;">هیچ پیامی وجود ندارد.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = messages.length - 1; i >= 0; i--) {
+        var m = messages[i];
+        var statusColor = m.closed ? '#ef4444' : (m.replied ? '#4ade80' : '#fbbf24');
+        var statusText = m.closed ? '🔒 بسته شده' : (m.replied ? '✅ پاسخ داده شده' : '⏳ در انتظار پاسخ');
+        var ticketId = m.ticketId || (i + 1);
+        html += '<div class="message-item" style="border-right:3px solid ' + statusColor + ';margin-bottom:15px;padding:15px;background:rgba(255,255,255,0.02);border-radius:10px;"><div class="message-header" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:6px;"><span class="sender" style="font-weight:700;color:#2dd4bf;">👤 ' + m.username + '</span><span style="font-size:11px;color:#7f8da5;">🆔 #' + ticketId + ' - ' + m.date + ' ' + (m.time || '') + '</span><span style="font-size:11px;color:' + statusColor + ';">' + statusText + '</span></div><div class="message-text" style="color:#c8d0dc;font-size:14px;padding:6px 0;">' + m.message + '</div>';
+        if (m.replied && m.reply) {
+            html += '<div style="margin-top:10px;padding:12px 15px;background:rgba(45,212,191,0.08);border-radius:8px;border-right:3px solid #2dd4bf;"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px;"><span style="color:#2dd4bf;font-size:13px;font-weight:600;">📩 پاسخ ادمین</span><span style="font-size:10px;color:#7f8da5;">' + (m.repliedAt || '') + '</span></div><div style="color:#c8d0dc;font-size:14px;margin-top:6px;">' + m.reply + '</div></div>';
+        }
+        if (m.closed) { html += '<div style="margin-top:6px;font-size:11px;color:#7f8da5;">🔒 بسته شده در: ' + (m.closedAt || '') + '</div>'; }
+        html += '<div class="message-actions" style="margin-top:12px;">';
+        if (!m.replied && !m.closed) {
+            html += '<textarea id="replyText_' + i + '" placeholder="پاسخ خود را بنویس..." style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;font-family:Vazirmatn,sans-serif;font-size:13px;resize:vertical;min-height:45px;"></textarea><button class="reply-btn" onclick="replyToMessage(' + i + ')" style="margin-top:6px;padding:6px 16px;border:none;border-radius:8px;background:#2dd4bf;color:#0a0e1a;font-family:Vazirmatn,sans-serif;font-weight:700;cursor:pointer;">📤 ارسال پاسخ</button>';
+        } else if (!m.closed && m.replied) {
+            html += '<button class="reply-btn" onclick="closeTicketFromAdmin(' + i + ')" style="margin-top:6px;padding:6px 16px;border:none;border-radius:8px;background:#ef4444;color:#fff;font-family:Vazirmatn,sans-serif;font-weight:700;cursor:pointer;">🔒 بستن تیکت</button>';
+        }
+        html += '</div></div>';
+    }
+    container.innerHTML = html;
+}
+
+function replyToMessage(index) {
+    var textarea = document.getElementById('replyText_' + index);
+    if (!textarea) return;
+    var reply = textarea.value.trim();
+    if (!reply) { showToast('⚠️ متن پاسخ را بنویس!', 'error'); return; }
+    var messages = getData('supportMessages', []);
+    var actualIndex = messages.length - 1 - index;
+    if (actualIndex < 0 || actualIndex >= messages.length) { showToast('❌ پیام پیدا نشد!', 'error'); return; }
+    messages[actualIndex].reply = reply;
+    messages[actualIndex].replied = true;
+    messages[actualIndex].repliedAt = new Date().toLocaleDateString('fa-IR') + ' - ' + new Date().toLocaleTimeString('fa-IR');
+    setData('supportMessages', messages);
+    showToast('✅ پاسخ شما با موفقیت ارسال شد!', 'success');
+    renderMessages();
+}
+
+function closeTicketFromAdmin(index) {
+    if (!confirm('🔒 آیا مطمئنی میخوای این تیکت رو ببندی؟')) return;
+    var messages = getData('supportMessages', []);
+    var actualIndex = messages.length - 1 - index;
+    if (actualIndex < 0 || actualIndex >= messages.length) { showToast('❌ تیکت پیدا نشد!', 'error'); return; }
+    messages[actualIndex].closed = true;
+    messages[actualIndex].closedAt = new Date().toLocaleDateString('fa-IR') + ' - ' + new Date().toLocaleTimeString('fa-IR');
+    setData('supportMessages', messages);
+    showToast('🔒 تیکت با موفقیت بسته شد!', 'success');
+    renderMessages();
+}
+
+// ============================================
+// پنل مدیریت - اعلان‌ها (کامل)
+// ============================================
+
+function renderNotifications() {
+    var container = document.getElementById('notificationsList');
+    if (!container) return;
+    var notifications = getData('notifications', []);
+    if (notifications.length === 0) {
+        container.innerHTML = '<p style="color:#7f8da5;text-align:center;padding:20px;">هیچ اعلانی منتشر نشده است.</p>';
+        return;
+    }
+    var html = '';
+    for (var i = notifications.length - 1; i >= 0; i--) {
+        var n = notifications[i];
+        var color = n.type === 'success' ? '#4ade80' : n.type === 'warning' ? '#fbbf24' : '#60a5fa';
+        html += '<div class="notification-item" style="border-right-color:' + color + ';"><div class="notif-title" style="color:' + color + ';">' + n.title + '</div><div class="notif-text">' + n.text + '</div><div class="notif-date">' + n.date + ' - ' + n.time + '</div>' + (n.editedAt ? '<div style="font-size:10px;color:#7f8da5;margin-top:4px;">✏️ ویرایش شده: ' + n.editedAt + '</div>' : '') + '<div style="display:flex;gap:8px;margin-top:10px;"><button class="btn-edit" onclick="editNotification(' + i + ')">✏️ ویرایش</button><button class="btn-delete" onclick="deleteNotification(' + i + ')">🗑️ حذف</button></div></div>';
+    }
+    container.innerHTML = html;
+}
+
+function editNotification(index) {
+    var notifications = getData('notifications', []);
+    var n = notifications[index];
+    if (!n) { showToast('❌ اعلان پیدا نشد!', 'error'); return; }
+    var newTitle = prompt('عنوان جدید:', n.title);
+    if (newTitle === null) return;
+    if (!newTitle.trim()) { showToast('⚠️ عنوان نمی‌تواند خالی باشد!', 'error'); return; }
+    var newText = prompt('متن جدید:', n.text);
+    if (newText === null) return;
+    if (!newText.trim()) { showToast('⚠️ متن نمی‌تواند خالی باشد!', 'error'); return; }
+    var newType = prompt('نوع جدید (info/success/warning):', n.type);
+    if (newType === null) return;
+    if (!['info', 'success', 'warning'].includes(newType)) { showToast('⚠️ نوع باید info، success یا warning باشد!', 'error'); return; }
+    notifications[index] = { title: newTitle.trim(), text: newText.trim(), type: newType, date: n.date, time: n.time, editedAt: new Date().toLocaleDateString('fa-IR') + ' - ' + new Date().toLocaleTimeString('fa-IR') };
+    setData('notifications', notifications);
+    renderNotifications();
+    setData('notificationsRead', false);
+    showToast('✅ اعلان ویرایش شد!', 'success');
+}
+
+function deleteNotification(index) {
+    if (!confirm('⚠️ مطمئنی میخوای این اعلان رو حذف کنی؟')) return;
+    var notifications = getData('notifications', []);
+    notifications.splice(index, 1);
+    setData('notifications', notifications);
+    renderNotifications();
+    setData('notificationsRead', false);
+    showToast('🗑️ اعلان حذف شد!', 'info');
+}
+
+function setupNotifications() {
+    var publishBtn = document.getElementById('publishNotificationBtn');
+    if (!publishBtn) return;
+    renderNotifications();
+    publishBtn.addEventListener('click', function() {
+        var title = document.getElementById('notificationTitle').value.trim();
+        var text = document.getElementById('notificationText').value.trim();
+        var type = document.getElementById('notificationType').value;
+        if (!title || !text) { showToast('⚠️ لطفاً عنوان و متن اعلان را وارد کن!', 'error'); return; }
+        var notifications = getData('notifications', []);
+        notifications.push({ title: title, text: text, type: type, date: new Date().toLocaleDateString('fa-IR'), time: new Date().toLocaleTimeString('fa-IR') });
+        setData('notifications', notifications);
+        setData('notificationsRead', false);
+        document.getElementById('notificationTitle').value = '';
+        document.getElementById('notificationText').value = '';
+        renderNotifications();
+        showToast('📢 اعلان با موفقیت منتشر شد!', 'success');
     });
 }
 
-// ============================================
-// بقیه توابع (openLesson, loadLessonDetail, ...)
-// ============================================
-
-function openLesson(lessonId) {
-    if (isLessonLocked(lessonId)) {
-        showToast('🔒 این درس قفل است! ابتدا آن را باز کنید.', 'error');
-        return;
+function showTab(tab) {
+    document.querySelectorAll('.admin-panel').forEach(function(el) { el.style.display = 'none'; });
+    var panel = document.getElementById('tab-' + tab);
+    if (panel) panel.style.display = 'block';
+    document.querySelectorAll('.admin-tab').forEach(function(el) { el.classList.remove('active'); });
+    var btns = document.querySelectorAll('.admin-tab');
+    for (var i = 0; i < btns.length; i++) {
+        if (btns[i].getAttribute('onclick') && btns[i].getAttribute('onclick').includes("'" + tab + "'")) {
+            btns[i].classList.add('active');
+        }
     }
-    const lessons = DB.get('lessons', LESSONS_DATA);
-    const lesson = lessons.find(l => l.id === lessonId);
-    if (!lesson) {
-        showToast('❌ درس پیدا نشد!', 'error');
-        return;
-    }
-    DB.set('lastLesson', lessonId);
-    window.location.href = `lesson-detail.html?id=${lessonId}`;
+    if (tab === 'lessons') renderAdminLessons();
+    if (tab === 'prices') renderPriceSettings();
+    if (tab === 'users') renderUsers();
+    if (tab === 'messages') renderMessages();
+    if (tab === 'notifications') renderNotifications();
 }
 
-// ===== بقیه توابع (با تغییرات لازم) =====
-// ... (بقیه کدهای قبلی با اضافه شدن updateCoinDisplay در جاهای مناسب)
+// ============================================
+// سکه رایگان (تبلیغات + گردونه)
+// ============================================
 
-// ===== بارگذاری پروفایل با سکه =====
-function loadProfile() {
-    const user = DB.get('user', { name: 'کاربر مهمان' });
-    const progress = DB.get('progress', {});
-    const completed = Object.values(progress).filter(p => p === 100).length;
-    const currentUser = DB.get('currentUser', null);
+function setupEarnCoinsPage() {
+    var adTimer = null;
+    var isAdWatching = false;
+    var userCoinsDisplay = document.getElementById('userCoinsDisplay');
+    var startAdBtn = document.getElementById('startAdBtn');
+    var completeAdBtn = document.getElementById('completeAdBtn');
+    var adMessage = document.getElementById('adMessage');
+    var adCooldownSpan = document.getElementById('adCooldown');
+    var spinChancesSpan = document.getElementById('spinChances');
+    var spinBtn = document.getElementById('spinBtn');
+    var spinResult = document.getElementById('spinResult');
+    var canvas = document.getElementById('wheelCanvas');
 
-    const displayName = currentUser || user.name;
-    const status = currentUser ? 'کاربر عضو' : 'ثبت‌نام نشده';
+    var prizes = [
+        { label: '۵ سکه', value: 5, color: '#4ade80' },
+        { label: '۱۵ سکه', value: 15, color: '#60a5fa' },
+        { label: '۵۰ سکه', value: 50, color: '#fbbf24' },
+        { label: '۱۰۰ سکه', value: 100, color: '#fb923c' },
+        { label: '۲۰۰ سکه', value: 200, color: '#f472b6' },
+        { label: 'پوچ', value: 0, color: '#9ca3af' }
+    ];
+    var weights = [25, 25, 20, 15, 5, 10];
+    var AD_DURATION = 45;
+    var AD_COOLDOWN = 10 * 60 * 1000;
 
-    document.getElementById('profileName').textContent = displayName;
-    document.getElementById('headerUsername').textContent = displayName;
-    document.getElementById('headerUserStatus').textContent = status;
-    document.getElementById('profileStatus').textContent = status;
-    document.getElementById('profileCompleted').textContent = completed;
-    document.getElementById('profileStreak').textContent = DB.get('stats', { streak: 0 }).streak || 0;
-    document.getElementById('profileHours').textContent = (DB.get('stats', { hours: 0 }).hours || 0) + ' ساعت';
-    document.getElementById('profileCoins').textContent = DB.get('coins', 0);
-    document.getElementById('nameInput').value = displayName;
+    var savedState = getData('adState', null);
+    var lastAdTime = savedState ? savedState.lastAdTime : 0;
+    var adTimeLeft = savedState ? savedState.adTimeLeft : AD_DURATION;
+    var isAdWatchingSaved = savedState ? savedState.isAdWatching : false;
+    var spinCount = savedState ? savedState.spinCount : 0;
+    var spinChances = savedState ? savedState.spinChances : 0;
 
-    // ... بقیه کدهای saveNameBtn و resetAllBtn
+    function saveAdState() {
+        var state = { lastAdTime: lastAdTime, adTimeLeft: adTimeLeft, isAdWatching: isAdWatching, spinCount: spinCount, spinChances: spinChances };
+        setData('adState', state);
+    }
+
+    function updateCoinsDisplay() {
+        var coins = getData('coins', 0);
+        if (userCoinsDisplay) userCoinsDisplay.textContent = coins;
+        var headerCoin = document.getElementById('headerCoinCount');
+        if (headerCoin) headerCoin.textContent = coins;
+    }
+
+    function addCoins(amount) {
+        var coins = getData('coins', 0);
+        setData('coins', coins + amount);
+        updateCoinsDisplay();
+        showToast('🪙 ' + amount + ' سکه اضافه شد!', 'success');
+        saveAdState();
+    }
+
+    function updateAdStatus() {
+        var now = Date.now();
+        var timeSinceLastAd = now - lastAdTime;
+        if (isAdWatching && adTimeLeft > 0 && adTimeLeft < AD_DURATION) {
+            if (startAdBtn) startAdBtn.disabled = true;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
+            if (adTimer) clearInterval(adTimer);
+            adTimer = setInterval(function() {
+                adTimeLeft--;
+                if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; }
+                saveAdState();
+                if (adTimeLeft <= 0) {
+                    clearInterval(adTimer); adTimer = null;
+                    if (completeAdBtn) completeAdBtn.disabled = false;
+                    if (adMessage) { adMessage.textContent = '✅ تموم شد! اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
+                    isAdWatching = false;
+                    saveAdState();
+                }
+            }, 1000);
+            return;
+        }
+        if (lastAdTime === 0) {
+            if (startAdBtn) startAdBtn.disabled = false;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
+            if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+            return;
+        }
+        if (timeSinceLastAd < AD_COOLDOWN) {
+            var remaining = Math.ceil((AD_COOLDOWN - timeSinceLastAd) / 60000);
+            if (startAdBtn) startAdBtn.disabled = true;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '⏳ صبر کن...'; adMessage.style.color = '#f59e0b'; }
+            if (adCooldownSpan) adCooldownSpan.textContent = remaining;
+        } else {
+            if (startAdBtn) startAdBtn.disabled = false;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
+            if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+        }
+        saveAdState();
+    }
+
+    if (startAdBtn) {
+        startAdBtn.addEventListener('click', function() {
+            if (isAdWatching) return;
+            if (startAdBtn.disabled) { showToast('⏳ منتظر بمان...', 'error'); return; }
+            isAdWatching = true;
+            adTimeLeft = AD_DURATION;
+            startAdBtn.disabled = true;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
+            saveAdState();
+            if (adTimer) clearInterval(adTimer);
+            adTimer = setInterval(function() {
+                adTimeLeft--;
+                if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; }
+                saveAdState();
+                if (adTimeLeft <= 0) {
+                    clearInterval(adTimer); adTimer = null;
+                    if (completeAdBtn) completeAdBtn.disabled = false;
+                    if (adMessage) { adMessage.textContent = '✅ تموم شد! اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
+                    isAdWatching = false;
+                    saveAdState();
+                }
+            }, 1000);
+        });
+    }
+
+    if (completeAdBtn) {
+        completeAdBtn.addEventListener('click', function() {
+            if (completeAdBtn.disabled) return;
+            addCoins(20);
+            lastAdTime = Date.now();
+            isAdWatching = false;
+            if (startAdBtn) startAdBtn.disabled = true;
+            if (completeAdBtn) completeAdBtn.disabled = true;
+            if (adMessage) { adMessage.textContent = '✅ دریافت شد!'; adMessage.style.color = '#4ade80'; }
+            spinCount++;
+            if (spinCount % 3 === 0) {
+                spinChances++;
+                if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
+                if (spinBtn) { spinBtn.disabled = false; spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)'; }
+                showToast('🎟️ یک شانس گردونه!', 'success');
+            }
+            saveAdState();
+            updateAdStatus();
+            setTimeout(function() { updateAdStatus(); }, 1000);
+        });
+    }
+
+    function drawWheel(rotation) {
+        rotation = rotation || 0;
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var centerX = canvas.width / 2;
+        var centerY = canvas.height / 2;
+        var radius = Math.min(centerX, centerY) - 10;
+        var sliceAngle = (2 * Math.PI) / prizes.length;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (var i = 0; i < prizes.length; i++) {
+            var prize = prizes[i];
+            var startAngle = i * sliceAngle + rotation;
+            var endAngle = startAngle + sliceAngle;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.closePath();
+            ctx.fillStyle = prize.color;
+            ctx.fill();
+            ctx.strokeStyle = '#07152b';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(startAngle + sliceAngle / 2);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#07152b';
+            ctx.font = 'bold 12px Vazirmatn';
+            ctx.fillText(prize.label, radius * 0.65, 0);
+            ctx.restore();
+        }
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 12, 0, 2 * Math.PI);
+        ctx.fillStyle = '#2dd4bf';
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+    }
+
+    function spinWheel() {
+        if (spinChances <= 0) { showToast('❌ شانس نداری!', 'error'); return; }
+        spinChances--;
+        if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
+        if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 در حال چرخش...'; }
+        if (spinResult) spinResult.textContent = '';
+        saveAdState();
+        var totalWeight = weights.reduce(function(a, b) { return a + b; }, 0);
+        var random = Math.random() * totalWeight;
+        var selectedIndex = 0;
+        for (var i = 0; i < weights.length; i++) {
+            random -= weights[i];
+            if (random <= 0) { selectedIndex = i; break; }
+        }
+        var prize = prizes[selectedIndex];
+        var sliceAngle = (2 * Math.PI) / prizes.length;
+        var targetRotation = (2 * Math.PI) * 5 + (2 * Math.PI - (selectedIndex * sliceAngle + sliceAngle / 2));
+        var currentRotation = 0;
+        var duration = 4000;
+        var startTime = Date.now();
+        function animateWheel() {
+            var elapsed = Date.now() - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var ease = 1 - Math.pow(1 - progress, 3);
+            currentRotation = targetRotation * ease;
+            drawWheel(currentRotation);
+            if (progress < 1) {
+                requestAnimationFrame(animateWheel);
+            } else {
+                if (prize.value > 0) {
+                    addCoins(prize.value);
+                    if (spinResult) { spinResult.textContent = '🎉 ' + prize.label + ' برنده شدی!'; spinResult.style.color = '#4ade80'; }
+                } else {
+                    if (spinResult) { spinResult.textContent = '😐 متأسفانه پوچ!'; spinResult.style.color = '#9ca3af'; }
+                }
+                if (spinChances > 0) {
+                    if (spinBtn) { spinBtn.disabled = false; spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)'; }
+                } else {
+                    if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 بچرخون (۰ شانس)'; }
+                }
+                saveAdState();
+            }
+        }
+        animateWheel();
+    }
+
+    if (spinBtn) { spinBtn.addEventListener('click', spinWheel); }
+    setInterval(function() { updateAdStatus(); }, 60000);
+    drawWheel();
+    updateCoinsDisplay();
+    updateAdStatus();
+    spinChances = getData('spinChances', 0);
+    if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
+    if (spinBtn) {
+        if (spinChances > 0) {
+            spinBtn.disabled = false;
+            spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)';
+        }
+    }
+    function saveChances() { setData('spinChances', spinChances); }
+    var originalAddCoins = addCoins;
+    addCoins = function(amount) { originalAddCoins(amount); saveChances(); };
+    window.addEventListener('beforeunload', function() { saveAdState(); });
 }
 
-// ===== راه‌اندازی اولیه =====
+// ============================================
+// راه‌اندازی نهایی
+// ============================================
+
 document.addEventListener('DOMContentLoaded', function() {
-    // ... کدهای قبلی
-    
-    // تنظیمات قیمت در ادمین
-    if (window.location.pathname.includes('admin.html')) {
-        setupPriceSettings();
-    }
-    
+    createAdminAccount();
+    updateUserHeader();
+    updateAuthMenu();
     updateCoinDisplay();
+    if (document.getElementById('lessonsContainer')) renderLessons();
+    if (document.getElementById('allLessonsContainer')) renderAllLessons();
+    if (window.location.pathname.includes('lesson-detail.html')) loadLessonDetail();
+    if (window.location.pathname.includes('earn-coins.html')) setupEarnCoinsPage();
+    var continueBtn = document.getElementById('continueLesson');
+    if (continueBtn) continueBtn.onclick = continueLastLesson;
+    var searchInput = document.getElementById('searchLessons');
+    if (searchInput) {
+        searchInput.oninput = function() {
+            var search = this.value.trim().toLowerCase();
+            var cards = document.querySelectorAll('#allLessonsContainer .lesson-card');
+            cards.forEach(function(card) {
+                card.style.display = card.textContent.toLowerCase().includes(search) ? '' : 'none';
+            });
+        };
+    }
+    if (window.location.pathname.includes('admin.html')) {
+        renderAdminLessons();
+        renderPriceSettings();
+        renderUsers();
+        renderMessages();
+        setupNotifications();
+        var addBtn = document.getElementById('addLessonBtn');
+        if (addBtn) addBtn.onclick = showAddLessonForm;
+        var cancelBtn = document.getElementById('cancelAddLessonBtn');
+        if (cancelBtn) cancelBtn.onclick = hideAddLessonForm;
+        var saveBtn = document.getElementById('saveNewLessonBtn');
+        if (saveBtn) saveBtn.onclick = saveNewLesson;
+        var priceSaveBtn = document.getElementById('savePriceSettingsBtn');
+        if (priceSaveBtn) priceSaveBtn.onclick = savePrices;
+    }
+    console.log('🌰 فندق با موفقیت بارگذاری شد!');
 });
