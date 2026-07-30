@@ -69,6 +69,7 @@
         <!-- تب‌های مدیریت -->
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="lessons">📚 مدیریت درس‌ها</button>
+            <button class="admin-tab" data-tab="prices">💰 قیمت درس‌ها</button>
             <button class="admin-tab" data-tab="users">👥 کاربران</button>
             <button class="admin-tab" data-tab="messages">💬 پیام‌ها</button>
             <button class="admin-tab" data-tab="notifications">🔔 اعلان‌ها</button>
@@ -111,15 +112,25 @@
                     <label>محتوای آموزشی</label>
                     <textarea id="newLessonContent" rows="4" placeholder="متن آموزشی درس..."></textarea>
                 </div>
-                <div class="form-group">
-                    <label>لغات درس (هر لغت در یک خط: کلمه کره‌ای | تلفظ | معنی)</label>
-                    <textarea id="newLessonVocabulary" rows="6" placeholder="مثال:&#10;안녕하세요 | An-nyeong-ha-se-yo | سلام&#10;감사합니다 | Kam-sa-ham-ni-da | متشکرم"></textarea>
-                </div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;">
                     <button class="primary-btn" id="saveNewLessonBtn">💾 ذخیره درس</button>
                     <button class="primary-btn secondary" id="cancelAddLessonBtn">❌ انصراف</button>
                 </div>
             </div>
+        </div>
+
+        <!-- ===== بخش تنظیمات قیمت درس‌ها ===== -->
+        <div class="admin-panel" id="tab-prices" style="display:none;">
+            <h3>💰 تنظیمات قیمت درس‌ها</h3>
+            <p style="color:#7f8da5;font-size:13px;margin-bottom:15px;">
+                قیمت هر درس رو تعیین کن. عدد ۰ به معنی رایگان هست.
+            </p>
+            <div id="priceSettingsContainer">
+                <!-- توسط JS پر میشه -->
+            </div>
+            <button class="primary-btn" id="savePriceSettingsBtn" style="margin-top:15px;">
+                💾 ذخیره تنظیمات قیمت
+            </button>
         </div>
 
         <!-- ===== بخش مدیریت کاربران ===== -->

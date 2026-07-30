@@ -54,7 +54,7 @@
 
         <header class="topbar">
             <div class="welcome">
-                <h1>سلام، خوش اومدی! 👋</h1>
+                <h1>سلام، <span id="userDisplayName">کاربر مهمان</span> 👋</h1>
                 <p>آماده‌ای امروز کره‌ای یاد بگیری؟</p>
             </div>
             <div class="user">
@@ -62,25 +62,14 @@
                     <strong id="headerUsername">کاربر مهمان</strong>
                     <span id="headerUserStatus">ثبت‌نام نشده</span>
                 </div>
-                <!-- ===== دکمه زنگوله اعلان ===== -->
-                <div class="notification-bell" id="notificationBell" onclick="showNotifications()">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+                <!-- ===== نمایش سکه ===== -->
+                <div class="coin-display" id="coinDisplay">
+                    <span class="coin-icon">🪙</span>
+                    <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
                 <div class="avatar" id="headerAvatar">👤</div>
             </div>
         </header>
-
-        <!-- ===== پنل نمایش اعلان‌ها ===== -->
-        <div class="notification-panel" id="notificationPanel" style="display:none;">
-            <div class="notification-panel-header">
-                <h4>🔔 اعلان‌ها</h4>
-                <button onclick="closeNotifications()" style="background:transparent;border:none;color:#7f8da5;font-size:20px;cursor:pointer;">✕</button>
-            </div>
-            <div id="notificationList">
-                <p style="color:#7f8da5;text-align:center;padding:20px;">هیچ اعلانی وجود ندارد.</p>
-            </div>
-        </div>
 
         <section class="stats-top">
             <div class="stat-top-card">

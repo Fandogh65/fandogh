@@ -1470,3 +1470,130 @@ body {
     background: #2dd4bf;
     border-radius: 10px;
 }
+/* ============================================
+   نمایش سکه در هدر
+   ============================================ */
+
+.coin-display {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(45, 212, 191, 0.12);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(45, 212, 191, 0.15);
+    margin-left: 5px;
+}
+
+.coin-display .coin-icon {
+    font-size: 18px;
+}
+
+.coin-display .coin-count {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2dd4bf;
+}
+
+/* ===== کارت درس قفل‌شده ===== */
+.lesson-card.locked {
+    opacity: 0.7;
+    position: relative;
+}
+
+.lesson-card.locked .lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    backdrop-filter: blur(1px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.lesson-card .unlock-btn {
+    margin-top: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #fbbf24;
+    color: #0a0e1a;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.lesson-card .unlock-btn:hover {
+    transform: scale(1.02);
+    background: #f59e0b;
+}
+
+.lesson-card .lesson-price {
+    color: #fbbf24;
+    font-size: 13px;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* ===== پنل ادمین - تنظیمات قیمت ===== */
+.price-setting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    flex-wrap: wrap;
+}
+
+.price-setting label {
+    min-width: 120px;
+    color: #7f8da5;
+    font-size: 13px;
+}
+
+.price-setting input[type="number"] {
+    width: 80px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: #07152b;
+    color: #fff;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 13px;
+}
+
+.price-setting .toggle-free {
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: none;
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.price-setting .toggle-free.free {
+    background: #4ade80;
+    color: #0a0e1a;
+}
+
+.price-setting .toggle-free.paid {
+    background: #fbbf24;
+    color: #0a0e1a;
+}
+
+.price-setting .lesson-title {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 100px;
+}
