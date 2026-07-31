@@ -872,3 +872,28 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     console.log('🌰 فندق با موفقیت بارگذاری شد!');
 });
+// ============================================
+// دکمه شروع تماشا (تبلیغات تپسل)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    var adBtn = document.getElementById('showAdBtn');
+    if (adBtn) {
+        adBtn.addEventListener('click', function() {
+            if (typeof Android !== 'undefined' && Android) {
+                Android.showAd();
+            } else {
+                showToast('⚠️ این قابلیت فقط در اپلیکیشن قابل استفاده است!', 'error');
+            }
+        });
+    }
+});
+
+// ===== تابع دریافت جایزه =====
+function giveAdReward() {
+    var coins = getData('coins', 0);
+    var newCoins = coins + 20;
+    setData('coins', newCoins);
+    updateCoinDisplay();
+    showToast('🪙 ۲۰ سکه دریافت شد!', 'success');
+}
