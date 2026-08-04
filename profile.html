@@ -6,6 +6,11 @@
     <title>پروفایل | فندق</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- ===== اسکریپت یکتانت ===== -->
+    <script>
+        !function(e,t,n){e.yektanetAnalyticsObject=n,e[n]=e[n]||function(){e[n].q.push(arguments)},e[n].q=e[n].q||[];var a=t.getElementsByTagName("head")[0],r=new Date,c="https://cdn.yektanet.com/superscript/CxosvHK1/native-RewardJoy.com-47049/yn_pub.js?v="+r.getFullYear().toString()+"0"+r.getMonth()+"0"+r.getDate()+"0"+r.getHours(),s=t.createElement("link");s.rel="preload",s.as="script",s.href=c,a.appendChild(s);var l=t.createElement("script");l.async=!0,l.src=c,a.appendChild(l)}(window,document,"yektanet");
+    </script>
 </head>
 <body>
 
@@ -35,7 +40,6 @@
 
     <main class="main">
         
-        <!-- دکمه بازگشت به داشبورد -->
         <button class="back-home-btn" onclick="window.location.href='index.html'">
             <i class="fas fa-home"></i>
         </button>
@@ -54,7 +58,6 @@
                     <span class="coin-icon">🪙</span>
                     <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
-                <!-- ===== ماسکات فندق در هدر ===== -->
                 <div class="avatar" id="headerAvatar">
                     <img src="assets/mascot/hazelnut.png" alt="فندق" class="mascot-avatar">
                 </div>
@@ -63,7 +66,6 @@
 
         <section class="profile-card">
             <div class="profile-avatar">
-                <!-- ===== ماسکات فندق خوشحال در پروفایل ===== -->
                 <img src="assets/mascot/hazelnut-happy.png" alt="فندق خوشحال" class="profile-mascot">
                 <h2 id="profileName">کاربر مهمان</h2>
                 <p style="color:#7f8da5;" id="profileStatus">ثبت‌نام نشده</p>
@@ -93,32 +95,23 @@
 
     <script src="script.js"></script>
     <script>
-        // ===== منوی کشویی =====
         function toggleMenu() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('show');
         }
-
         function closeMenu() {
             document.getElementById('sidebar').classList.remove('open');
             document.getElementById('overlay').classList.remove('show');
         }
-
         document.querySelectorAll('.menu-item').forEach(function(item) {
             item.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    closeMenu();
-                }
+                if (window.innerWidth <= 768) closeMenu();
             });
         });
 
-        // ===== ذخیره نام کاربری =====
         document.getElementById('saveNameBtn').addEventListener('click', function() {
             var name = document.getElementById('nameInput').value.trim();
-            if (name === '') {
-                alert('لطفاً یک نام وارد کن!');
-                return;
-            }
+            if (name === '') { alert('لطفاً یک نام وارد کن!'); return; }
             localStorage.setItem('fandogh_username', name);
             document.getElementById('profileName').textContent = name;
             document.getElementById('headerUsername').textContent = name;
@@ -126,7 +119,6 @@
             alert('✅ نام با موفقیت ذخیره شد!');
         });
 
-        // ===== ریست همه =====
         document.getElementById('resetAllBtn').addEventListener('click', function() {
             if (confirm('⚠️ همه داده‌ها پاک میشن! مطمئنی؟')) {
                 localStorage.clear();
@@ -143,7 +135,6 @@
             }
         });
 
-        // ===== بارگذاری اطلاعات =====
         document.addEventListener('DOMContentLoaded', function() {
             var savedName = localStorage.getItem('fandogh_username');
             if (savedName) {
