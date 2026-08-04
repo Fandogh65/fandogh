@@ -54,13 +54,17 @@
                     <span class="coin-icon">🪙</span>
                     <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
-                <div class="avatar">👤</div>
+                <!-- ===== ماسکات فندق در هدر ===== -->
+                <div class="avatar" id="headerAvatar">
+                    <img src="assets/mascot/hazelnut.png" alt="فندق" class="mascot-avatar">
+                </div>
             </div>
         </header>
 
         <section class="profile-card">
             <div class="profile-avatar">
-                <div class="profile-avatar-icon">👤</div>
+                <!-- ===== ماسکات فندق خوشحال در پروفایل ===== -->
+                <img src="assets/mascot/hazelnut-happy.png" alt="فندق خوشحال" class="profile-mascot">
                 <h2 id="profileName">کاربر مهمان</h2>
                 <p style="color:#7f8da5;" id="profileStatus">ثبت‌نام نشده</p>
             </div>
@@ -88,5 +92,68 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+        // ===== منوی کشویی =====
+        function toggleMenu() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        function closeMenu() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('show');
+        }
+
+        document.querySelectorAll('.menu-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // ===== ذخیره نام کاربری =====
+        document.getElementById('saveNameBtn').addEventListener('click', function() {
+            var name = document.getElementById('nameInput').value.trim();
+            if (name === '') {
+                alert('لطفاً یک نام وارد کن!');
+                return;
+            }
+            localStorage.setItem('fandogh_username', name);
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('headerUsername').textContent = name;
+            document.getElementById('userDisplayName').textContent = name;
+            alert('✅ نام با موفقیت ذخیره شد!');
+        });
+
+        // ===== ریست همه =====
+        document.getElementById('resetAllBtn').addEventListener('click', function() {
+            if (confirm('⚠️ همه داده‌ها پاک میشن! مطمئنی؟')) {
+                localStorage.clear();
+                document.getElementById('profileName').textContent = 'کاربر مهمان';
+                document.getElementById('headerUsername').textContent = 'کاربر مهمان';
+                document.getElementById('userDisplayName').textContent = 'کاربر مهمان';
+                document.getElementById('nameInput').value = '';
+                document.getElementById('headerCoinCount').textContent = '0';
+                document.getElementById('profileCoins').textContent = '0';
+                document.getElementById('profileCompleted').textContent = '۰';
+                document.getElementById('profileStreak').textContent = '۰';
+                document.getElementById('profileHours').textContent = '۰ ساعت';
+                alert('🗑️ همه داده‌ها ریست شد!');
+            }
+        });
+
+        // ===== بارگذاری اطلاعات =====
+        document.addEventListener('DOMContentLoaded', function() {
+            var savedName = localStorage.getItem('fandogh_username');
+            if (savedName) {
+                document.getElementById('profileName').textContent = savedName;
+                document.getElementById('headerUsername').textContent = savedName;
+                document.getElementById('userDisplayName').textContent = savedName;
+                document.getElementById('nameInput').value = savedName;
+            }
+        });
+    </script>
+
 </body>
 </html>

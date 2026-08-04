@@ -577,12 +577,10 @@ function showTab(tab) {
 }
 
 // ============================================
-// سکه رایگان (تبلیغات + گردونه)
+// سکه رایگان (تبلیغات + گردونه) - نسخه جدید
 // ============================================
 
 function setupEarnCoinsPage() {
-    var adTimer = null;
-    var isAdWatching = false;
     var userCoinsDisplay = document.getElementById('userCoinsDisplay');
     var startAdBtn = document.getElementById('startAdBtn');
     var completeAdBtn = document.getElementById('completeAdBtn');
@@ -602,21 +600,34 @@ function setupEarnCoinsPage() {
         { label: 'پوچ', value: 0, color: '#9ca3af' }
     ];
     var weights = [25, 25, 20, 15, 5, 10];
-    var AD_DURATION = 45;
-    var AD_COOLDOWN = 10 * 60 * 1000;
 
-    var savedState = getData('adState', null);
-    var lastAdTime = savedState ? savedState.lastAdTime : 0;
-    var adTimeLeft = savedState ? savedState.adTimeLeft : AD_DURATION;
-    var isAdWatchingSaved = savedState ? savedState.isAdWatching : false;
-    var spinCount = savedState ? savedState.spinCount : 0;
-    var spinChances = savedState ? savedState.spinChances : 0;
+    // ===== کلیدهای ذخیره‌سازی =====
+    var STORAGE_KEY = 'adState_v2';
+    var AD_DURATION = 45; // ثانیه
+    var AD_COOLDOWN = 20 * 60; // ۲۰ دقیقه به ثانیه
 
-    function saveAdState() {
-        var state = { lastAdTime: lastAdTime, adTimeLeft: adTimeLeft, isAdWatching: isAdWatching, spinCount: spinCount, spinChances: spinChances };
-        setData('adState', state);
+    // ===== بارگذاری وضعیت ذخیره‌شده =====
+    var saved = getData(STORAGE_KEY, null);
+    var lastAdCompleteTime = saved ? saved.lastAdCompleteTime : 0; // timestamp
+    var adStartTime = saved ? saved.adStartTime : 0;
+    var isAdWatching = saved ? saved.isAdWatching : false;
+    var adTimeLeft = saved ? saved.adTimeLeft : AD_DURATION;
+    var spinChances = saved ? saved.spinChances : 0;
+    var watchCount = saved ? saved.watchCount : 0; // تعداد دفعات تکمیل شده
+
+    function saveState() {
+        var state = {
+            lastAdCompleteTime: lastAdCompleteTime,
+            adStartTime: adStartTime,
+            isAdWatching: isAdWatching,
+            adTimeLeft: adTimeLeft,
+            spinChances: spinChances,
+            watchCount: watchCount
+        };
+        setData(STORAGE_KEY, state);
     }
 
+    // ===== به‌روزرسانی نمایش سکه =====
     function updateCoinsDisplay() {
         var coins = getData('coins', 0);
         if (userCoinsDisplay) userCoinsDisplay.textContent = coins;
@@ -624,105 +635,130 @@ function setupEarnCoinsPage() {
         if (headerCoin) headerCoin.textContent = coins;
     }
 
+    // ===== اضافه کردن سکه =====
     function addCoins(amount) {
         var coins = getData('coins', 0);
         setData('coins', coins + amount);
         updateCoinsDisplay();
         showToast('🪙 ' + amount + ' سکه اضافه شد!', 'success');
-        saveAdState();
+        saveState();
     }
 
-    function updateAdStatus() {
+    // ===== وضعیت دکمه‌ها و پیام =====
+    function updateUI() {
         var now = Date.now();
-        var timeSinceLastAd = now - lastAdTime;
-        if (isAdWatching && adTimeLeft > 0 && adTimeLeft < AD_DURATION) {
-            if (startAdBtn) startAdBtn.disabled = true;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
-            if (adTimer) clearInterval(adTimer);
-            adTimer = setInterval(function() {
-                adTimeLeft--;
-                if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; }
-                saveAdState();
-                if (adTimeLeft <= 0) {
-                    clearInterval(adTimer); adTimer = null;
-                    if (completeAdBtn) completeAdBtn.disabled = false;
-                    if (adMessage) { adMessage.textContent = '✅ تموم شد! اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
-                    isAdWatching = false;
-                    saveAdState();
-                }
-            }, 1000);
+        var timeSinceLastComplete = (now - lastAdCompleteTime) / 1000; // ثانیه
+
+        // اگر در حال تماشا هستیم
+        if (isAdWatching) {
+            var elapsed = (now - adStartTime) / 1000;
+            var remaining = Math.max(0, AD_DURATION - elapsed);
+            adTimeLeft = Math.ceil(remaining);
+            if (adTimeLeft <= 0) {
+                // زمان تمام شده، دکمه اتمام فعال بشه
+                isAdWatching = false;
+                adTimeLeft = 0;
+                if (startAdBtn) startAdBtn.disabled = true;
+                if (completeAdBtn) { completeAdBtn.disabled = false; completeAdBtn.style.background = '#2dd4bf'; completeAdBtn.style.borderColor = '#2dd4bf'; }
+                if (adMessage) { adMessage.textContent = '✅ تبلیغ تموم شد! دکمه اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
+                saveState();
+            } else {
+                if (startAdBtn) startAdBtn.disabled = true;
+                if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
+                if (adMessage) { adMessage.textContent = '⏳ در حال پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
+                // تایمر برای به‌روزرسانی خودکار (هر ۱ ثانیه)
+                setTimeout(function() { updateUI(); }, 1000);
+            }
             return;
         }
-        if (lastAdTime === 0) {
-            if (startAdBtn) startAdBtn.disabled = false;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
-            if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+
+        // اگر در حالت آماده‌باش هستیم ولی تایمر کوادون فعاله
+        if (lastAdCompleteTime > 0 && timeSinceLastComplete < AD_COOLDOWN) {
+            var remainingMin = Math.ceil((AD_COOLDOWN - timeSinceLastComplete) / 60);
+            if (startAdBtn) startAdBtn.disabled = true;
+            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
+            if (adMessage) { adMessage.textContent = '⏳ صبر کن... (' + remainingMin + ' دقیقه)'; adMessage.style.color = '#f59e0b'; }
+            if (adCooldownSpan) adCooldownSpan.textContent = remainingMin;
+            // تایمر برای بروزرسانی هر دقیقه
+            setTimeout(function() { updateUI(); }, 60000);
             return;
         }
-        if (timeSinceLastAd < AD_COOLDOWN) {
-            var remaining = Math.ceil((AD_COOLDOWN - timeSinceLastAd) / 60000);
-            if (startAdBtn) startAdBtn.disabled = true;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '⏳ صبر کن...'; adMessage.style.color = '#f59e0b'; }
-            if (adCooldownSpan) adCooldownSpan.textContent = remaining;
-        } else {
-            if (startAdBtn) startAdBtn.disabled = false;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
-            if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+
+        // حالت آماده
+        if (startAdBtn) startAdBtn.disabled = false;
+        if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
+        if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
+        if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+        // اگر قبلاً کوادون تموم شده، lastAdCompleteTime رو ریست کن تا دوباره محاسبه نشه
+        if (lastAdCompleteTime > 0 && timeSinceLastComplete >= AD_COOLDOWN) {
+            lastAdCompleteTime = 0;
+            saveState();
         }
-        saveAdState();
+        // نمایش شانس‌ها
+        if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
+        if (spinBtn) {
+            if (spinChances > 0) {
+                spinBtn.disabled = false;
+                spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)';
+            } else {
+                spinBtn.disabled = true;
+                spinBtn.textContent = '🎡 بچرخون (۰ شانس)';
+            }
+        }
     }
 
+    // ===== شروع تماشا =====
     if (startAdBtn) {
         startAdBtn.addEventListener('click', function() {
-            if (isAdWatching) return;
-            if (startAdBtn.disabled) { showToast('⏳ منتظر بمان...', 'error'); return; }
+            if (startAdBtn.disabled) return;
+            var now = Date.now();
+            var timeSinceLastComplete = (now - lastAdCompleteTime) / 1000;
+            if (lastAdCompleteTime > 0 && timeSinceLastComplete < AD_COOLDOWN) {
+                showToast('⏳ هنوز زمان تماشای بعدی نرسیده!', 'error');
+                return;
+            }
+            // شروع تماشا
             isAdWatching = true;
+            adStartTime = now;
             adTimeLeft = AD_DURATION;
             startAdBtn.disabled = true;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
-            saveAdState();
-            if (adTimer) clearInterval(adTimer);
-            adTimer = setInterval(function() {
-                adTimeLeft--;
-                if (adMessage) { adMessage.textContent = '⏳ پخش... (' + adTimeLeft + 's)'; }
-                saveAdState();
-                if (adTimeLeft <= 0) {
-                    clearInterval(adTimer); adTimer = null;
-                    if (completeAdBtn) completeAdBtn.disabled = false;
-                    if (adMessage) { adMessage.textContent = '✅ تموم شد! اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
-                    isAdWatching = false;
-                    saveAdState();
-                }
-            }, 1000);
+            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
+            if (adMessage) { adMessage.textContent = '⏳ در حال پخش... (' + AD_DURATION + 's)'; adMessage.style.color = '#f59e0b'; }
+            saveState();
+            // شروع تایمر UI
+            setTimeout(function() { updateUI(); }, 1000);
         });
     }
 
+    // ===== اتمام تماشا =====
     if (completeAdBtn) {
         completeAdBtn.addEventListener('click', function() {
             if (completeAdBtn.disabled) return;
+            // اعطای سکه
             addCoins(20);
-            lastAdTime = Date.now();
+            watchCount++;
+            lastAdCompleteTime = Date.now();
             isAdWatching = false;
-            if (startAdBtn) startAdBtn.disabled = true;
-            if (completeAdBtn) completeAdBtn.disabled = true;
-            if (adMessage) { adMessage.textContent = '✅ دریافت شد!'; adMessage.style.color = '#4ade80'; }
-            spinCount++;
-            if (spinCount % 3 === 0) {
+            adTimeLeft = 0;
+            // بررسی شانس گردونه
+            if (watchCount % 3 === 0) {
                 spinChances++;
-                if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
-                if (spinBtn) { spinBtn.disabled = false; spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)'; }
-                showToast('🎟️ یک شانس گردونه!', 'success');
+                showToast('🎟️ یک شانس گردونه دریافت کردی!', 'success');
             }
-            saveAdState();
-            updateAdStatus();
-            setTimeout(function() { updateAdStatus(); }, 1000);
+            saveState();
+            updateUI();
+            updateCoinsDisplay();
+            // غیرفعال کردن دکمه اتمام
+            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
+            if (adMessage) { adMessage.textContent = '✅ سکه دریافت شد!'; adMessage.style.color = '#4ade80'; }
+            // بروزرسانی خودکار بعد از ۱ ثانیه
+            setTimeout(function() { updateUI(); }, 1000);
         });
     }
+
+    // ============================================
+    // گردونه شانس (همان کد قبلی با کمی تغییر)
+    // ============================================
 
     function drawWheel(rotation) {
         rotation = rotation || 0;
@@ -771,7 +807,8 @@ function setupEarnCoinsPage() {
         if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
         if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 در حال چرخش...'; }
         if (spinResult) spinResult.textContent = '';
-        saveAdState();
+        saveState();
+
         var totalWeight = weights.reduce(function(a, b) { return a + b; }, 0);
         var random = Math.random() * totalWeight;
         var selectedIndex = 0;
@@ -785,6 +822,7 @@ function setupEarnCoinsPage() {
         var currentRotation = 0;
         var duration = 4000;
         var startTime = Date.now();
+
         function animateWheel() {
             var elapsed = Date.now() - startTime;
             var progress = Math.min(elapsed / duration, 1);
@@ -805,29 +843,24 @@ function setupEarnCoinsPage() {
                 } else {
                     if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 بچرخون (۰ شانس)'; }
                 }
-                saveAdState();
+                saveState();
             }
         }
         animateWheel();
     }
 
     if (spinBtn) { spinBtn.addEventListener('click', spinWheel); }
-    setInterval(function() { updateAdStatus(); }, 60000);
+
+    // ===== مقداردهی اولیه =====
     drawWheel();
     updateCoinsDisplay();
-    updateAdStatus();
-    spinChances = getData('spinChances', 0);
-    if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
-    if (spinBtn) {
-        if (spinChances > 0) {
-            spinBtn.disabled = false;
-            spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)';
-        }
-    }
-    function saveChances() { setData('spinChances', spinChances); }
-    var originalAddCoins = addCoins;
-    addCoins = function(amount) { originalAddCoins(amount); saveChances(); };
-    window.addEventListener('beforeunload', function() { saveAdState(); });
+    updateUI();
+    saveState();
+
+    // ===== ذخیره وضعیت قبل از خروج =====
+    window.addEventListener('beforeunload', function() {
+        saveState();
+    });
 }
 
 // ============================================
@@ -872,6 +905,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     console.log('🌰 فندق با موفقیت بارگذاری شد!');
 });
+
 // ============================================
 // دکمه شروع تماشا (تبلیغات تپسل)
 // ============================================

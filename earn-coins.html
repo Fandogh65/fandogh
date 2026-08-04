@@ -35,7 +35,6 @@
 
     <main class="main">
         
-        <!-- دکمه بازگشت به داشبورد -->
         <button class="back-home-btn" onclick="window.location.href='index.html'">
             <i class="fas fa-home"></i>
         </button>
@@ -54,7 +53,9 @@
                     <span class="coin-icon">🪙</span>
                     <span class="coin-count" id="headerCoinCount">0</span>
                 </div>
-                <div class="avatar">👤</div>
+                <div class="avatar" id="headerAvatar">
+                    <img src="assets/mascot/hazelnut.png" alt="فندق" class="mascot-avatar">
+                </div>
             </div>
         </header>
 
@@ -63,21 +64,30 @@
             <span id="userCoinsDisplay" style="font-size:28px;font-weight:800;color:#2dd4bf;margin-right:10px;">0</span>
         </div>
 
-        <!-- ===== کادر تبلیغات ویدیویی ===== -->
+        <!-- ===== بخش تبلیغ جدید ===== -->
         <div class="coin-box">
-            <h3>📺 تماشای تبلیغ ویدیویی</h3>
+            <h3>📺 تماشای تبلیغ</h3>
             <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">
-                با تماشای یک تبلیغ ویدیویی، <strong>۲۰ سکه</strong> دریافت کن!
+                با زدن دکمه شروع تماشا و تماشای یک تبلیغ ۲۰ سکه رایگان بگیر
             </p>
 
             <div id="adStatus" style="background:rgba(255,255,255,0.03);padding:15px;border-radius:12px;margin-bottom:15px;text-align:center;">
                 <span id="adMessage" style="color:#4ade80;">✅ آماده تماشا</span>
             </div>
 
-            <!-- ===== دکمه شروع تماشا (جدید) ===== -->
-            <button class="primary-btn" id="showAdBtn" style="width:100%;padding:14px;font-size:16px;">
-                <i class="fas fa-play"></i> 📺 شروع تماشا
-            </button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="primary-btn" id="startAdBtn" style="flex:1;padding:14px;font-size:16px;min-width:120px;">
+                    🎬 شروع تماشا
+                </button>
+                <button class="primary-btn" id="completeAdBtn" style="flex:1;padding:14px;font-size:16px;min-width:120px;background:#555;border-color:#555;" disabled>
+                    ✅ اتمام تماشا
+                </button>
+            </div>
+
+            <!-- ===== متن راهنما ===== -->
+            <p style="color:#7f8da5;font-size:12px;text-align:center;margin-top:10px;">
+                برای تماشا، روی تبلیغ نمایش داده شده در پایین صفحه کلیک کنید.
+            </p>
 
             <div style="margin-top:12px;font-size:12px;color:#7f8da5;text-align:center;">
                 ⏱️ زمان باقی‌مانده تا تماشای بعدی: <span id="adCooldown">۰</span> دقیقه
@@ -88,7 +98,7 @@
         <div class="coin-box" style="margin-top:25px;">
             <h3>🎡 گردونه شانس</h3>
             <p style="color:#7f8da5;font-size:13px;margin:10px 0 15px 0;">
-                هر ۳ بار تماشای تبلیغ، یک شانس چرخوندن گردونه دریافت کن.
+                هر ۳ بار تماشای موفق تبلیغ، یک شانس چرخوندن گردونه دریافت کن.
             </p>
             <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:12px 18px;border-radius:12px;margin-bottom:15px;">
                 <span style="color:#7f8da5;font-size:13px;">🎟️ تعداد شانس‌ها:</span>
