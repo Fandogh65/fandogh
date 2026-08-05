@@ -1162,3 +1162,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     console.log('🌰 فندق با موفقیت بارگذاری شد!');
 });
+// ============================================
+// منوی همبرگر (برای همه صفحات)
+// ============================================
+
+function toggleMenu() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    if (sidebar) sidebar.classList.toggle('open');
+    if (overlay) overlay.classList.toggle('show');
+}
+
+function closeMenu() {
+    var sidebar = document.getElementById('sidebar');
+    var overlay = document.getElementById('overlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+}
