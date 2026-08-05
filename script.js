@@ -1,5 +1,5 @@
 // ============================================
-// 🌰 فندق - نسخه کامل نهایی با رفع مشکل باز کردن درس
+// 🌰 فندق - نسخه کامل نهایی (رفع مشکل باز کردن درس)
 // ============================================
 
 // ===== داده‌های درس‌ها =====
@@ -49,9 +49,12 @@ function isLessonLocked(id) {
     return unlocked.indexOf(id) === -1;
 }
 
-// ===== باز کردن درس با سکه (اصلاح شده با دیباگ) =====
+// ============================================
+// تابع باز کردن درس (اصلاح شده با دیباگ کامل)
+// ============================================
 function unlockLesson(id) {
-    console.log('🔓 تلاش برای باز کردن درس با ID:', id);
+    console.log('🔓 ===== شروع باز کردن درس =====');
+    console.log('📚 ID درس:', id);
     
     // ۱. دریافت قیمت درس
     var price = getLessonPrice(id);
@@ -77,30 +80,45 @@ function unlockLesson(id) {
         return false;
     }
     
-    // ۴. کسر سکه و باز کردن درس
+    // ۴. کسر سکه
     var newCoins = coins - price;
     setData('coins', newCoins);
+    console.log('✅ سکه جدید:', newCoins);
     
+    // ۵. باز کردن درس
     var unlocked = getData('unlockedLessons', []);
+    console.log('📋 لیست درس‌های باز شده قبلی:', unlocked);
+    
     if (unlocked.indexOf(id) === -1) {
         unlocked.push(id);
         setData('unlockedLessons', unlocked);
-        console.log('✅ درس با ID ' + id + ' باز شد!');
+        console.log('✅ درس با ID ' + id + ' به لیست بازشده اضافه شد.');
     } else {
-        console.log('ℹ️ درس قبلاً باز شده بود');
+        console.log('ℹ️ درس قبلاً باز شده بود.');
     }
     
-    // ۵. به‌روزرسانی نمایش
+    // ۶. ذخیره آخرین درس
+    setData('lastLesson', id);
+    
+    // ۷. به‌روزرسانی نمایش
     updateCoinDisplay();
     showToast('✅ درس باز شد!', 'success');
     
-    // ۶. بازرندر لیست درس‌ها (مهم!)
-    if (document.getElementById('lessonsContainer')) {
+    // ۸. رندر مجدد (مهم!)
+    var container1 = document.getElementById('lessonsContainer');
+    var container2 = document.getElementById('allLessonsContainer');
+    
+    if (container1) {
+        console.log('🔄 رندر مجدد lessonsContainer');
         renderLessons();
     }
-    if (document.getElementById('allLessonsContainer')) {
+    if (container2) {
+        console.log('🔄 رندر مجدد allLessonsContainer');
         renderAllLessons();
     }
+    
+    // ۹. نمایش پیام موفقیت
+    alert('✅ درس با موفقیت باز شد! حالا می‌تونی وارد درس بشی.');
     
     return true;
 }
@@ -114,15 +132,23 @@ function updateCoinDisplay() {
 
 // ===== باز کردن درس =====
 function openLesson(id) {
-    if (isLessonLocked(id)) { showToast('🔒 این درس قفل است!', 'error'); return; }
+    if (isLessonLocked(id)) { 
+        showToast('🔒 این درس قفل است!', 'error'); 
+        return; 
+    }
     var lessons = getData('lessons', LESSONS_DATA);
     var lesson = lessons.find(function(l) { return l.id === id; });
-    if (!lesson) { showToast('❌ درس پیدا نشد!', 'error'); return; }
+    if (!lesson) { 
+        showToast('❌ درس پیدا نشد!', 'error'); 
+        return; 
+    }
     setData('lastLesson', id);
     window.location.href = 'lesson-detail.html?id=' + id;
 }
 
-// ===== رندر درس‌ها (صفحه اصلی) =====
+// ============================================
+// رندر درس‌ها (با دکمه‌های اصلاح‌شده)
+// ============================================
 function renderLessons() {
     var container = document.getElementById('lessonsContainer');
     if (!container) return;
@@ -138,18 +164,22 @@ function renderLessons() {
         if (locked) html += '<div class="lock-overlay">🔒</div>';
         html += '<div class="lesson-icon">' + lesson.icon + '</div><h3>' + lesson.title + '</h3><p class="lesson-category">📘 ' + lesson.category + '</p>';
         if (!locked) {
-            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div><div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div><button class="primary-btn lesson-btn" onclick="openLesson(' + lesson.id + ')">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
+            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div>';
+            html += '<div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div>';
+            html += '<button class="primary-btn lesson-btn" data-lesson-id="' + lesson.id + '">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
         } else {
-            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div><button class="unlock-btn" onclick="unlockLesson(' + lesson.id + ')">🪙 باز کردن</button>';
+            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div>';
+            html += '<button class="unlock-btn" data-lesson-id="' + lesson.id + '">🪙 باز کردن</button>';
         }
         html += '</div>';
     }
     container.innerHTML = html;
+    attachLessonEvents();
     updateStats();
     updateCoinDisplay();
 }
 
-// ===== رندر همه درس‌ها (صفحه lessons) =====
+// ===== رندر همه درس‌ها =====
 function renderAllLessons() {
     var container = document.getElementById('allLessonsContainer');
     if (!container) return;
@@ -167,18 +197,57 @@ function renderAllLessons() {
         if (locked) html += '<div class="lock-overlay">🔒</div>';
         html += '<div class="lesson-icon">' + lesson.icon + '</div><h3>' + lesson.title + '</h3><p class="lesson-category">📘 ' + lesson.category + '</p><p style="font-size:12px;color:#7f8da5;margin-bottom:12px;">' + lesson.description + '</p>';
         if (!locked) {
-            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div><div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div><button class="primary-btn lesson-btn" onclick="openLesson(' + lesson.id + ')">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
+            html += '<div class="progress"><div class="progress-bar" style="width:' + p + '%;"></div></div>';
+            html += '<div class="progress-info"><span>' + (p === 100 ? '✅ تکمیل شده' : p > 0 ? 'در حال پیشرفت' : 'شروع نشده') + '</span><span>' + p + '%</span></div>';
+            html += '<button class="primary-btn lesson-btn" data-lesson-id="' + lesson.id + '">' + (p === 100 ? '📝 مرور درس' : 'ورود به درس') + '</button>';
         } else {
-            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div><button class="unlock-btn" onclick="unlockLesson(' + lesson.id + ')">🪙 باز کردن</button>';
+            html += '<div class="lesson-price">🔒 ' + price + ' سکه</div>';
+            html += '<button class="unlock-btn" data-lesson-id="' + lesson.id + '">🪙 باز کردن</button>';
         }
         html += '</div>';
     }
     container.innerHTML = html;
+    attachLessonEvents();
     var avg = lessons.length > 0 ? Math.round(total / lessons.length) : 0;
     var bar = document.getElementById('overallProgress');
     var text = document.getElementById('overallProgressText');
     if (bar) bar.style.width = avg + '%';
     if (text) text.textContent = avg + '%';
+}
+
+// ============================================
+// اتصال رویدادهای دکمه‌ها (روش جایگزین برای onclick)
+// ============================================
+function attachLessonEvents() {
+    // دکمه‌های "باز کردن" (unlock)
+    var unlockBtns = document.querySelectorAll('.unlock-btn');
+    unlockBtns.forEach(function(btn) {
+        btn.removeEventListener('click', handleUnlock);
+        btn.addEventListener('click', handleUnlock);
+    });
+    
+    // دکمه‌های "ورود به درس" (open)
+    var lessonBtns = document.querySelectorAll('.lesson-btn');
+    lessonBtns.forEach(function(btn) {
+        btn.removeEventListener('click', handleOpenLesson);
+        btn.addEventListener('click', handleOpenLesson);
+    });
+}
+
+function handleUnlock(e) {
+    var btn = e.currentTarget;
+    var id = parseInt(btn.getAttribute('data-lesson-id'));
+    console.log('🖱️ کلیک روی دکمه باز کردن برای درس ID:', id);
+    if (!id) return;
+    unlockLesson(id);
+}
+
+function handleOpenLesson(e) {
+    var btn = e.currentTarget;
+    var id = parseInt(btn.getAttribute('data-lesson-id'));
+    console.log('🖱️ کلیک روی دکمه ورود به درس ID:', id);
+    if (!id) return;
+    openLesson(id);
 }
 
 // ===== به‌روزرسانی آمار =====
