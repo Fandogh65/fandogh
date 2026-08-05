@@ -1,5 +1,5 @@
 // ============================================
-// 🌰 فندق - نسخه کامل نهایی
+// 🌰 فندق - نسخه کامل نهایی با رفع مشکل باز کردن درس
 // ============================================
 
 // ===== داده‌های درس‌ها =====
@@ -9,7 +9,7 @@ var LESSONS_DATA = [
     { id: 3, icon: '📖', title: 'گرامر پایه', category: 'درسی • خانواده', description: 'ساخت جمله‌های ساده کره‌ای', level: 'متوسط', content: 'ترتیب جمله: فاعل + مفعول + فعل' },
     { id: 4, icon: '📅', title: 'روزها و تاریخ', category: 'درسی • روزها و تاریخ', description: 'روزهای هفته و تاریخ‌ها', level: 'متوسط', content: 'یک‌شنبه = 일요일، دوشنبه = 월요일' },
     { id: 5, icon: '🕐', title: 'ساعت و زمان', category: 'درسی • ساعت و زمان', description: 'گفتن ساعت و زمان', level: 'پیشرفته', content: 'ساعت ۱ = 1시، ساعت ۳:۳۰ = 3시 30분' },
-    { id: 6, icon: '🛍️', title: 'خرید کردن', category: 'درسی • خرید کردن', description: 'مکالمات هنگام خرید', level: 'پیشرفته', content: 'قیمتش چنده؟ = 얼마예요？' }
+    { id: 6, icon: '🛍️', title: 'خرید کردن', category: 'درسی • خرید کردن', description: 'مکالمات هنگام خرید', level: 'پیشرفته', content: 'قیمتش چنده؟ = 얼마예요؟' }
 ];
 
 // ===== قیمت‌های پیش‌فرض =====
@@ -49,20 +49,59 @@ function isLessonLocked(id) {
     return unlocked.indexOf(id) === -1;
 }
 
-// ===== باز کردن درس با سکه =====
+// ===== باز کردن درس با سکه (اصلاح شده با دیباگ) =====
 function unlockLesson(id) {
+    console.log('🔓 تلاش برای باز کردن درس با ID:', id);
+    
+    // ۱. دریافت قیمت درس
     var price = getLessonPrice(id);
-    if (price === 0) { showToast('✅ این درس رایگان است!', 'info'); return false; }
+    console.log('💰 قیمت درس:', price);
+    
+    if (price === 0) {
+        showToast('✅ این درس رایگان است!', 'info');
+        return false;
+    }
+    
+    // ۲. دریافت سکه کاربر
     var coins = getData('coins', 0);
-    if (coins < price) { showToast('⚠️ به ' + price + ' سکه نیاز داری!', 'error'); return false; }
-    if (!confirm('آیا می‌خوای ' + price + ' سکه پرداخت کنی؟')) return false;
+    console.log('🪙 سکه فعلی:', coins);
+    
+    if (coins < price) {
+        showToast('⚠️ به ' + price + ' سکه نیاز داری! (داری: ' + coins + ')', 'error');
+        return false;
+    }
+    
+    // ۳. تأیید کاربر
+    if (!confirm('آیا می‌خوای ' + price + ' سکه پرداخت کنی؟')) {
+        console.log('❌ کاربر انصراف داد');
+        return false;
+    }
+    
+    // ۴. کسر سکه و باز کردن درس
     var newCoins = coins - price;
     setData('coins', newCoins);
+    
     var unlocked = getData('unlockedLessons', []);
-    if (unlocked.indexOf(id) === -1) { unlocked.push(id); setData('unlockedLessons', unlocked); }
+    if (unlocked.indexOf(id) === -1) {
+        unlocked.push(id);
+        setData('unlockedLessons', unlocked);
+        console.log('✅ درس با ID ' + id + ' باز شد!');
+    } else {
+        console.log('ℹ️ درس قبلاً باز شده بود');
+    }
+    
+    // ۵. به‌روزرسانی نمایش
     updateCoinDisplay();
     showToast('✅ درس باز شد!', 'success');
-    renderLessons();
+    
+    // ۶. بازرندر لیست درس‌ها (مهم!)
+    if (document.getElementById('lessonsContainer')) {
+        renderLessons();
+    }
+    if (document.getElementById('allLessonsContainer')) {
+        renderAllLessons();
+    }
+    
     return true;
 }
 
@@ -83,7 +122,7 @@ function openLesson(id) {
     window.location.href = 'lesson-detail.html?id=' + id;
 }
 
-// ===== رندر درس‌ها =====
+// ===== رندر درس‌ها (صفحه اصلی) =====
 function renderLessons() {
     var container = document.getElementById('lessonsContainer');
     if (!container) return;
@@ -110,7 +149,7 @@ function renderLessons() {
     updateCoinDisplay();
 }
 
-// ===== رندر همه درس‌ها =====
+// ===== رندر همه درس‌ها (صفحه lessons) =====
 function renderAllLessons() {
     var container = document.getElementById('allLessonsContainer');
     if (!container) return;
@@ -577,7 +616,7 @@ function showTab(tab) {
 }
 
 // ============================================
-// سکه رایگان (تبلیغات + گردونه) - نسخه جدید
+// سکه رایگان (تبلیغات + گردونه)
 // ============================================
 
 function setupEarnCoinsPage() {
@@ -601,19 +640,17 @@ function setupEarnCoinsPage() {
     ];
     var weights = [25, 25, 20, 15, 5, 10];
 
-    // ===== کلیدهای ذخیره‌سازی =====
     var STORAGE_KEY = 'adState_v2';
-    var AD_DURATION = 45; // ثانیه
-    var AD_COOLDOWN = 20 * 60; // ۲۰ دقیقه به ثانیه
+    var AD_DURATION = 45;
+    var AD_COOLDOWN = 20 * 60;
 
-    // ===== بارگذاری وضعیت ذخیره‌شده =====
     var saved = getData(STORAGE_KEY, null);
-    var lastAdCompleteTime = saved ? saved.lastAdCompleteTime : 0; // timestamp
+    var lastAdCompleteTime = saved ? saved.lastAdCompleteTime : 0;
     var adStartTime = saved ? saved.adStartTime : 0;
     var isAdWatching = saved ? saved.isAdWatching : false;
     var adTimeLeft = saved ? saved.adTimeLeft : AD_DURATION;
     var spinChances = saved ? saved.spinChances : 0;
-    var watchCount = saved ? saved.watchCount : 0; // تعداد دفعات تکمیل شده
+    var watchCount = saved ? saved.watchCount : 0;
 
     function saveState() {
         var state = {
@@ -627,7 +664,6 @@ function setupEarnCoinsPage() {
         setData(STORAGE_KEY, state);
     }
 
-    // ===== به‌روزرسانی نمایش سکه =====
     function updateCoinsDisplay() {
         var coins = getData('coins', 0);
         if (userCoinsDisplay) userCoinsDisplay.textContent = coins;
@@ -635,7 +671,6 @@ function setupEarnCoinsPage() {
         if (headerCoin) headerCoin.textContent = coins;
     }
 
-    // ===== اضافه کردن سکه =====
     function addCoins(amount) {
         var coins = getData('coins', 0);
         setData('coins', coins + amount);
@@ -644,70 +679,107 @@ function setupEarnCoinsPage() {
         saveState();
     }
 
-    // ===== وضعیت دکمه‌ها و پیام =====
-    function updateUI() {
-        var now = Date.now();
-        var timeSinceLastComplete = (now - lastAdCompleteTime) / 1000; // ثانیه
-
-        // اگر در حال تماشا هستیم
-        if (isAdWatching) {
-            var elapsed = (now - adStartTime) / 1000;
-            var remaining = Math.max(0, AD_DURATION - elapsed);
-            adTimeLeft = Math.ceil(remaining);
-            if (adTimeLeft <= 0) {
-                // زمان تمام شده، دکمه اتمام فعال بشه
-                isAdWatching = false;
-                adTimeLeft = 0;
-                if (startAdBtn) startAdBtn.disabled = true;
-                if (completeAdBtn) { completeAdBtn.disabled = false; completeAdBtn.style.background = '#2dd4bf'; completeAdBtn.style.borderColor = '#2dd4bf'; }
-                if (adMessage) { adMessage.textContent = '✅ تبلیغ تموم شد! دکمه اتمام رو بزن.'; adMessage.style.color = '#4ade80'; }
-                saveState();
-            } else {
-                if (startAdBtn) startAdBtn.disabled = true;
-                if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
-                if (adMessage) { adMessage.textContent = '⏳ در حال پخش... (' + adTimeLeft + 's)'; adMessage.style.color = '#f59e0b'; }
-                // تایمر برای به‌روزرسانی خودکار (هر ۱ ثانیه)
-                setTimeout(function() { updateUI(); }, 1000);
-            }
-            return;
-        }
-
-        // اگر در حالت آماده‌باش هستیم ولی تایمر کوادون فعاله
-        if (lastAdCompleteTime > 0 && timeSinceLastComplete < AD_COOLDOWN) {
-            var remainingMin = Math.ceil((AD_COOLDOWN - timeSinceLastComplete) / 60);
-            if (startAdBtn) startAdBtn.disabled = true;
-            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
-            if (adMessage) { adMessage.textContent = '⏳ صبر کن... (' + remainingMin + ' دقیقه)'; adMessage.style.color = '#f59e0b'; }
-            if (adCooldownSpan) adCooldownSpan.textContent = remainingMin;
-            // تایمر برای بروزرسانی هر دقیقه
-            setTimeout(function() { updateUI(); }, 60000);
-            return;
-        }
-
-        // حالت آماده
-        if (startAdBtn) startAdBtn.disabled = false;
-        if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
-        if (adMessage) { adMessage.textContent = '✅ آماده تماشا'; adMessage.style.color = '#4ade80'; }
-        if (adCooldownSpan) adCooldownSpan.textContent = '۰';
-        // اگر قبلاً کوادون تموم شده، lastAdCompleteTime رو ریست کن تا دوباره محاسبه نشه
-        if (lastAdCompleteTime > 0 && timeSinceLastComplete >= AD_COOLDOWN) {
-            lastAdCompleteTime = 0;
-            saveState();
-        }
-        // نمایش شانس‌ها
+    function updateSpinButton() {
         if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
         if (spinBtn) {
             if (spinChances > 0) {
                 spinBtn.disabled = false;
                 spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)';
+                spinBtn.style.background = '#2dd4bf';
+                spinBtn.style.color = '#0a0e1a';
+                spinBtn.style.opacity = '1';
+                spinBtn.style.cursor = 'pointer';
             } else {
                 spinBtn.disabled = true;
                 spinBtn.textContent = '🎡 بچرخون (۰ شانس)';
+                spinBtn.style.background = '#555';
+                spinBtn.style.color = '#fff';
+                spinBtn.style.opacity = '0.6';
+                spinBtn.style.cursor = 'not-allowed';
             }
         }
+        saveState();
     }
 
-    // ===== شروع تماشا =====
+    function updateUI() {
+        var now = Date.now();
+        var timeSinceLastComplete = (now - lastAdCompleteTime) / 1000;
+
+        if (isAdWatching) {
+            var elapsed = (now - adStartTime) / 1000;
+            var remaining = Math.max(0, AD_DURATION - elapsed);
+            adTimeLeft = Math.ceil(remaining);
+            if (adTimeLeft <= 0) {
+                isAdWatching = false;
+                adTimeLeft = 0;
+                if (startAdBtn) startAdBtn.disabled = true;
+                if (completeAdBtn) {
+                    completeAdBtn.disabled = false;
+                    completeAdBtn.style.background = '#2dd4bf';
+                    completeAdBtn.style.borderColor = '#2dd4bf';
+                    completeAdBtn.style.color = '#0a0e1a';
+                }
+                if (adMessage) {
+                    adMessage.textContent = '✅ تبلیغ تموم شد! دکمه اتمام رو بزن.';
+                    adMessage.style.color = '#4ade80';
+                }
+                saveState();
+                updateSpinButton();
+            } else {
+                if (startAdBtn) startAdBtn.disabled = true;
+                if (completeAdBtn) {
+                    completeAdBtn.disabled = true;
+                    completeAdBtn.style.background = '#555';
+                    completeAdBtn.style.borderColor = '#555';
+                    completeAdBtn.style.color = '#fff';
+                }
+                if (adMessage) {
+                    adMessage.textContent = '⏳ در حال پخش... (' + adTimeLeft + 's)';
+                    adMessage.style.color = '#f59e0b';
+                }
+                setTimeout(function() { updateUI(); }, 1000);
+            }
+            return;
+        }
+
+        if (lastAdCompleteTime > 0 && timeSinceLastComplete < AD_COOLDOWN) {
+            var remainingMin = Math.ceil((AD_COOLDOWN - timeSinceLastComplete) / 60);
+            if (startAdBtn) startAdBtn.disabled = true;
+            if (completeAdBtn) {
+                completeAdBtn.disabled = true;
+                completeAdBtn.style.background = '#555';
+                completeAdBtn.style.borderColor = '#555';
+                completeAdBtn.style.color = '#fff';
+            }
+            if (adMessage) {
+                adMessage.textContent = '⏳ صبر کن... (' + remainingMin + ' دقیقه)';
+                adMessage.style.color = '#f59e0b';
+            }
+            if (adCooldownSpan) adCooldownSpan.textContent = remainingMin;
+            setTimeout(function() { updateUI(); }, 60000);
+            updateSpinButton();
+            return;
+        }
+
+        if (startAdBtn) startAdBtn.disabled = false;
+        if (completeAdBtn) {
+            completeAdBtn.disabled = true;
+            completeAdBtn.style.background = '#555';
+            completeAdBtn.style.borderColor = '#555';
+            completeAdBtn.style.color = '#fff';
+        }
+        if (adMessage) {
+            adMessage.textContent = '✅ آماده تماشا';
+            adMessage.style.color = '#4ade80';
+        }
+        if (adCooldownSpan) adCooldownSpan.textContent = '۰';
+        if (lastAdCompleteTime > 0 && timeSinceLastComplete >= AD_COOLDOWN) {
+            lastAdCompleteTime = 0;
+            saveState();
+        }
+        updateSpinButton();
+    }
+
     if (startAdBtn) {
         startAdBtn.addEventListener('click', function() {
             if (startAdBtn.disabled) return;
@@ -717,47 +789,61 @@ function setupEarnCoinsPage() {
                 showToast('⏳ هنوز زمان تماشای بعدی نرسیده!', 'error');
                 return;
             }
-            // شروع تماشا
             isAdWatching = true;
             adStartTime = now;
             adTimeLeft = AD_DURATION;
             startAdBtn.disabled = true;
-            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
-            if (adMessage) { adMessage.textContent = '⏳ در حال پخش... (' + AD_DURATION + 's)'; adMessage.style.color = '#f59e0b'; }
+            if (completeAdBtn) {
+                completeAdBtn.disabled = true;
+                completeAdBtn.style.background = '#555';
+                completeAdBtn.style.borderColor = '#555';
+                completeAdBtn.style.color = '#fff';
+            }
+            if (adMessage) {
+                adMessage.textContent = '⏳ در حال پخش... (' + AD_DURATION + 's)';
+                adMessage.style.color = '#f59e0b';
+            }
             saveState();
-            // شروع تایمر UI
             setTimeout(function() { updateUI(); }, 1000);
         });
     }
 
-    // ===== اتمام تماشا =====
     if (completeAdBtn) {
         completeAdBtn.addEventListener('click', function() {
             if (completeAdBtn.disabled) return;
-            // اعطای سکه
+            
             addCoins(20);
             watchCount++;
             lastAdCompleteTime = Date.now();
             isAdWatching = false;
             adTimeLeft = 0;
-            // بررسی شانس گردونه
+            
             if (watchCount % 3 === 0) {
                 spinChances++;
                 showToast('🎟️ یک شانس گردونه دریافت کردی!', 'success');
+                updateSpinButton();
             }
+            
             saveState();
             updateUI();
             updateCoinsDisplay();
-            // غیرفعال کردن دکمه اتمام
-            if (completeAdBtn) { completeAdBtn.disabled = true; completeAdBtn.style.background = '#555'; completeAdBtn.style.borderColor = '#555'; }
-            if (adMessage) { adMessage.textContent = '✅ سکه دریافت شد!'; adMessage.style.color = '#4ade80'; }
-            // بروزرسانی خودکار بعد از ۱ ثانیه
+            
+            if (completeAdBtn) {
+                completeAdBtn.disabled = true;
+                completeAdBtn.style.background = '#555';
+                completeAdBtn.style.borderColor = '#555';
+                completeAdBtn.style.color = '#fff';
+            }
+            if (adMessage) {
+                adMessage.textContent = '✅ سکه دریافت شد!';
+                adMessage.style.color = '#4ade80';
+            }
             setTimeout(function() { updateUI(); }, 1000);
         });
     }
 
     // ============================================
-    // گردونه شانس (همان کد قبلی با کمی تغییر)
+    // گردونه شانس
     // ============================================
 
     function drawWheel(rotation) {
@@ -802,10 +888,13 @@ function setupEarnCoinsPage() {
     }
 
     function spinWheel() {
-        if (spinChances <= 0) { showToast('❌ شانس نداری!', 'error'); return; }
+        if (spinChances <= 0) {
+            showToast('❌ شانس نداری!', 'error');
+            return;
+        }
+        
         spinChances--;
-        if (spinChancesSpan) spinChancesSpan.textContent = spinChances;
-        if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 در حال چرخش...'; }
+        updateSpinButton();
         if (spinResult) spinResult.textContent = '';
         saveState();
 
@@ -823,6 +912,13 @@ function setupEarnCoinsPage() {
         var duration = 4000;
         var startTime = Date.now();
 
+        if (spinBtn) {
+            spinBtn.disabled = true;
+            spinBtn.textContent = '🎡 در حال چرخش...';
+            spinBtn.style.background = '#555';
+            spinBtn.style.color = '#fff';
+        }
+
         function animateWheel() {
             var elapsed = Date.now() - startTime;
             var progress = Math.min(elapsed / duration, 1);
@@ -834,33 +930,61 @@ function setupEarnCoinsPage() {
             } else {
                 if (prize.value > 0) {
                     addCoins(prize.value);
-                    if (spinResult) { spinResult.textContent = '🎉 ' + prize.label + ' برنده شدی!'; spinResult.style.color = '#4ade80'; }
+                    if (spinResult) {
+                        spinResult.textContent = '🎉 ' + prize.label + ' برنده شدی!';
+                        spinResult.style.color = '#4ade80';
+                    }
                 } else {
-                    if (spinResult) { spinResult.textContent = '😐 متأسفانه پوچ!'; spinResult.style.color = '#9ca3af'; }
+                    if (spinResult) {
+                        spinResult.textContent = '😐 متأسفانه پوچ!';
+                        spinResult.style.color = '#9ca3af';
+                    }
                 }
-                if (spinChances > 0) {
-                    if (spinBtn) { spinBtn.disabled = false; spinBtn.textContent = '🎡 بچرخون (' + spinChances + ' شانس)'; }
-                } else {
-                    if (spinBtn) { spinBtn.disabled = true; spinBtn.textContent = '🎡 بچرخون (۰ شانس)'; }
-                }
+                updateSpinButton();
                 saveState();
             }
         }
         animateWheel();
     }
 
-    if (spinBtn) { spinBtn.addEventListener('click', spinWheel); }
+    if (spinBtn) {
+        spinBtn.addEventListener('click', spinWheel);
+    }
 
-    // ===== مقداردهی اولیه =====
     drawWheel();
     updateCoinsDisplay();
     updateUI();
+    updateSpinButton();
     saveState();
 
-    // ===== ذخیره وضعیت قبل از خروج =====
     window.addEventListener('beforeunload', function() {
         saveState();
     });
+}
+
+// ============================================
+// دکمه شروع تماشا (تبلیغات تپسل)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    var adBtn = document.getElementById('showAdBtn');
+    if (adBtn) {
+        adBtn.addEventListener('click', function() {
+            if (typeof Android !== 'undefined' && Android) {
+                Android.showAd();
+            } else {
+                showToast('⚠️ این قابلیت فقط در اپلیکیشن قابل استفاده است!', 'error');
+            }
+        });
+    }
+});
+
+function giveAdReward() {
+    var coins = getData('coins', 0);
+    var newCoins = coins + 20;
+    setData('coins', newCoins);
+    updateCoinDisplay();
+    showToast('🪙 ۲۰ سکه دریافت شد!', 'success');
 }
 
 // ============================================
@@ -905,29 +1029,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     console.log('🌰 فندق با موفقیت بارگذاری شد!');
 });
-
-// ============================================
-// دکمه شروع تماشا (تبلیغات تپسل)
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    var adBtn = document.getElementById('showAdBtn');
-    if (adBtn) {
-        adBtn.addEventListener('click', function() {
-            if (typeof Android !== 'undefined' && Android) {
-                Android.showAd();
-            } else {
-                showToast('⚠️ این قابلیت فقط در اپلیکیشن قابل استفاده است!', 'error');
-            }
-        });
-    }
-});
-
-// ===== تابع دریافت جایزه =====
-function giveAdReward() {
-    var coins = getData('coins', 0);
-    var newCoins = coins + 20;
-    setData('coins', newCoins);
-    updateCoinDisplay();
-    showToast('🪙 ۲۰ سکه دریافت شد!', 'success');
-}
