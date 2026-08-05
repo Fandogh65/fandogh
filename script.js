@@ -1,5 +1,5 @@
 // ============================================
-// 🌰 فندق - نسخه کامل نهایی (رفع مشکل باز کردن درس)
+// 🌰 فندق - نسخه کامل نهایی (رفع مشکل باز کردن درس + ویرایش با مودال)
 // ============================================
 
 // ===== داده‌های درس‌ها =====
@@ -385,9 +385,75 @@ function createAdminAccount() {
 }
 
 // ============================================
-// پنل مدیریت - درس‌ها
+// پنل مدیریت - درس‌ها (با مودال ویرایش)
 // ============================================
 
+// ===== باز کردن مودال ویرایش =====
+function openEditModal(index) {
+    var lessons = getData('lessons', LESSONS_DATA);
+    var l = lessons[index];
+    if (!l) {
+        showToast('❌ درس پیدا نشد!', 'error');
+        return;
+    }
+    
+    document.getElementById('editLessonIndex').value = index;
+    document.getElementById('editTitle').value = l.title || '';
+    document.getElementById('editIcon').value = l.icon || '📚';
+    document.getElementById('editCategory').value = l.category || '';
+    document.getElementById('editLevel').value = l.level || 'مقدماتی';
+    document.getElementById('editDescription').value = l.description || '';
+    document.getElementById('editContent').value = l.content || '';
+    
+    document.getElementById('editLessonModal').style.display = 'flex';
+}
+
+// ===== بستن مودال =====
+function closeEditModal() {
+    document.getElementById('editLessonModal').style.display = 'none';
+}
+
+// ===== ذخیره ویرایش =====
+function saveEditLesson() {
+    var index = parseInt(document.getElementById('editLessonIndex').value);
+    var lessons = getData('lessons', LESSONS_DATA);
+    var l = lessons[index];
+    if (!l) {
+        showToast('❌ درس پیدا نشد!', 'error');
+        return;
+    }
+    
+    var newTitle = document.getElementById('editTitle').value.trim();
+    var newIcon = document.getElementById('editIcon').value.trim() || '📚';
+    var newCategory = document.getElementById('editCategory').value.trim();
+    var newLevel = document.getElementById('editLevel').value;
+    var newDesc = document.getElementById('editDescription').value.trim();
+    var newContent = document.getElementById('editContent').value.trim();
+    
+    if (!newTitle || !newCategory) {
+        showToast('⚠️ عنوان و دسته‌بندی الزامی است!', 'error');
+        return;
+    }
+    
+    lessons[index] = {
+        id: l.id,
+        icon: newIcon,
+        title: newTitle,
+        category: newCategory,
+        description: newDesc || 'توضیحی وارد نشده.',
+        level: newLevel,
+        content: newContent || 'محتوای در حال ویرایش...'
+    };
+    
+    setData('lessons', lessons);
+    renderAdminLessons();
+    renderLessons();
+    renderAllLessons();
+    closeEditModal();
+    showToast('✅ درس با موفقیت ویرایش شد!', 'success');
+}
+
+// ===== رندر درس‌ها در پنل مدیریت =====
 function renderAdminLessons() {
     var container = document.getElementById('adminLessonsContainer');
     if (!container) return;
@@ -399,35 +465,24 @@ function renderAdminLessons() {
     var html = '';
     for (var i = 0; i < lessons.length; i++) {
         var l = lessons[i];
-        html += '<div class="admin-lesson-item" data-index="' + i + '"><div class="lesson-info"><span style="font-size:24px;">' + l.icon + '</span><span><strong>' + l.title + '</strong></span><span class="level-badge">' + (l.level || 'مقدماتی') + '</span><span style="color:#7f8da5;font-size:12px;">' + l.category + '</span></div><div class="lesson-actions"><button class="btn-edit" onclick="editLesson(' + i + ')">✏️ ویرایش</button><button class="btn-delete" onclick="deleteLesson(' + i + ')">🗑️ حذف</button></div></div>';
+        html += '<div class="admin-lesson-item" data-index="' + i + '">';
+        html += '<div class="lesson-info">';
+        html += '<span style="font-size:24px;">' + l.icon + '</span>';
+        html += '<span><strong>' + l.title + '</strong></span>';
+        html += '<span class="level-badge">' + (l.level || 'مقدماتی') + '</span>';
+        html += '<span style="color:#7f8da5;font-size:12px;">' + l.category + '</span>';
+        html += '</div>';
+        html += '<div class="lesson-actions">';
+        // استفاده از openEditModal به جای editLesson
+        html += '<button class="btn-edit" onclick="openEditModal(' + i + ')">✏️ ویرایش</button>';
+        html += '<button class="btn-delete" onclick="deleteLesson(' + i + ')">🗑️ حذف</button>';
+        html += '</div>';
+        html += '</div>';
     }
     container.innerHTML = html;
 }
 
-function editLesson(index) {
-    var lessons = getData('lessons', LESSONS_DATA);
-    var l = lessons[index];
-    if (!l) return;
-    var newTitle = prompt('عنوان جدید:', l.title);
-    if (newTitle !== null && newTitle.trim()) l.title = newTitle.trim();
-    var newIcon = prompt('آیکون جدید:', l.icon);
-    if (newIcon !== null) l.icon = newIcon.trim() || '📚';
-    var newCategory = prompt('دسته‌بندی جدید:', l.category);
-    if (newCategory !== null && newCategory.trim()) l.category = newCategory.trim();
-    var newLevel = prompt('سطح جدید (مقدماتی/متوسط/پیشرفته):', l.level || 'مقدماتی');
-    if (newLevel !== null) l.level = newLevel.trim() || 'مقدماتی';
-    var newDesc = prompt('توضیحات جدید:', l.description);
-    if (newDesc !== null) l.description = newDesc.trim() || 'توضیحی برای این درس وارد نشده است.';
-    var newContent = prompt('محتوای آموزشی جدید:', l.content || '');
-    if (newContent !== null) l.content = newContent.trim() || 'محتوای این درس در حال ویرایش است...';
-    lessons[index] = l;
-    setData('lessons', lessons);
-    renderAdminLessons();
-    renderLessons();
-    renderAllLessons();
-    showToast('✅ درس ویرایش شد!', 'success');
-}
-
+// ===== حذف درس =====
 function deleteLesson(index) {
     if (!confirm('⚠️ مطمئنی این درس رو حذف کنی؟')) return;
     if (!confirm('‼️ آخرین تأیید؟')) return;
@@ -446,6 +501,7 @@ function deleteLesson(index) {
     showToast('🗑️ درس حذف شد!', 'info');
 }
 
+// ===== افزودن درس جدید =====
 function showAddLessonForm() {
     var form = document.getElementById('addLessonForm');
     if (form) form.style.display = 'block';
@@ -479,6 +535,10 @@ function saveNewLesson() {
     renderAllLessons();
 }
 
+// ============================================
+// پنل مدیریت - قیمت‌ها
+// ============================================
+
 function renderPriceSettings() {
     var container = document.getElementById('priceSettingsContainer');
     if (!container) return;
@@ -502,6 +562,10 @@ function savePrices() {
     renderAllLessons();
     renderLessons();
 }
+
+// ============================================
+// پنل مدیریت - کاربران
+// ============================================
 
 function renderUsers() {
     var container = document.getElementById('usersListContainer');
@@ -596,7 +660,7 @@ function closeTicketFromAdmin(index) {
 }
 
 // ============================================
-// پنل مدیریت - اعلان‌ها (کامل)
+// پنل مدیریت - اعلان‌ها
 // ============================================
 
 function renderNotifications() {

@@ -35,7 +35,6 @@
 
     <main class="main">
         
-        <!-- دکمه بازگشت به داشبورد -->
         <button class="back-home-btn" onclick="window.location.href='index.html'">
             <i class="fas fa-home"></i>
         </button>
@@ -151,7 +150,48 @@
             <h4 style="color:#7f8da5;margin-bottom:15px;">📋 اعلان‌های منتشر شده</h4>
             <div id="notificationsList"></div>
         </div>
+
     </main>
+
+    <!-- ===== مودال ویرایش درس (برای WebView) ===== -->
+    <div id="editLessonModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;padding:20px;overflow-y:auto;justify-content:center;align-items:center;">
+        <div style="background:#111b2e;max-width:500px;margin:auto;padding:25px;border-radius:16px;border:1px solid rgba(45,212,191,0.15);">
+            <h3 style="color:#2dd4bf;margin-bottom:15px;">✏️ ویرایش درس</h3>
+            <input type="hidden" id="editLessonIndex">
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">عنوان</label>
+                <input type="text" id="editTitle" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">آیکون</label>
+                <input type="text" id="editIcon" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">دسته‌بندی</label>
+                <input type="text" id="editCategory" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">سطح</label>
+                <select id="editLevel" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+                    <option value="مقدماتی">مقدماتی</option>
+                    <option value="متوسط">متوسط</option>
+                    <option value="پیشرفته">پیشرفته</option>
+                </select>
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">توضیحات</label>
+                <input type="text" id="editDescription" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="color:#7f8da5;font-size:13px;display:block;margin-bottom:4px;">محتوای درس</label>
+                <textarea id="editContent" rows="4" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:#07152b;color:#fff;font-family:Vazirmatn,sans-serif;"></textarea>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:15px;">
+                <button onclick="saveEditLesson()" style="flex:1;padding:12px;background:#2dd4bf;color:#0a0e1a;border:none;border-radius:8px;font-weight:700;cursor:pointer;">💾 ذخیره</button>
+                <button onclick="closeEditModal()" style="flex:1;padding:12px;background:#555;color:#fff;border:none;border-radius:8px;cursor:pointer;">❌ انصراف</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
