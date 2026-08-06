@@ -959,3 +959,47 @@ body:not(.page-index):not(.page-login):not(.page-register) .back-home-btn {
     font-size: 14px;
     padding: 6px 0;
 }
+/* ============================================
+   دکمه‌های یکدست فندق
+   ============================================ */
+
+.primary-btn,
+.lesson-btn,
+.unlock-btn {
+    border: none;
+    background: #2dd4bf;
+    color: #0a0e1a;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 16px rgba(45, 212, 191, 0.15);
+    text-align: center;
+    display: inline-block;
+    min-width: 100px;
+}
+
+.primary-btn:hover,
+.lesson-btn:hover,
+.unlock-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(45, 212, 191, 0.3);
+}
+
+.primary-btn.secondary,
+.lesson-btn.secondary {
+    background: transparent;
+    color: #2dd4bf;
+    border: 1px solid rgba(45, 212, 191, 0.2);
+    box-shadow: none;
+}
+
+.primary-btn.secondary:hover,
+.lesson-btn.secondary:hover {
+    background: rgba(45, 212, 191, 0.05);
+    transform: none;
+    box-shadow: none;
+}
